@@ -5,7 +5,7 @@ public class ProgDocCurso {
 	private int idProgDocCur;
 	private String idDocente;
 	private int idCurso;
-	private int tiene;
+	private int idPeriodo;
 
 	public ProgDocCurso() {}
 

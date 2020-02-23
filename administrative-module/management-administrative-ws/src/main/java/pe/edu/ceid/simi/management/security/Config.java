@@ -1,7 +1,7 @@
 package pe.edu.ceid.simi.management.security;
 
 public class Config {
-	public static final String CONFIGURATION = "file:D:/CURSOS/Proyecto/simi-server/configuracion/configuracionMA.json";
+	public static final String CONFIGURATION = "file:C:/Users/User/git/BACKEND-SIMI-FISI20200/configuracion/configuracionMA.json";
 	//public static final String CONFIGURATION = "file:${SIMI_HOME}/configuracion/configuracionMA.json";
 
 
