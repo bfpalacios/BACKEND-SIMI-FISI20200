@@ -56,5 +56,11 @@ public class ProgDocCursoController {
 	public List<ProgDocCursoDTO> getProgDocCursosByPeriodo(@PathVariable int id) {
 		return this.service.getProgDocCursosByPeriodo(id);
 	}
+
+	@GetMapping(path = {"/listProgDocCursosByPeriodoIdioma/{idPeriodo}/{idIdioma}"})
+	public List<ProgDocCursoDTO> getProgDocCursosByPeriodoIdioma(@PathVariable int idPeriodo,
+			@PathVariable int idIdioma) {
+		return this.service.getProgDocCursosByPeriodoIdioma(idPeriodo, idIdioma);
+	}
 	
 }
