@@ -10,5 +10,6 @@ public interface CursoRepository {
 	boolean deleteCurso(int id);
 	List<CursoDTO> getCursos();
 	List<CursoDTO> getCursosByIdioma(int idIdioma);
+	List<CursoDTO> getCursosByDocente(int idDocente);
 	CursoDTO getCursoById(int id);
 }
