@@ -19,7 +19,7 @@ import pe.edu.ceid.simi.management.domain.progcurso.model.ProgCursoDTO;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/progcurso"})
+@RequestMapping({"/api/v1/programacionCurso/progcurso"})
 public class ProgCursoController {
 
 	@Autowired

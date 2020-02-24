@@ -10,6 +10,7 @@ import javax.swing.tree.TreePath;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.aula.model.AulaDTO;
+import pe.edu.ceid.simi.management.infraestructure.Tratamiento;
 
 
 @Component
@@ -25,11 +26,9 @@ public class AulaRowMapper implements RowMapper {
 		List<AulaDTO> aulas = new ArrayList<AulaDTO>();
 		
 		for(Map<String, Object> row: rows) {
-			String refAula = "";
-			
 			int idAula = Integer.parseInt(row.get("ID_AULA").toString());
 			String nomAula =row.get("NOM_AULA").toString();
-			if (row.get("REF_AULA") != null)	refAula = row.get("REF_AULA").toString();
+			String refAula = Tratamiento.tratarString("REF_AULA", row);
 			int idSede = Integer.parseInt(row.get("FK_ID_SEDE").toString());
 			String nomSede = row.get("NOM_SEDE").toString();
 			

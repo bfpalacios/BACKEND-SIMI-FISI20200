@@ -38,8 +38,20 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 
 	@Override
 	public EstudianteUsuarioPersona editEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona,
-			int id) {
-		// TODO Auto-generated method stub
+			String id) {
+		String insertQuery = "{CALL SP_EST_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+		int success = this.jdbcTemplate.update(insertQuery, id, estudianteUsuarioPersona.getNombre(),
+				estudianteUsuarioPersona.getApellidoPat(), estudianteUsuarioPersona.getApellidoMat(), estudianteUsuarioPersona.getDni(),
+				estudianteUsuarioPersona.getGenero(), estudianteUsuarioPersona.getEdad(), estudianteUsuarioPersona.getUniversity(),
+				estudianteUsuarioPersona.getLugarNacDist(), estudianteUsuarioPersona.getLugarNacProv(), estudianteUsuarioPersona.getLugarNacDep(),
+				estudianteUsuarioPersona.getNacionalidad(), estudianteUsuarioPersona.getAddress(), estudianteUsuarioPersona.getPhone(), 
+				estudianteUsuarioPersona.getEmail(), estudianteUsuarioPersona.getContrasenia(), estudianteUsuarioPersona.getEstado(),
+				estudianteUsuarioPersona.getIdTipoEstudiante());
+		
+		if (success >= 0) {
+			return estudianteUsuarioPersona;
+		}
+		
 		return null;
 	}
 

@@ -96,6 +96,24 @@ public class ProgDocCursoRepositoryImpl implements ProgDocCursoRepository {
 	}
 
 	@Override
+	public List<ProgDocCursoDTO> getProgDocCursosByIdioma(int idIdioma) {
+		String query = "SELECT * FROM tpprog_doc_curso AS pdc\r\n" + 
+				"	INNER JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 
+				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
+				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+				"	INNER JOIN tmcurso AS cu ON cu.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"		INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cu.FK_ID_NIVEL\r\n" + 
+				"		INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cu.FK_ID_IDIOMA\r\n" + 
+				"	INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
+				"WHERE cu.FK_ID_IDIOMA = " + idIdioma;
+		
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<ProgDocCursoDTO> progs = row.mapRowProgDocCurso(rows);
+		
+		return progs;
+	}
+
+	@Override
 	public ProgDocCursoDTO getProgDocCursoById(int id) {
 		String query = "SELECT * FROM tpprog_doc_curso AS pdc\r\n" + 
 				"	INNER JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 

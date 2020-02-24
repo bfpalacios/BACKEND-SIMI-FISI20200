@@ -21,7 +21,7 @@ public class DocenteUsuarioPersonaServiceImpl implements DocenteUsuarioPersonaSe
 	}
 
 	@Override
-	public DocenteUsuarioPersona editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, int id) {
+	public DocenteUsuarioPersona editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id) {
 		// TODO Auto-generated method stub
 		return this.repository.editDocenteUsuarioPersona(docenteUsuarioPersona, id);
 	}

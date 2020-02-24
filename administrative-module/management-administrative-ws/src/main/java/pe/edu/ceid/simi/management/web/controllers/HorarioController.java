@@ -19,7 +19,7 @@ import pe.edu.ceid.simi.management.domain.horario.model.HorarioDTO;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/horario"})
+@RequestMapping({"/api/v1/programacionCurso/horario"})
 
 public class HorarioController {
 

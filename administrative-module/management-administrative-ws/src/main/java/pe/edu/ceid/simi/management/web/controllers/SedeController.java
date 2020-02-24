@@ -19,7 +19,7 @@ import pe.edu.ceid.simi.management.domain.sede.model.Sede;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/sede"})
+@RequestMapping({"/api/v1/programacionCurso/sede"})
 public class SedeController {
 	@Autowired
 	private SedeService service;

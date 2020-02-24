@@ -51,9 +51,11 @@ public class DatabaseSource {
 		return driver;
 	}
 
+
 	public void setDriver(String driver) {
 		this.driver = driver;
 	}
+
 
 	public String getUrl() {
 		return url;
@@ -64,13 +66,16 @@ public class DatabaseSource {
 		this.url = url;
 	}
 
+
 	public String getUsername() {
 		return username;
 	}
 
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 
 	public String getPassword() {
 		return password;

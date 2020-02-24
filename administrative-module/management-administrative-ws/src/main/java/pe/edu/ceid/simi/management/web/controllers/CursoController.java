@@ -18,7 +18,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/curso"})
+@RequestMapping({"/api/v1/programacionCurso/curso"})
 public class CursoController {
 
 	@Autowired

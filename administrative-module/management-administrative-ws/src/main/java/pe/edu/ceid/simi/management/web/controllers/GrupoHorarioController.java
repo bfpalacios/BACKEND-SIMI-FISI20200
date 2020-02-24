@@ -19,7 +19,7 @@ import pe.edu.ceid.simi.management.domain.grupohorario.model.GrupoHorarioDTO;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/grupoHorario"})
+@RequestMapping({"/api/v1/programacionCurso/grupoHorario"})
 public class GrupoHorarioController {
 
 	@Autowired

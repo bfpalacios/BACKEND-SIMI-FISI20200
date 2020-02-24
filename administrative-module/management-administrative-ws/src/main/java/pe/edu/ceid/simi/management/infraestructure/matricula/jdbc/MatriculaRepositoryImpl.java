@@ -14,7 +14,7 @@ import pe.edu.ceid.simi.management.domain.matricula.repository.MatriculaReposito
 
 @Component
 public class MatriculaRepositoryImpl implements MatriculaRepository {
-
+ 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -23,10 +23,10 @@ public class MatriculaRepositoryImpl implements MatriculaRepository {
 
 	@Override
 	public Matricula crearMatricula(Matricula matricula) {
-		String insertQuery = "INSERT INTO tpmatricula (ID_MATRICULA, FK_COD_ESTUDIANTE_CI, FK_ID_PROGCURSO, FK_NUM_VOUCHER, "
-				+ "FK_ID_ESTADO_MATRICULA) VALUES (?, ?, ?, ?, ?)";
-		int success = this.jdbcTemplate.update(insertQuery, matricula.getIdMatricula(), matricula.getCodEstudiante(),
-				matricula.getIdProgCurso(), matricula.getNumVoucher(), matricula.getIdEstadoMatricula());
+		String insertQuery = "INSERT INTO tpmatricula (FK_COD_ESTUDIANTE_CI, FK_ID_PROGCURSO, FK_SEC_VOUCHER, "
+				+ "FK_ID_ESTADO_MATRICULA, FECHA_MATRICULA) VALUES (?, ?, ?, ?, ?)";
+		int success = this.jdbcTemplate.update(insertQuery, matricula.getCodEstudiante(), matricula.getIdProgCurso(),
+				matricula.getNumVoucher(), matricula.getIdEstadoMatricula(), matricula.getFechaMatricula());
 		
 		if (success >= 0) {
 			return matricula;
@@ -37,10 +37,10 @@ public class MatriculaRepositoryImpl implements MatriculaRepository {
 
 	@Override
 	public Matricula editMatricula(Matricula matricula, int id) {
-		String query = "UPDATE tpmatricula SET ID_MATRICULA = ?, FK_COD_ESTUDIANTE_CI = ?, FK_ID_PROGCURSO = ?, "
-				+ "FK_NUM_VOUCHER = ?, FK_ID_ESTADO_MATRICULA = ? WHERE ID_CURSO = "+ id;
-		int update = this.jdbcTemplate.update(query, matricula.getIdMatricula(), matricula.getCodEstudiante(),
-				matricula.getIdProgCurso(), matricula.getNumVoucher(), matricula.getIdEstadoMatricula());
+		String query = "UPDATE tpmatricula SET FK_COD_ESTUDIANTE_CI = ?, FK_ID_PROGCURSO = ?, FK_SEC_VOUCHER = ?, "
+				+ "FK_ID_ESTADO_MATRICULA = ?, FECHA_MATRICULA = ? WHERE ID_MATRICULA = " + id;
+		int update = this.jdbcTemplate.update(query, matricula.getCodEstudiante(), matricula.getIdProgCurso(),
+				matricula.getNumVoucher(), matricula.getIdEstadoMatricula(), matricula.getFechaMatricula());
 		
 		if (update == 1) {
 			return matricula;
@@ -64,8 +64,8 @@ public class MatriculaRepositoryImpl implements MatriculaRepository {
 	@Override
 	public List<MatriculaDTO> getMatriculas() {
 		String query = "SELECT *, per.NOMBRE NOMBRE_EST, per.APELLIDO_PAT APELLIDO_PAT_EST, per.APELLIDO_MAT APELLIDO_MAT_EST,\r\n" + 
-				"	usu.EMAIL EMAIL_EST, pe.APELLIDO_PAT APELLIDO_PAT_DOC, pe.APELLIDO_MAT APELLIDO_MAT_DOC,\r\n" + 
-				"    us.EMAIL EMAIL_DOC FROM tpmatricula AS ma\r\n" + 
+				"	usu.EMAIL EMAIL_EST, pe.NOMBRE NOMBRE_DOC, pe.APELLIDO_PAT APELLIDO_PAT_DOC,\r\n" + 
+				"    pe.APELLIDO_MAT APELLIDO_MAT_DOC, us.EMAIL EMAIL_DOC FROM tpmatricula AS ma\r\n" + 
 				"	INNER JOIN tmestudiante AS es ON es.COD_ESTUDIANTE_CI = ma.FK_COD_ESTUDIANTE_CI\r\n" + 
 				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = es.FK_ID_USUARIO\r\n" + 
 				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
@@ -78,8 +78,8 @@ public class MatriculaRepositoryImpl implements MatriculaRepository {
 				"				INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cu.FK_ID_NIVEL\r\n" + 
 				"				INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cu.FK_ID_IDIOMA\r\n" + 
 				"			INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
-				"		INNER JOIN tmaula AS au ON au.ID_AULA = pc.FK_ID_AULA\r\n" + 
-				"			INNER JOIN tmsede AS se ON se.ID_SEDE = au.FK_ID_SEDE\r\n" + 
+				"		LEFT JOIN tmaula AS au ON au.ID_AULA = pc.FK_ID_AULA\r\n" + 
+				"			LEFT JOIN tmsede AS se ON se.ID_SEDE = au.FK_ID_SEDE\r\n" + 
 				"		INNER JOIN tmhorario_grupo_horario AS hgh ON hgh.ID_HORARIO_GRUPOHORARIO = pc.FK_ID_HORARIO_GRUPOHORARIO\r\n" + 
 				"			INNER JOIN tmgrupo_horario AS gh ON gh.ID_GRUPOHORARIO = hgh.FK_ID_GRUPOHORARIO\r\n" + 
 				"            INNER JOIN txhoras_clase AS hc ON hc.ID_HORA = hgh.FK_ID_HORA\r\n" + 
@@ -94,8 +94,8 @@ public class MatriculaRepositoryImpl implements MatriculaRepository {
 	@Override
 	public MatriculaDTO getMatriculaById(int id) {
 		String query = "SELECT *, per.NOMBRE NOMBRE_EST, per.APELLIDO_PAT APELLIDO_PAT_EST, per.APELLIDO_MAT APELLIDO_MAT_EST,\r\n" + 
-				"	usu.EMAIL EMAIL_EST, pe.APELLIDO_PAT APELLIDO_PAT_DOC, pe.APELLIDO_MAT APELLIDO_MAT_DOC,\r\n" + 
-				"    us.EMAIL EMAIL_DOC FROM tpmatricula AS ma\r\n" + 
+				"	usu.EMAIL EMAIL_EST, pe.NOMBRE NOMBRE_DOC, pe.APELLIDO_PAT APELLIDO_PAT_DOC,\r\n" + 
+				"    pe.APELLIDO_MAT APELLIDO_MAT_DOC, us.EMAIL EMAIL_DOC FROM tpmatricula AS ma\r\n" + 
 				"	INNER JOIN tmestudiante AS es ON es.COD_ESTUDIANTE_CI = ma.FK_COD_ESTUDIANTE_CI\r\n" + 
 				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = es.FK_ID_USUARIO\r\n" + 
 				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
@@ -108,8 +108,8 @@ public class MatriculaRepositoryImpl implements MatriculaRepository {
 				"				INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cu.FK_ID_NIVEL\r\n" + 
 				"				INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cu.FK_ID_IDIOMA\r\n" + 
 				"			INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
-				"		INNER JOIN tmaula AS au ON au.ID_AULA = pc.FK_ID_AULA\r\n" + 
-				"			INNER JOIN tmsede AS se ON se.ID_SEDE = au.FK_ID_SEDE\r\n" + 
+				"		LEFT JOIN tmaula AS au ON au.ID_AULA = pc.FK_ID_AULA\r\n" + 
+				"			LEFT JOIN tmsede AS se ON se.ID_SEDE = au.FK_ID_SEDE\r\n" + 
 				"		INNER JOIN tmhorario_grupo_horario AS hgh ON hgh.ID_HORARIO_GRUPOHORARIO = pc.FK_ID_HORARIO_GRUPOHORARIO\r\n" + 
 				"			INNER JOIN tmgrupo_horario AS gh ON gh.ID_GRUPOHORARIO = hgh.FK_ID_GRUPOHORARIO\r\n" + 
 				"            INNER JOIN txhoras_clase AS hc ON hc.ID_HORA = hgh.FK_ID_HORA\r\n" + 

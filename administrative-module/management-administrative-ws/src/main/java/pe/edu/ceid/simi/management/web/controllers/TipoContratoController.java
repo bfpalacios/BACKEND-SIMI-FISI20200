@@ -18,7 +18,7 @@ import pe.edu.ceid.simi.management.domain.tipocontrato.model.TipoContrato;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/tipocontrato"})
+@RequestMapping({"/api/v1/programacionDocente/tipocontrato"})
 public class TipoContratoController {
 	@Autowired
 	private TipoContratoService service;
@@ -29,8 +29,8 @@ public class TipoContratoController {
 	}
 	
 	@PutMapping(path = {"/actualizarTipoContrato/{id}"})
-	public TipoContrato actualizarTipoContratoById(@RequestBody TipoContrato tipoContrato, @PathVariable int id) {
-		
+	public TipoContrato actualizarTipoContratoById(@RequestBody TipoContrato tipoContrato,
+			@PathVariable int id) {
 		tipoContrato.setIdTipoContrato(id);
 		return this.service.editTipoContrato(tipoContrato, id);
 	}

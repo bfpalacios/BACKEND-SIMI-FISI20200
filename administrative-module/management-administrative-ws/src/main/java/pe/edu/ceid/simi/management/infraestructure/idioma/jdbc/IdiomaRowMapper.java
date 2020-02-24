@@ -10,6 +10,7 @@ import javax.swing.tree.TreePath;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.idioma.model.Idioma;
+import pe.edu.ceid.simi.management.infraestructure.Tratamiento;
 
 @Component
 public class IdiomaRowMapper implements RowMapper {
@@ -23,18 +24,15 @@ public class IdiomaRowMapper implements RowMapper {
 	public List<Idioma> mapRowIdioma(List<Map<String, Object>> rows){
 		List<Idioma> idiomass = new ArrayList<Idioma>();
 		
-		
 		for(Map<String, Object> row: rows) {
-			String descIdioma = "";
-			if(row.get("DESC_IDIOMA") != null) descIdioma = row.get("DESC_IDIOMA").toString();
-			
 			int idIdioma = Integer.parseInt(row.get("ID_IDIOMA").toString());
-			String nomIdioma = row.get("NOM_IDIOMA").toString();
-		
+			String nomIdioma = Tratamiento.tratarString("NOM_IDIOMA", row);
+			String descIdioma = Tratamiento.tratarString("DESC_IDIOMA", row);
 			
 			Idioma i = new Idioma(idIdioma, nomIdioma, descIdioma);
 			idiomass.add(i);
 		}
+		
 		return idiomass;
 	}
 	
