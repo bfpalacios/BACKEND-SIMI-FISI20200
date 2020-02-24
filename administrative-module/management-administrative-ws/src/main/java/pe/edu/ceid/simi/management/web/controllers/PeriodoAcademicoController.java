@@ -18,7 +18,7 @@ import pe.edu.ceid.simi.management.domain.periodoacademico.model.PeriodoAcademic
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/periodoacademico"})
+@RequestMapping({"/api/v1/programacionCurso/periodoacademico"})
 public class PeriodoAcademicoController {
 
 	@Autowired

@@ -12,7 +12,7 @@ import java.util.List;
 
 //@CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/nivel"})
+@RequestMapping({"/api/v1/programacionCurso/nivel"})
 
 public class NivelController {
 

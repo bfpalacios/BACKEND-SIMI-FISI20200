@@ -19,7 +19,7 @@ import pe.edu.ceid.simi.management.domain.progdoccurso.model.ProgDocCursoDTO;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/progdoccurso"})
+@RequestMapping({"/api/v1/programacionCurso/progdoccurso"})
 public class ProgDocCursoController {
 
 	@Autowired
@@ -55,6 +55,11 @@ public class ProgDocCursoController {
 	@GetMapping(path = {"/listProgDocCursosByPeriodo/{id}"})
 	public List<ProgDocCursoDTO> getProgDocCursosByPeriodo(@PathVariable int id) {
 		return this.service.getProgDocCursosByPeriodo(id);
+	}
+
+	@GetMapping(path = {"/listProgDocCursosByIdioma/{id}"})
+	public List<ProgDocCursoDTO> getProgDocCursosByIdioma(@PathVariable int id) {
+		return this.service.getProgDocCursosByIdioma(id);
 	}
 	
 }

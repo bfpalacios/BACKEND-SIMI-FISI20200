@@ -10,6 +10,7 @@ import javax.swing.tree.TreePath;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.curso.model.CursoDTO;
+import pe.edu.ceid.simi.management.infraestructure.Tratamiento;
 
 @Component
 public class CursoRowMapper implements RowMapper {
@@ -29,8 +30,7 @@ public class CursoRowMapper implements RowMapper {
 			int cnivel = Integer.parseInt(row.get("FK_ID_NIVEL").toString());
 			String nomNivel = row.get("NOM_NIVEL").toString();
 			int ciclo = Integer.parseInt(row.get("CICLO").toString());
-			String libro = "";
-			if(row.get("LIBRO")!=null)  libro = row.get("LIBRO").toString();
+			String libro = Tratamiento.tratarString("LIBRO", row);
 			
 			CursoDTO i = new CursoDTO(ccurso, cidioma, nomIdioma, cnivel, nomNivel, ciclo, libro);
 			
@@ -38,5 +38,5 @@ public class CursoRowMapper implements RowMapper {
 		}
 		return cursos;
 	}
-	
+
 }

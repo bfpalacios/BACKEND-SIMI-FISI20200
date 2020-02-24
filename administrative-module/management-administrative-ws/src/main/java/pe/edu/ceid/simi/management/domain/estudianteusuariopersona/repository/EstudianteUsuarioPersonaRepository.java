@@ -6,7 +6,7 @@ import pe.edu.ceid.simi.management.domain.estudianteusuariopersona.model.Estudia
 
 public interface EstudianteUsuarioPersonaRepository {
 	EstudianteUsuarioPersona crearEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona);
-	EstudianteUsuarioPersona editEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona, int id);
+	EstudianteUsuarioPersona editEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona, String id);
 	List<EstudianteUsuarioPersona> getEstudianteUsuarioPersona();
 	boolean deleteEstudianteUsuarioPersona(String codEstudiante);
 	EstudianteUsuarioPersona getEstudianteUsuarioPersonaById(String codEstudiante);

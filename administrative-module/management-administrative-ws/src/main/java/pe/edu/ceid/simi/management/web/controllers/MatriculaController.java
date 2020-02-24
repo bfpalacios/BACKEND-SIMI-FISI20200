@@ -19,7 +19,7 @@ import pe.edu.ceid.simi.management.domain.matricula.model.MatriculaDTO;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/matricula"})
+@RequestMapping({"/api/procesoMatricula/matricula"})
 public class MatriculaController {
 
 	@Autowired
@@ -32,7 +32,6 @@ public class MatriculaController {
 	
 	@PutMapping(path = {"/actualizarMatricula/{id}"})
 	public Matricula actualizarMatricula(@RequestBody Matricula curso, @PathVariable int id) {
-		
 		curso.setIdMatricula(id);
 		return this.service.editMatricula(curso, id);
 	}

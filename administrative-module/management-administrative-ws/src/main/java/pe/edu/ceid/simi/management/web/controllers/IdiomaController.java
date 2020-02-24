@@ -19,7 +19,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/idioma"})
+@RequestMapping({"/api/v1/programacionCurso/idioma"})
 public class IdiomaController {
 
 	@Autowired

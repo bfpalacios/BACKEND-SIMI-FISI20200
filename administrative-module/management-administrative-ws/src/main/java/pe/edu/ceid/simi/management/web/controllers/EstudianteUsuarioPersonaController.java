@@ -18,7 +18,7 @@ import pe.edu.ceid.simi.management.domain.estudianteusuariopersona.model.Estudia
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/estudianteusuariopersona"})
+@RequestMapping({"/api/v1/programacionDocente/estudianteusuariopersona"})
 public class EstudianteUsuarioPersonaController {
 
 	@Autowired
@@ -30,9 +30,10 @@ public class EstudianteUsuarioPersonaController {
 	}
 	
 	@PutMapping(path = {"/actualizarEstudianteUsuarioPersona/{id}"})
-	public EstudianteUsuarioPersona actualizarEstudianteUsuarioPersonaById(@RequestBody EstudianteUsuarioPersona docUsuPer, @PathVariable int id) {
+	public EstudianteUsuarioPersona actualizarEstudianteUsuarioPersonaById(@RequestBody EstudianteUsuarioPersona estUsuPer,
+			@PathVariable String id) {
 		//docente.setCodDocente(id);
-		return this.service.editEstudianteUsuarioPersona(docUsuPer, id);
+		return this.service.editEstudianteUsuarioPersona(estUsuPer, id);
 	}
 	
 	@DeleteMapping(path = {"/eliminarEstudianteUsuarioPersonaById/{id}"})

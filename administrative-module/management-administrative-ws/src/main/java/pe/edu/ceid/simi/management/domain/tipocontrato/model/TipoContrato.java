@@ -4,7 +4,9 @@ public class TipoContrato {
 	
 	private int idTipoContrato;
 	private String nomTipoContrato;
-	
+
+	public TipoContrato() {}
+
 	public TipoContrato(int ctipoContrato, String nomTipoContrato) {
 		super();
 		this.idTipoContrato = ctipoContrato;

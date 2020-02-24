@@ -18,14 +18,6 @@ public class Curso {
 		this.libro = libro;
 	}
 	
-	public Curso(int ccurso, int cidioma, int cnivel, int ciclo) {
-		super();
-		this.idCurso = ccurso;
-		this.idIdioma = cidioma;
-		this.idNivel = cnivel;
-		this.ciclo = ciclo;
-	}
-	
 	public Curso() {
 		super();
 	}
