@@ -44,7 +44,8 @@ public class IdiomaRepositoryImpl implements IdiomaRepository {
 
 	@Override
 	public List<Idioma> getIdiomas() {
-		String query = "SELECT * FROM tmidioma";
+		String query = "SELECT * FROM tmidioma AS id "
+				+ "ORDER BY id.NOM_IDIOMA";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<Idioma> idiomas = row.mapRowIdioma(rows);
 		
