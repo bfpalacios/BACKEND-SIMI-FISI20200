@@ -17,7 +17,7 @@ public class Application extends SpringBootServletInitializer {
 		return application.sources(Application.class);
 	}
 	
-//	private static final Logger logger = LogManager.getLogger("sera :c");
+//	private static final Logger logger = LogManager.getLogger(Application.class());
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
