@@ -10,6 +10,7 @@ import javax.swing.tree.TreePath;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.progcurso.model.ProgCursoDTO;
+import pe.edu.ceid.simi.management.infraestructure.Tratamiento;
 
 @Component
 public class ProgCursoRowMapper implements RowMapper {
@@ -24,40 +25,30 @@ public class ProgCursoRowMapper implements RowMapper {
 		List<ProgCursoDTO> progs = new ArrayList<ProgCursoDTO>();
 		
 		for(Map<String, Object> row: rows) {
-			Integer idAula = -1;
-			String nomAula = "";
-			String nomSede = "";
+			Integer idAula = Tratamiento.tratarEntero("FK_ID_AULA", row);
+			String nomAula = Tratamiento.tratarString("NOM_AULA", row);
+			String nomSede = Tratamiento.tratarString("NOM_SEDE", row);
 			
 			int idProgCurso = Integer.parseInt(row.get("ID_PROGCURSO").toString());
 			int idProgDocCur = Integer.parseInt(row.get("FK_ID_PROG_DOC_CUR").toString());
-			String nombre =row.get("NOMBRE").toString();
-			String apellidoPat =row.get("APELLIDO_PAT").toString();
-			String apellidoMat =row.get("APELLIDO_MAT").toString();
-			String nomIdioma =row.get("NOM_IDIOMA").toString();
-			String nomNivel =row.get("NOM_NIVEL").toString();
-			String nomPeriodo =row.get("NOM_PERIODO").toString();
-			int ciclo = Integer.parseInt(row.get("CICLO").toString());
+			String nombre = Tratamiento.tratarString("NOMBRE", row);
+			String apellidoPat = Tratamiento.tratarString("APELLIDO_PAT", row);
+			String apellidoMat = Tratamiento.tratarString("APELLIDO_MAT", row);
+			String nomIdioma = Tratamiento.tratarString("NOM_IDIOMA", row);
+			String nomNivel = Tratamiento.tratarString("NOM_NIVEL", row);
+			String nomPeriodo = Tratamiento.tratarString("NOM_PERIODO", row);
+			int ciclo = Tratamiento.tratarEntero("CiCLO", row);
 			int idGrupoHorario = Integer.parseInt(row.get("FK_ID_HORARIO_GRUPOHORARIO").toString());
 			String nomGrupoHorario = row.get("NOM_GRUPOHORARIO").toString();
 			String horaInicio = row.get("HORA_INICIO").toString();
 			String horaSalida = row.get("HORA_SALIDA").toString();
 			int idEstadoProgCurso = Integer.parseInt(row.get("FK_ID_ESTADO_PROGCURSO").toString());
-			String nomEstado =row.get("NOM_ESTADO").toString();
+			String nomEstado = Tratamiento.tratarString("NOM_ESTADO", row);
 			
-			try {
-				if (!row.get("FK_ID_AULA").equals(null)) {
-					idAula = Integer.parseInt(row.get("FK_ID_AULA").toString());
-					nomAula = row.get("NOM_AULA").toString();
-					nomSede = row.get("NOM_SEDE").toString();
-				}
-			} catch (NullPointerException e) {
-				
-			} finally {
-				ProgCursoDTO p = new ProgCursoDTO(idProgCurso, idProgDocCur, nombre, apellidoPat, apellidoMat,
-						nomIdioma, nomNivel, nomPeriodo, ciclo, idAula, nomAula, nomSede, idGrupoHorario, nomGrupoHorario,
-						horaInicio, horaSalida, idEstadoProgCurso, nomEstado);
-				progs.add(p);
-			}
+			ProgCursoDTO p = new ProgCursoDTO(idProgCurso, idProgDocCur, nombre, apellidoPat, apellidoMat,
+					nomIdioma, nomNivel, nomPeriodo, ciclo, idAula, nomAula, nomSede, idGrupoHorario, nomGrupoHorario,
+					horaInicio, horaSalida, idEstadoProgCurso, nomEstado);
+			progs.add(p);
 		}
 		
 		return progs;

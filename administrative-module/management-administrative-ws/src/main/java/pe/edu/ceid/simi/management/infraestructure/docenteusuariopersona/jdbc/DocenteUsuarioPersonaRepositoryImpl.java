@@ -41,18 +41,31 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 	}
 
 	@Override
-	public DocenteUsuarioPersona editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, int id) {
-		// TODO Auto-generated method stub
+	public DocenteUsuarioPersona editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id) {
+		String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+		int success = this.jdbcTemplate.update(insertQuery, id, docenteUsuarioPersona.getNombre(),
+				docenteUsuarioPersona.getApellidoPat(), docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(),
+				docenteUsuarioPersona.getGenero(), docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(),
+				docenteUsuarioPersona.getLugarNacDist(), docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(),
+				docenteUsuarioPersona.getNacionalidad(), docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone(),
+				docenteUsuarioPersona.getEmail(), docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(),
+				docenteUsuarioPersona.getDepartamento());
+		
+		if (success >= 0) {
+			return docenteUsuarioPersona;
+		}
+		
 		return null;
 	}
 
 	@Override
 	public List<DocenteUsuarioPersona> getDocenteUsuarioPersona() {
-		String query = "SELECT *, us.FECHA_ALTA AS 'FECHA_ALTA_US', pe.FECHA_ALTA AS 'FECHA_ALTA_PE' " +
-				"FROM tmdocente AS doc " + 
-				"INNER JOIN tmusuario AS us ON us.ID_USUARIO = doc.FK_ID_USUARIO " + 
-				"INNER JOIN tmpersona AS pe ON pe.ID_PERSONA = us.FK_ID_PERSONA " + 
-				"INNER JOIN tmrol AS ro ON ro.ID_ROL = us.FK_ID_ROL";
+		String query = "SELECT *, us.FECHA_ALTA FECHA_ALTA_USU, us.FECHA_BAJA FECHA_BAJA_USU, us.FECHA_MOD FECHA_MOD_USU,\r\n" + 
+				"	pe.FECHA_ALTA FECHA_ALTA_PER, pe.FECHA_MOD FECHA_MOD_PER\r\n" + 
+				"FROM tmdocente AS doc\r\n" + 
+				"	INNER JOIN tmusuario AS us ON us.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
+				"		INNER JOIN tmpersona AS pe ON pe.ID_PERSONA = us.FK_ID_PERSONA\r\n" + 
+				"		INNER JOIN tmrol AS ro ON ro.ID_ROL = us.FK_ID_ROL";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<DocenteUsuarioPersona> docUsuPer = row.mapRowDocenteUsuarioPersona(rows);
 		return docUsuPer;
@@ -70,11 +83,12 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 
 	@Override
 	public DocenteUsuarioPersona getDocenteUsuarioPersonaById(String id) {
-		String query ="SELECT *, us.FECHA_ALTA AS 'FECHA_ALTA_US', pe.FECHA_ALTA AS 'FECHA_ALTA_PE' " +
-				"FROM tmdocente AS doc " + 
-				"INNER JOIN tmusuario AS us ON us.ID_USUARIO = doc.FK_ID_USUARIO " + 
-				"INNER JOIN tmpersona AS pe ON pe.ID_PERSONA = us.FK_ID_PERSONA " + 
-				"INNER JOIN tmrol AS ro ON ro.ID_ROL = us.FK_ID_ROL " +
+		String query ="SELECT *, us.FECHA_ALTA FECHA_ALTA_USU, us.FECHA_BAJA FECHA_BAJA_USU, us.FECHA_MOD FECHA_MOD_USU,\r\n" + 
+				"	pe.FECHA_ALTA FECHA_ALTA_PER, pe.FECHA_MOD FECHA_MOD_PER\r\n" + 
+				"FROM tmdocente AS doc\r\n" + 
+				"	INNER JOIN tmusuario AS us ON us.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
+				"		INNER JOIN tmpersona AS pe ON pe.ID_PERSONA = us.FK_ID_PERSONA\r\n" + 
+				"		INNER JOIN tmrol AS ro ON ro.ID_ROL = us.FK_ID_ROL " +
 				"WHERE doc.COD_DOCENTE_CI = '" + id + "'";
 		List<DocenteUsuarioPersona> docUsuPer = this.row.mapRowDocenteUsuarioPersona(this.jdbcTemplate.queryForList(query));
 		

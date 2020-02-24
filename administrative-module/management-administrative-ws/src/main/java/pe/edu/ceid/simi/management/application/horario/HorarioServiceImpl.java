@@ -30,9 +30,9 @@ public class HorarioServiceImpl implements HorarioService {
 	}
 
 	@Override
-	public boolean deleteHorario(int chorario) {
+	public boolean deleteHorario(int idHorario) {
 		// TODO Auto-generated method stub
-		return this.repository.deleteHorario(chorario);
+		return this.repository.deleteHorario(idHorario);
 	}
 	
 	@Override

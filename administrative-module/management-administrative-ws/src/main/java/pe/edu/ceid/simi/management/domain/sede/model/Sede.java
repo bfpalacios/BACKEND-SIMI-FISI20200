@@ -6,7 +6,9 @@ public class Sede {
 	private String nomSede;
 	private String descSede;
 	private String dirSede;
-		
+
+	public Sede() {}
+
 	public Sede(int idSede, String nomSede, String descSede, String dirSede) {
 		super();
 		this.idSede = idSede;

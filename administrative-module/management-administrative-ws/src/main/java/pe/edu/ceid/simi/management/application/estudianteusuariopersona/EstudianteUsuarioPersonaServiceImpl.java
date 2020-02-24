@@ -22,7 +22,7 @@ public class EstudianteUsuarioPersonaServiceImpl implements EstudianteUsuarioPer
 
 	@Override
 	public EstudianteUsuarioPersona editEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona,
-			int id) {
+			String id) {
 		// TODO Auto-generated method stub
 		return this.repository.editEstudianteUsuarioPersona(estudianteUsuarioPersona, id);
 	}

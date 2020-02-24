@@ -12,7 +12,7 @@ public class DocenteUsuarioPersona {
 	private int genero;
 	private int edad;
 	private Date fechaAltaP;
-
+	private Date fechaModP;
 	private String university;
 	private String fechaNacimiento; 
 	private String lugarNacDist;
@@ -30,35 +30,20 @@ public class DocenteUsuarioPersona {
 	private int estado;
 	private Date fechaAltaU;
 	private Date fechaBajaU;
+	private Date fechaModU;
+	private int idUsuarioMod;
+	
 	private String codDocente;
 	private String departamento;
 
 	public DocenteUsuarioPersona() {}
 
 	public DocenteUsuarioPersona(int idPersona, String nombre, String apellidoPat, String apellidoMat, String dni,
-			int genero, int edad, int idUsuario, String email, String contrasenia, int idRol, String nomRol, int estado,
-			String codDocente, String departamento) {
-		super();
-		this.idPersona = idPersona;
-		this.nombre = nombre;
-		this.apellidoPat = apellidoPat;
-		this.apellidoMat = apellidoMat;
-		this.dni = dni;
-		this.genero = genero;
-		this.edad = edad;
-		this.idUsuario = idUsuario;
-		this.email = email;
-		this.contrasenia = contrasenia;
-		this.idRol = idRol;
-		this.nomRol = nomRol;
-		this.estado = estado;
-		this.codDocente = codDocente;
-		this.departamento = departamento;
-	}
-
-	public DocenteUsuarioPersona(int idPersona, String nombre, String apellidoPat, String apellidoMat, String dni,
-			int genero, int edad, Date fechaAltaP, int idUsuario, String email, String contrasenia, int idRol,
-			String nomRol, int estado, Date fechaAltaU, Date fechaBajaU, String codDocente, String departamento) {
+			int genero, int edad, Date fechaAltaP, Date fechaModP, String university, String fechaNacimiento,
+			String lugarNacDist, String lugarNacProv, String lugarNacDep, String nacionalidad, String address,
+			String phone, int idUsuario, String email, String contrasenia, int idRol, String nomRol, int estado,
+			Date fechaAltaU, Date fechaBajaU, Date fechaModU, int idUsuarioMod, String codDocente,
+			String departamento) {
 		super();
 		this.idPersona = idPersona;
 		this.nombre = nombre;
@@ -68,39 +53,7 @@ public class DocenteUsuarioPersona {
 		this.genero = genero;
 		this.edad = edad;
 		this.fechaAltaP = fechaAltaP;
-		this.idUsuario = idUsuario;
-		this.email = email;
-		this.contrasenia = contrasenia;
-		this.idRol = idRol;
-		this.nomRol = nomRol;
-		this.estado = estado;
-		this.fechaAltaU = fechaAltaU;
-		this.fechaBajaU = fechaBajaU;
-		this.codDocente = codDocente;
-		this.departamento = departamento;
-	}
-	
-	public DocenteUsuarioPersona(int idPersona, String nombre, String apellidoPat, String apellidoMat, String dni,
-			int genero, int edad, int idUsuario, String email, String contrasenia, int idRol,
-			String nomRol, int estado, String codDocente, String departamento,
-			String university, String fechaNacimiento, String lugarNacDist, String lugarNacProv, String lugarNacDep,
-			String nacionalidad, String address, String phone) {
-		super();
-		this.idPersona = idPersona;
-		this.nombre = nombre;
-		this.apellidoPat = apellidoPat;
-		this.apellidoMat = apellidoMat;
-		this.dni = dni;
-		this.genero = genero;
-		this.edad = edad;
-		this.idUsuario = idUsuario;
-		this.email = email;
-		this.contrasenia = contrasenia;
-		this.idRol = idRol;
-		this.nomRol = nomRol;
-		this.estado = estado;
-		this.codDocente = codDocente;
-		this.departamento = departamento;
+		this.fechaModP = fechaModP;
 		this.university = university;
 		this.fechaNacimiento = fechaNacimiento;
 		this.lugarNacDist = lugarNacDist;
@@ -109,6 +62,18 @@ public class DocenteUsuarioPersona {
 		this.nacionalidad = nacionalidad;
 		this.address = address;
 		this.phone = phone;
+		this.idUsuario = idUsuario;
+		this.email = email;
+		this.contrasenia = contrasenia;
+		this.idRol = idRol;
+		this.nomRol = nomRol;
+		this.estado = estado;
+		this.fechaAltaU = fechaAltaU;
+		this.fechaBajaU = fechaBajaU;
+		this.fechaModU = fechaModU;
+		this.idUsuarioMod = idUsuarioMod;
+		this.codDocente = codDocente;
+		this.departamento = departamento;
 	}
 
 	public int getIdPersona() {
@@ -266,6 +231,30 @@ public class DocenteUsuarioPersona {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public Date getFechaModP() {
+		return fechaModP;
+	}
+
+	public void setFechaModP(Date fechaModP) {
+		this.fechaModP = fechaModP;
+	}
+
+	public Date getFechaModU() {
+		return fechaModU;
+	}
+
+	public void setFechaModU(Date fechaModU) {
+		this.fechaModU = fechaModU;
+	}
+
+	public int getIdUsuarioMod() {
+		return idUsuarioMod;
+	}
+
+	public void setIdUsuarioMod(int idUsuarioMod) {
+		this.idUsuarioMod = idUsuarioMod;
 	}
 	
 }

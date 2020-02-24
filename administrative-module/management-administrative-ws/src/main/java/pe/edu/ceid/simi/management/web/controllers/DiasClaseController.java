@@ -18,7 +18,7 @@ import pe.edu.ceid.simi.management.domain.diasclase.model.DiasClase;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/diasclase"})
+@RequestMapping({"/api/v1/programacionCurso/diasclase"})
 public class DiasClaseController {
 
 	@Autowired

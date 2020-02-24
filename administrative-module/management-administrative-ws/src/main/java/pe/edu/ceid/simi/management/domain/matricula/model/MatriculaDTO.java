@@ -1,9 +1,11 @@
 package pe.edu.ceid.simi.management.domain.matricula.model;
 
+import java.sql.Date;
+
 public class MatriculaDTO {
 
 	private int idMatricula;
-	private int codEstudiante;
+	private String codEstudiante;
 	private String nombreEstudiante;
 	private String apellidoPatEstudiante;
 	private String apellidoMatEstudiante;
@@ -24,45 +26,11 @@ public class MatriculaDTO {
 	private int numVoucher;
 	private int idEstadoMatricula;
 	private String nomEstadoMatricula;
-	
-	public MatriculaDTO(int idMatricula, int codEstudiante, String nombreEstudiante, String apellidoPatEstudiante,
-			String apellidoMatEstudiante, int idProgCurso, String nombreDocente, String apellidoPatDocente,
-			String apellidoMatDocente, String nomIdioma, String nomNivel, String nomPeriodo, int ciclo, String nomAula,
-			String nomSede, String nomGrupoHorario, String nomEstadoProgCurso, int numVoucher, int idEstadoMatricula,
-			String nomEstadoMatricula) {
-		super();
-		this.idMatricula = idMatricula;
-		this.codEstudiante = codEstudiante;
-		this.nombreEstudiante = nombreEstudiante;
-		this.apellidoPatEstudiante = apellidoPatEstudiante;
-		this.apellidoMatEstudiante = apellidoMatEstudiante;
-		this.idProgCurso = idProgCurso;
-		this.nombreDocente = nombreDocente;
-		this.apellidoPatDocente = apellidoPatDocente;
-		this.apellidoMatDocente = apellidoMatDocente;
-		this.nomIdioma = nomIdioma;
-		this.nomNivel = nomNivel;
-		this.nomPeriodo = nomPeriodo;
-		this.ciclo = ciclo;
-		this.nomAula = nomAula;
-		this.nomSede = nomSede;
-		this.nomGrupoHorario = nomGrupoHorario;
-		this.nomEstadoProgCurso = nomEstadoProgCurso;
-		this.numVoucher = numVoucher;
-		this.idEstadoMatricula = idEstadoMatricula;
-		this.nomEstadoMatricula = nomEstadoMatricula;
-	}
+	private Date fechaMatricula;
 
-	public MatriculaDTO(int idMatricula, int codEstudiante, int idProgCurso, int numVoucher, int isEstadoMatricula) {
-		super();
-		this.idMatricula = idMatricula;
-		this.codEstudiante = codEstudiante;
-		this.idProgCurso = idProgCurso;
-		this.numVoucher = numVoucher;
-		this.idEstadoMatricula = isEstadoMatricula;
-	}
+	public MatriculaDTO() {}
 	
-	public MatriculaDTO(int idMatricula, int codEstudiante, String nombreEstudiante, String apellidoPatEstudiante,
+	public MatriculaDTO(int idMatricula, String codEstudiante, String nombreEstudiante, String apellidoPatEstudiante,
 			String apellidoMatEstudiante, String emailEstudiante, int idProgCurso, String nombreDocente,
 			String apellidoPatDocente, String apellidoMatDocente, String emailDocente, String nomIdioma,
 			String nomNivel, String nomPeriodo, int ciclo, String nomAula, String nomSede, String nomGrupoHorario,
@@ -92,16 +60,48 @@ public class MatriculaDTO {
 		this.nomEstadoMatricula = nomEstadoMatricula;
 	}
 
+	public MatriculaDTO(int idMatricula, String codEstudiante, String nombreEstudiante, String apellidoPatEstudiante,
+			String apellidoMatEstudiante, String emailEstudiante, int idProgCurso, String nombreDocente,
+			String apellidoPatDocente, String apellidoMatDocente, String emailDocente, String nomIdioma,
+			String nomNivel, String nomPeriodo, int ciclo, String nomAula, String nomSede, String nomGrupoHorario,
+			String nomEstadoProgCurso, int numVoucher, int idEstadoMatricula, String nomEstadoMatricula,
+			Date fechaMatricula) {
+		super();
+		this.idMatricula = idMatricula;
+		this.codEstudiante = codEstudiante;
+		this.nombreEstudiante = nombreEstudiante;
+		this.apellidoPatEstudiante = apellidoPatEstudiante;
+		this.apellidoMatEstudiante = apellidoMatEstudiante;
+		this.emailEstudiante = emailEstudiante;
+		this.idProgCurso = idProgCurso;
+		this.nombreDocente = nombreDocente;
+		this.apellidoPatDocente = apellidoPatDocente;
+		this.apellidoMatDocente = apellidoMatDocente;
+		this.emailDocente = emailDocente;
+		this.nomIdioma = nomIdioma;
+		this.nomNivel = nomNivel;
+		this.nomPeriodo = nomPeriodo;
+		this.ciclo = ciclo;
+		this.nomAula = nomAula;
+		this.nomSede = nomSede;
+		this.nomGrupoHorario = nomGrupoHorario;
+		this.nomEstadoProgCurso = nomEstadoProgCurso;
+		this.numVoucher = numVoucher;
+		this.idEstadoMatricula = idEstadoMatricula;
+		this.nomEstadoMatricula = nomEstadoMatricula;
+		this.fechaMatricula = fechaMatricula;
+	}
+
 	public int getIdMatricula() {
 		return idMatricula;
 	}
 	public void setIdMatricula(int idMatricula) {
 		this.idMatricula = idMatricula;
 	}
-	public int getCodEstudiante() {
+	public String getCodEstudiante() {
 		return codEstudiante;
 	}
-	public void setCodEstudiante(int codEstudiante) {
+	public void setCodEstudiante(String codEstudiante) {
 		this.codEstudiante = codEstudiante;
 	}
 	public String getNombreEstudiante() {
@@ -224,6 +224,12 @@ public class MatriculaDTO {
 	}
 	public void setEmailDocente(String emailDocente) {
 		this.emailDocente = emailDocente;
+	}
+	public Date getFechaMatricula() {
+		return fechaMatricula;
+	}
+	public void setFechaMatricula(Date fechaMatricula) {
+		this.fechaMatricula = fechaMatricula;
 	}
 	
 }

@@ -18,7 +18,7 @@ import pe.edu.ceid.simi.management.domain.tipoestudiante.model.TipoEstudiante;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/tipoestudiante"})
+@RequestMapping({"/api/v1/programacionDocente/tipoestudiante"})
 public class TipoEstudianteController {
 	@Autowired
 	private TipoEstudianteService service;

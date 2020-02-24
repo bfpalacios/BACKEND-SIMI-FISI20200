@@ -10,6 +10,7 @@ import javax.swing.tree.TreePath;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.sede.model.Sede;
+import pe.edu.ceid.simi.management.infraestructure.Tratamiento;
 
 
 @Component
@@ -25,16 +26,10 @@ public class SedeRowMapper implements RowMapper {
 		List<Sede> sedess = new ArrayList<Sede>();
 		
 		for(Map<String, Object> row: rows) {
-			String nomSede = "";
-			String dirSede = "";
-			
 			int idSede = Integer.parseInt(row.get("ID_SEDE").toString());
-			
-			if (row.get("NOM_SEDE").toString() != null)	nomSede = row.get("NOM_SEDE").toString();
-			
-			String descSede =row.get("DESC_SEDE").toString();
-			
-			if (row.get("DIR_SEDE").toString() != null)	dirSede = row.get("DIR_SEDE").toString();
+			String nomSede = Tratamiento.tratarString("NOM_SEDE", row);
+			String dirSede = Tratamiento.tratarString("DIR_SEDE", row);
+			String descSede = Tratamiento.tratarString("DESC_SEDE", row);
 			
 			Sede s = new Sede(idSede, nomSede, descSede, dirSede);
 			sedess.add(s);

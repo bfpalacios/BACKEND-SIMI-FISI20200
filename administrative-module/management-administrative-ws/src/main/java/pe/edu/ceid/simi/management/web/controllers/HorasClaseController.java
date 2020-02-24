@@ -19,7 +19,7 @@ import pe.edu.ceid.simi.management.domain.horasclase.model.HorasClase;
 
 //@CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/horasclase"})
+@RequestMapping({"/api/v1/programacionCurso/horasclase"})
 
 public class HorasClaseController {
 
