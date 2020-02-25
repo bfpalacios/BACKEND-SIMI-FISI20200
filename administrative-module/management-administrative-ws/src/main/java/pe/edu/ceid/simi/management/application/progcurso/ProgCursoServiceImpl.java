@@ -40,9 +40,15 @@ public class ProgCursoServiceImpl implements ProgCursoService {
 	}
 
 	@Override
+	public List<ProgCursoDTO> getProgCursosByDocente(String codDocente, int idCurso) {
+		// TODO Auto-generated method stub
+		return this.repository.getProgCursosByDocenteCurso(codDocente, idCurso);
+	}
+	
+	@Override
 	public ProgCursoDTO getProgCursoById(int id) {
 		// TODO Auto-generated method stub
 		return this.repository.getProgCursoById(id);
 	}
-	
+
 }

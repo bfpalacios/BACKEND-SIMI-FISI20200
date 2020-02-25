@@ -10,5 +10,6 @@ public interface ProgCursoService {
 	ProgCurso editProgCurso(ProgCurso progCurso, int id);
 	boolean deleteProgCurso(int id);
 	List<ProgCursoDTO> getProgCursos();
+	List<ProgCursoDTO> getProgCursosByDocente(String codDocente, int idCurso);
 	ProgCursoDTO getProgCursoById(int id);
 }
