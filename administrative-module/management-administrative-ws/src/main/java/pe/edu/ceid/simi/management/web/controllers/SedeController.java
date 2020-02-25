@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import pe.edu.ceid.simi.management.application.sede.SedeService;
 import pe.edu.ceid.simi.management.domain.sede.model.Sede;
 
-
 @CrossOrigin(origins = "localhost:4200")
 @RestController
 @RequestMapping({"/api/v1/programacionCurso/sede"})
 public class SedeController {
+	
 	@Autowired
 	private SedeService service;
 	

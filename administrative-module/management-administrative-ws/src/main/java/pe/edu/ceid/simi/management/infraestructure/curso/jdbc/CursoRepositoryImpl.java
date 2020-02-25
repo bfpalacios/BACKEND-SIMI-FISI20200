@@ -94,4 +94,18 @@ public class CursoRepositoryImpl implements CursoRepository {
 		return null;
 	}
 
+	@Override
+	public List<CursoDTO> getCursosByDocente(int idDocente) {
+		String query = "SELECT * FROM tmcurso AS cu "
+				+ "INNER JOIN tmidioma AS id ON cu.FK_ID_IDIOMA = id.ID_IDIOMA "
+				+ "INNER JOIN txnivel AS ni ON cu.FK_ID_NIVEL = ni.ID_NIVEL "
+				+ "INNER JOIN tpprog_doc_curso AS pdc ON pdc.FK_ID_CURSO = cu.ID_CURSO "
+				+ "INNER JOIN tmdocente AS doc ON doc.ID_DOCENTE = pdc.FK_ID_DOCENTE "
+				+ "WHERE id.ID_IDIOMA = " + idDocente
+				+ " ORDER BY id.ID_IDIOMA, ni.ID_NIVEL, cu.CICLO";
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<CursoDTO> cursos = row.mapRowCurso(rows);
+		return cursos;
+	}
+
 }

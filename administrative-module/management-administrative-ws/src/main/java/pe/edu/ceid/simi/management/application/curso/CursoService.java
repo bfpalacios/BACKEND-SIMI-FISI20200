@@ -11,6 +11,7 @@ public interface CursoService {
 	Curso editCurso(Curso curso, int id);
 	List<CursoDTO> getCursos();
 	List<CursoDTO> getCursosByIdioma(int idIdioma);
+	List<CursoDTO> getCursosByDocente(int idDocente);
 	CursoDTO getCursoById(int id);
 	boolean deleteCurso(int id);
 }

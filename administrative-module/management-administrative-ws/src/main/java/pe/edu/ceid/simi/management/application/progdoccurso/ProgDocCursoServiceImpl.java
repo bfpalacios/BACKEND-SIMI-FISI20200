@@ -39,11 +39,11 @@ public class ProgDocCursoServiceImpl implements ProgDocCursoService {
 		return this.repository.getProgDocCursos();
 	}
 
-	@Override
-	public ProgDocCursoDTO getProgDocCursoById(int id) {
-		// TODO Auto-generated method stub
-		return this.repository.getProgDocCursoById(id);
-	}
+	 @Override
+	 public ProgDocCursoDTO getProgDocCursoById(int id) {
+	 	// TODO Auto-generated method stub
+	 	return this.repository.getProgDocCursoById(id);
+	 }
 
 	@Override
 	public List<ProgDocCursoDTO> getProgDocCursosByPeriodo(int idPeriodo) {
@@ -52,9 +52,9 @@ public class ProgDocCursoServiceImpl implements ProgDocCursoService {
 	}
 
 	@Override
-	public List<ProgDocCursoDTO> getProgDocCursosByIdioma(int idIdioma) {
+	public List<ProgDocCursoDTO> getProgDocCursosByPeriodoIdioma(int idPeriodo, int idIdioma) {
 		// TODO Auto-generated method stub
-		return this.repository.getProgDocCursosByIdioma(idIdioma);
+		return this.repository.getProgDocCursosByPeriodoIdioma(idPeriodo, idIdioma);
 	}
 
 }
