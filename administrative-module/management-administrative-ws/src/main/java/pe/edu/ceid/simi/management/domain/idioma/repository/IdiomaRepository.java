@@ -4,8 +4,8 @@ import java.util.List;
 import pe.edu.ceid.simi.management.domain.idioma.model.Idioma;
 
 public interface IdiomaRepository {
-	Idioma crearIdioma(Idioma idioma);
-	Idioma editIdioma(Idioma idioma, int id);
+	String crearIdioma(Idioma idioma);
+	String editIdioma(Idioma idioma, int id);
 	List<Idioma> getIdiomas();
 	String deleteIdioma(int cidioma);
 	Idioma getIdiomaById(int id);

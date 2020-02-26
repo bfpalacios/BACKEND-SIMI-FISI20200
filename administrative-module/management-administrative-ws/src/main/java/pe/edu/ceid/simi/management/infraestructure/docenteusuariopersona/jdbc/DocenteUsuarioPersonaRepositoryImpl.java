@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.docenteusuariopersona.model.DocenteUsuarioPersona;
 import pe.edu.ceid.simi.management.domain.docenteusuariopersona.repository.DocenteUsuarioPersonaRepository;
-import pe.edu.ceid.simi.management.domain.sede.model.Sede;
 
 @Component
 public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPersonaRepository {

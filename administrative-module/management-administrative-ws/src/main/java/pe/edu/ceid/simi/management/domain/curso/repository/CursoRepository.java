@@ -5,8 +5,8 @@ import pe.edu.ceid.simi.management.domain.curso.model.CursoDTO;
 import java.util.List;
 
 public interface CursoRepository {
-	Curso crearCurso(Curso curso);
-	Curso editCurso(Curso curso, int id);
+	String crearCurso(Curso curso);
+	String editCurso(Curso curso, int id);
 	String deleteCurso(int id);
 	List<CursoDTO> getCursos();
 	List<CursoDTO> getCursosByIdioma(int idIdioma);
