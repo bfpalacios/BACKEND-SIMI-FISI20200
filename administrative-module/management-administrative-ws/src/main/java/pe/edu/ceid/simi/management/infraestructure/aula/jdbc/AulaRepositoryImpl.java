@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 import pe.edu.ceid.simi.management.domain.aula.model.Aula;
 import pe.edu.ceid.simi.management.domain.aula.model.AulaDTO;
 import pe.edu.ceid.simi.management.domain.aula.repository.AulaRepository;
-import pe.edu.ceid.simi.management.domain.sede.model.Sede;
-
 
 @Component
 public class AulaRepositoryImpl implements AulaRepository {
@@ -23,26 +21,52 @@ public class AulaRepositoryImpl implements AulaRepository {
 	private AulaRowMapper row;
 
 	@Override
-	public Aula crearAula(Aula aula) {
-		String insertQuery = "INSERT INTO tmaula (NOM_AULA, REF_AULA, FK_ID_SEDE) values (?, ?, ?)";
-		int success = this.jdbcTemplate.update(insertQuery, aula.getNomAula(), aula.getRefAula(),
-				 aula.getIdSede());
-		if (success >= 0) {
-			return aula;
+	public String crearAula(Aula aula) {
+		int existe = 0;
+		String query = "SELECT COUNT(*) AS CUENTA FROM tmaula "
+				+ "WHERE NOM_AULA = " + aula.getNomAula() +
+				" AND FK_ID_SEDE = " + aula.getIdSede();
+		
+		Map<String, Object> row = this.jdbcTemplate.queryForList(query).get(0);
+		existe = Integer.parseInt(row.get("CUENTA").toString());
+		
+		if (existe == 0) {
+			String insertQuery = "INSERT INTO tmaula (NOM_AULA, REF_AULA, FK_ID_SEDE) values (?, ?, ?)";
+			int success = this.jdbcTemplate.update(insertQuery, aula.getNomAula(), aula.getRefAula(),
+					 aula.getIdSede());
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+		} else {
+			return "Esta aula ya existe en esta sede";
 		}
-		return null;
 	}
 
 	@Override
-	public Aula editAula(Aula aula, int id) {
-		String query = "UPDATE tmaula SET NOM_AULA = ?, REF_AULA = ? , FK_ID_SEDE = ? WHERE ID_AULA = "+ id;
-		int update = this.jdbcTemplate.update(query, aula.getNomAula(), aula.getRefAula(), aula.getIdSede());
+	public String editAula(Aula aula, int id) {
+		int existe = 0;
+		String query = "SELECT COUNT(*) AS CUENTA FROM tmaula "
+				+ "WHERE NOM_AULA = " + aula.getNomAula() +
+				" AND FK_ID_SEDE = " + aula.getIdSede();
 		
-		if (update == 1) {
-			return aula;
+		Map<String, Object> row = this.jdbcTemplate.queryForList(query).get(0);
+		existe = Integer.parseInt(row.get("CUENTA").toString());
+		
+		if (existe == 0) {
+			String updateQuery = "UPDATE tmaula SET NOM_AULA = ?, REF_AULA = ? , FK_ID_SEDE = ? WHERE ID_AULA = "+ id;
+			int update = this.jdbcTemplate.update(updateQuery, aula.getNomAula(), aula.getRefAula(), aula.getIdSede());
+			
+			if (update == 1) {
+				return "true";
+			}
+			
+			return "false";
+		} else {
+			return "Esta aula ya existe en esta sede";
 		}
-		
-		return null;
 	}
 
 	@Override

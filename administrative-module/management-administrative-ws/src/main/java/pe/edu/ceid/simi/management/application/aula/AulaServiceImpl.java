@@ -17,13 +17,13 @@ public class AulaServiceImpl implements AulaService {
 	private AulaRepository repository;
 	
 	@Override
-	public Aula crearAula(Aula aula) {
+	public String crearAula(Aula aula) {
 		// TODO Auto-generated method stub
 		return this.repository.crearAula(aula);
 	}
 
 	@Override
-	public Aula editAula(Aula aula, int id) {
+	public String editAula(Aula aula, int id) {
 		// TODO Auto-generated method stub
 		return this.repository.editAula(aula, id);
 	}
