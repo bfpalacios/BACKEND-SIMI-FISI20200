@@ -8,6 +8,7 @@ public interface EstudianteUsuarioPersonaService {
 	String crearEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona);
 	String editEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona, String id);
 	List<EstudianteUsuarioPersona> getEstudianteUsuarioPersona();
+	List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonaMatriculadosByProgCurso(int idProgCurso);
 	boolean deleteEstudianteUsuarioPersona(String codEstudiante);
 	EstudianteUsuarioPersona getEstudianteUsuarioPersonaById(String codEstudiante);
 }

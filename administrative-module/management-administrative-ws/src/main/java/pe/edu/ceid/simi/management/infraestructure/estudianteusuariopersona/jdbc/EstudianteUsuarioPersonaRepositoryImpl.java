@@ -127,6 +127,22 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 	}
 
 	@Override
+	public List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonaMatriculadosByProgCurso(int idProgCurso) {
+		String query = "SELECT * FROM tmestudiante AS est\r\n" + 
+				"INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = est.FK_ID_USUARIO\r\n" + 
+				"	INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+				"	INNER JOIN tmrol AS rol ON rol.ID_ROL = usu.FK_ID_ROL\r\n" + 
+				"INNER JOIN tpmatricula AS mat ON mat.FK_COD_ESTUDIANTE_CI = est.COD_ESTUDIANTE_CI\r\n" + 
+				"	INNER JOIN tpprog_curso AS pgc ON pgc.ID_PROGCURSO = mat.FK_ID_PROGCURSO\r\n" + 
+				"		INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
+				"WHERE pgc.ID_PROGCURSO = " + idProgCurso;
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<EstudianteUsuarioPersona> estUsuPer = row.mapRowEstudianteUsuarioPersona(rows);
+		
+		return estUsuPer;
+	}
+
+	@Override
 	public boolean deleteEstudianteUsuarioPersona(String cosEstudiante) {
 		String query = "{CALL SP_EST_USU_PER_DELETE(?)}";
 		int success = this.jdbcTemplate.update(query, cosEstudiante);

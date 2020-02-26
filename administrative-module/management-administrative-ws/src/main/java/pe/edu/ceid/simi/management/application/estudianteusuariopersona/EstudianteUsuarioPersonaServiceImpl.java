@@ -45,4 +45,10 @@ public class EstudianteUsuarioPersonaServiceImpl implements EstudianteUsuarioPer
 		return this.repository.getEstudianteUsuarioPersonaById(codEstudiante);
 	}
 
+	@Override
+	public List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonaMatriculadosByProgCurso(int idProgCurso) {
+		// TODO Auto-generated method stub
+		return this.repository.getEstudianteUsuarioPersonaMatriculadosByProgCurso(idProgCurso);
+	}
+
 }
