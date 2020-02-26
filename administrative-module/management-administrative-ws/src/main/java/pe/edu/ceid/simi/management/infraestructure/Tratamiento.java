@@ -34,5 +34,11 @@ public class Tratamiento {
 		
 		return ret;
 	}
+	
+	public static String tratarDuplicado() {
+		String msj = null;
+		
+		return msj;
+	}
 
 }
