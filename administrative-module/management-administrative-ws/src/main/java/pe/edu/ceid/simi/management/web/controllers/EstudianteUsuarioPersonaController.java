@@ -30,7 +30,7 @@ public class EstudianteUsuarioPersonaController {
 	}
 	
 	@PutMapping(path = {"/actualizarEstudianteUsuarioPersona/{id}"})
-	public EstudianteUsuarioPersona actualizarEstudianteUsuarioPersonaById(@RequestBody EstudianteUsuarioPersona estUsuPer,
+	public String actualizarEstudianteUsuarioPersonaById(@RequestBody EstudianteUsuarioPersona estUsuPer,
 			@PathVariable String id) {
 		//docente.setCodDocente(id);
 		return this.service.editEstudianteUsuarioPersona(estUsuPer, id);
@@ -42,7 +42,7 @@ public class EstudianteUsuarioPersonaController {
 	}
 	
 	@PostMapping(path = {"/crearEstudianteUsuarioPersona"})
-	public EstudianteUsuarioPersona crearEstudianteUsuarioPersona(@RequestBody EstudianteUsuarioPersona docUsuPer) {
+	public String crearEstudianteUsuarioPersona(@RequestBody EstudianteUsuarioPersona docUsuPer) {
 		return this.service.crearEstudianteUsuarioPersona(docUsuPer);
 	}
 	

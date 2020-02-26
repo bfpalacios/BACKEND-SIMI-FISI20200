@@ -20,39 +20,98 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 	private EstudianteUsuarioPersonaRowMapper row;
 
 	@Override
-	public EstudianteUsuarioPersona crearEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona) {
-		String insertQuery = "{CALL SP_EST_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-		int success = this.jdbcTemplate.update(insertQuery, estudianteUsuarioPersona.getNombre(), estudianteUsuarioPersona.getApellidoPat(),
-				estudianteUsuarioPersona.getApellidoMat(), estudianteUsuarioPersona.getDni(), estudianteUsuarioPersona.getGenero(),
-				estudianteUsuarioPersona.getEdad(), estudianteUsuarioPersona.getUniversity(), estudianteUsuarioPersona.getLugarNacDist(),
-				estudianteUsuarioPersona.getLugarNacProv(), estudianteUsuarioPersona.getLugarNacDep(), estudianteUsuarioPersona.getNacionalidad(),
-				estudianteUsuarioPersona.getAddress(), estudianteUsuarioPersona.getPhone(),  estudianteUsuarioPersona.getEmail(),
-				estudianteUsuarioPersona.getContrasenia(), estudianteUsuarioPersona.getEstado(), estudianteUsuarioPersona.getIdTipoEstudiante());
+	public String crearEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona) {
+
+		int existeDni = 0;
+		int existeEmail = 0;
+		int existePhone = 0;
+
+		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + estudianteUsuarioPersona.getDni() + "'";
+		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + estudianteUsuarioPersona.getEmail() + "'";
+		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + estudianteUsuarioPersona.getPhone() + "'";
+
+		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
+		existeDni = Integer.parseInt(row.get("CUENTA").toString());
+
+		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
+		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
+
+		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
+		existePhone = Integer.parseInt(row.get("CUENTA").toString());
 		
-		if (success >= 0) {
-			return estudianteUsuarioPersona;
+		if (existeDni == 0) {
+			if (existeEmail == 0) {
+				if (existePhone == 0) {
+					String insertQuery = "{CALL SP_EST_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+					int success = this.jdbcTemplate.update(insertQuery, estudianteUsuarioPersona.getNombre(), estudianteUsuarioPersona.getApellidoPat(),
+							estudianteUsuarioPersona.getApellidoMat(), estudianteUsuarioPersona.getDni(), estudianteUsuarioPersona.getGenero(),
+							estudianteUsuarioPersona.getEdad(), estudianteUsuarioPersona.getUniversity(), estudianteUsuarioPersona.getLugarNacDist(),
+							estudianteUsuarioPersona.getLugarNacProv(), estudianteUsuarioPersona.getLugarNacDep(), estudianteUsuarioPersona.getNacionalidad(),
+							estudianteUsuarioPersona.getAddress(), estudianteUsuarioPersona.getPhone(),  estudianteUsuarioPersona.getEmail(),
+							estudianteUsuarioPersona.getContrasenia(), estudianteUsuarioPersona.getEstado(), estudianteUsuarioPersona.getIdTipoEstudiante());
+					
+					if (success >= 0) {
+						return "true";
+					}
+					
+					return "false";
+				} else {
+					return "Se debe ingresar otro número de teléfono.";
+				}
+			} else {
+				return "El correo electrónico consignado ya ha sido registrado.";
+			}
+		} else {
+			return "El DNI consignado ya ha sido registrado";
 		}
 		
-		return null;
 	}
 
 	@Override
-	public EstudianteUsuarioPersona editEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona,
-			String id) {
-		String insertQuery = "{CALL SP_EST_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-		int success = this.jdbcTemplate.update(insertQuery, id, estudianteUsuarioPersona.getNombre(),
-				estudianteUsuarioPersona.getApellidoPat(), estudianteUsuarioPersona.getApellidoMat(), estudianteUsuarioPersona.getDni(),
-				estudianteUsuarioPersona.getGenero(), estudianteUsuarioPersona.getEdad(), estudianteUsuarioPersona.getUniversity(),
-				estudianteUsuarioPersona.getLugarNacDist(), estudianteUsuarioPersona.getLugarNacProv(), estudianteUsuarioPersona.getLugarNacDep(),
-				estudianteUsuarioPersona.getNacionalidad(), estudianteUsuarioPersona.getAddress(), estudianteUsuarioPersona.getPhone(), 
-				estudianteUsuarioPersona.getEmail(), estudianteUsuarioPersona.getContrasenia(), estudianteUsuarioPersona.getEstado(),
-				estudianteUsuarioPersona.getIdTipoEstudiante());
+	public String editEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona, String id) {
+		int existeDni = 0;
+		int existeEmail = 0;
+		int existePhone = 0;
 		
-		if (success >= 0) {
-			return estudianteUsuarioPersona;
+		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + estudianteUsuarioPersona.getDni() + "'";
+		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + estudianteUsuarioPersona.getEmail() + "'";
+		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + estudianteUsuarioPersona.getPhone() + "'";
+
+		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
+		existeDni = Integer.parseInt(row.get("CUENTA").toString());
+
+		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
+		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
+
+		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
+		existePhone = Integer.parseInt(row.get("CUENTA").toString());
+		
+		if (existeDni == 0) {
+			if (existeEmail == 0) {
+				if (existePhone == 0) {
+					String insertQuery = "{CALL SP_EST_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+					int success = this.jdbcTemplate.update(insertQuery, id, estudianteUsuarioPersona.getNombre(),
+							estudianteUsuarioPersona.getApellidoPat(), estudianteUsuarioPersona.getApellidoMat(), estudianteUsuarioPersona.getDni(),
+							estudianteUsuarioPersona.getGenero(), estudianteUsuarioPersona.getEdad(), estudianteUsuarioPersona.getUniversity(),
+							estudianteUsuarioPersona.getLugarNacDist(), estudianteUsuarioPersona.getLugarNacProv(), estudianteUsuarioPersona.getLugarNacDep(),
+							estudianteUsuarioPersona.getNacionalidad(), estudianteUsuarioPersona.getAddress(), estudianteUsuarioPersona.getPhone(), 
+							estudianteUsuarioPersona.getEmail(), estudianteUsuarioPersona.getContrasenia(), estudianteUsuarioPersona.getEstado(),
+							estudianteUsuarioPersona.getIdTipoEstudiante());
+					
+					if (success >= 0) {
+						return "true";
+					}
+					
+					return "false";
+				} else {
+					return "Se debe ingresar otro número de teléfono.";
+				}
+			} else {
+				return "El correo electrónico consignado ya ha sido registrado.";
+			}
+		} else {
+			return "El DNI consignado ya ha sido registrado";
 		}
-		
-		return null;
 	}
 
 	@Override
