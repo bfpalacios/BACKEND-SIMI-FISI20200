@@ -111,7 +111,7 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 	}
 
 	@Override
-	public List<ProgCursoDTO> getProgCursosByDocenteCurso(String codDocente, int idCurso) {
+	public List<ProgCursoDTO> getProgCursosByCursoPeriodo(int idCurso, int idPeriodo) {
 		String query = "SELECT * FROM tpprog_curso AS pc\r\n" + 
 				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pc.FK_ID_PROG_DOC_CUR\r\n" + 
 				"		INNER JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 
@@ -127,7 +127,7 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 				"		INNER JOIN tmgrupo_horario AS gh ON gh.ID_GRUPOHORARIO = hgh.FK_ID_GRUPOHORARIO\r\n" + 
 				"        INNER JOIN txhoras_clase AS dc ON dc.ID_HORA = hgh.FK_ID_HORA\r\n" + 
 				"	INNER JOIN txestado_progcurso AS ep ON ep.ID_ESTADO_PROGCURSO = pc.FK_ID_ESTADO_PROGCURSO " +
-				"	WHERE doc.COD_DOCENTE_CI  = '" + codDocente + "' AND cu.ID_CURSO = " + idCurso;
+				"	WHERE cu.ID_CURSO  = '" + idCurso + "' AND pa.ID_PERIODO = " + idPeriodo;
 		
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<ProgCursoDTO> progs = row.mapRowProgCurso(rows);
