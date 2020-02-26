@@ -1,3 +1,4 @@
+
 package pe.edu.ceid.simi.management.infraestructure;
 
 import java.sql.Date;
@@ -33,6 +34,12 @@ public class Tratamiento {
 		} catch (Exception e) {}
 		
 		return ret;
+	}
+	
+	public static String tratarDuplicado() {
+		String msj = null;
+		
+		return msj;
 	}
 
 }

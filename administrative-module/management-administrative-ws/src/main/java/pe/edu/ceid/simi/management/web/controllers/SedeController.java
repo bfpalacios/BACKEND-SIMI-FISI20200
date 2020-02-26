@@ -37,7 +37,7 @@ public class SedeController {
 	}
 
 	@DeleteMapping(path = {"/eliminarSedeById/{id}"})
-	public boolean eliminarSedeById(@PathVariable int id) {	
+	public String eliminarSedeById(@PathVariable int id) {	
 			return this.service.deleteSede(id);
 	}
 	

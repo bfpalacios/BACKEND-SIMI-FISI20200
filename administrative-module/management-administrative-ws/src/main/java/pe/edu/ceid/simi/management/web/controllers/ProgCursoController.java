@@ -24,10 +24,15 @@ public class ProgCursoController {
 
 	@Autowired
 	private ProgCursoService service;
-	
+
 	@GetMapping(path = {"/listProgCursos"})
 	public List<ProgCursoDTO> getProgCursos() {
 		return this.service.getProgCursos();
+	}
+	
+	@GetMapping(path = {"/listProgCursosByDocenteCurso/{idCurso}/{idPeriodo}"})
+	public List<ProgCursoDTO> getProgCursosByDocenteCurso(@PathVariable int idCurso, @PathVariable int idPeriodo) {
+		return this.service.getProgCursosByCursoPeriodo(idCurso, idPeriodo);
 	}
 	
 	@PutMapping(path = {"/actualizarProgCurso/{id}"})

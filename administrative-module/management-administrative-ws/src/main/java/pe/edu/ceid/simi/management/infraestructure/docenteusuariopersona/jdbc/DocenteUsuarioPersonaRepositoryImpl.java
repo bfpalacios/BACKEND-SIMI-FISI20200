@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.docenteusuariopersona.model.DocenteUsuarioPersona;
 import pe.edu.ceid.simi.management.domain.docenteusuariopersona.repository.DocenteUsuarioPersonaRepository;
+import pe.edu.ceid.simi.management.domain.sede.model.Sede;
 
 @Component
 public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPersonaRepository {
@@ -72,13 +73,29 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 	}
 
 	@Override
-	public boolean deleteDocenteUsuarioPersona(String codDocente) {
-		String query = "{CALL SP_DOC_USU_PER_DELETE(?)}";
-		int success = this.jdbcTemplate.update(query, codDocente);
-		if (success >= 0) {
-			return true;
+	public String deleteDocenteUsuarioPersona(String codDocente) {
+		
+		
+		DocenteUsuarioPersona docente = getDocenteUsuarioPersonaById(codDocente);
+		
+		
+		try{ 
+				String query = "{CALL SP_DOC_USU_PER_DELETE(?)}";
+				int success = this.jdbcTemplate.update(query, codDocente);
+				if (success >= 0) {
+					return "true";
+				}
+				return "false";
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.print(e);
+			return "No se puede eliminar al docente "+ docente.getNombre() +" "+ docente.getApellidoPat()+" "+ docente.getApellidoMat()
+			+" porque tiene asignado carga académica" ;
 		}
-		return false;
+		
+		
 	}
 
 	@Override
