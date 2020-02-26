@@ -47,7 +47,8 @@ public class AulaRepositoryImpl implements AulaRepository {
 	@Override
 	public List<AulaDTO> getAulas() {
 		String query = "SELECT * FROM tmaula AS au "
-				+ "INNER JOIN tmsede AS se ON au.FK_ID_SEDE = se.ID_SEDE";
+				+ "INNER JOIN tmsede AS se ON au.FK_ID_SEDE = se.ID_SEDE "
+				+ "ORDER BY au.FK_ID_SEDE,au.NOM_AULA";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<AulaDTO> aulas = row.mapRowAula(rows);
 		return aulas;

@@ -5,15 +5,17 @@ public class Apertura {
 	private String codEstudiante;
 	private int idCurso;
 	private int idHorarioGrupohorario;
+	private String mensaje;
 	
 	public Apertura() {}
 	
-	public Apertura(int idApertura, String codEstudiante, int idCurso, int idHorarioGrupohorario) {
+	public Apertura(int idApertura, String codEstudiante, int idCurso, int idHorarioGrupohorario, String mensaje) {
 		super();
 		this.idApertura = idApertura;
 		this.codEstudiante = codEstudiante;
 		this.idCurso = idCurso;
 		this.idHorarioGrupohorario = idHorarioGrupohorario;
+		this.mensaje = mensaje;
 	}
 
 	public int getIdApertura() {
@@ -47,6 +49,13 @@ public class Apertura {
 	public void setIdHorarioGrupohorario(int idHorarioGrupohorario) {
 		this.idHorarioGrupohorario = idHorarioGrupohorario;
 	}
-	
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
 	
 }
