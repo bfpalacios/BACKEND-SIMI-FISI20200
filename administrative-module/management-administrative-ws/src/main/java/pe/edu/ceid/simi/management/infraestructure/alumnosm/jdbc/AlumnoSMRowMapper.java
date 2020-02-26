@@ -1,4 +1,4 @@
-package pe.edu.ceid.simi.management.infraestructure.alumnosm;
+package pe.edu.ceid.simi.management.infraestructure.alumnosm.jdbc;
 
 import java.util.ArrayList;
 import java.util.List;
