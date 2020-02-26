@@ -33,7 +33,7 @@ public class IdiomaServiceImpl implements IdiomaService{
 	}
 
 	@Override
-	public boolean deleteIdioma(int cidioma) {
+	public String deleteIdioma(int cidioma) {
 		// TODO Auto-generated method stub
 		return this.repository.deleteIdioma(cidioma);
 	}

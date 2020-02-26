@@ -36,7 +36,7 @@ public class DocenteUsuarioPersonaController {
 	}
 	
 	@DeleteMapping(path = {"/eliminarDocenteUsuarioPersonaById/{id}"})
-	public boolean eliminarDocenteUsuarioPersonaById(@PathVariable String id) {	
+	public String eliminarDocenteUsuarioPersonaById(@PathVariable String id) {	
 			return this.service.deleteDocenteUsuarioPersona(id);
 	}
 	

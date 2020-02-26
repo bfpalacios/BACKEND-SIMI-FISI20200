@@ -1,4 +1,5 @@
 package pe.edu.ceid.simi.management.infraestructure.idioma.jdbc;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,15 +54,26 @@ public class IdiomaRepositoryImpl implements IdiomaRepository {
 	}
 
 	@Override
-	public boolean deleteIdioma(int cidioma) {
-		String query = "DELETE FROM tmidioma WHERE ID_IDIOMA = ?";
-		int success = this.jdbcTemplate.update(query, cidioma);
+	public String deleteIdioma(int cidioma)   {
 		
-		if (success >= 0) {
-			return true;
+		Idioma idioma = getIdiomaById(cidioma);
+		try{
+			
+			String query = "DELETE FROM tmidioma WHERE ID_IDIOMA = ?";
+			int success = this.jdbcTemplate.update(query, cidioma);
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.print(e);
+			return "No se puede eliminar el idioma "+ idioma.getNomIdioma() +" porque esta siendo utilizado" ;
 		}
 		
-		return false;
 	}
 
 	@Override

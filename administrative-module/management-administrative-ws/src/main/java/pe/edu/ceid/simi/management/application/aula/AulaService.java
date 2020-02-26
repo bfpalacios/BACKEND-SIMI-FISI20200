@@ -11,5 +11,5 @@ public interface AulaService {
 	List<AulaDTO> getAulas();
 	List<AulaDTO> getAulasBySede(int idSede);
 	AulaDTO getAulaById(int id);
-	boolean deleteAula(int id);
+	String deleteAula(int id);
 }

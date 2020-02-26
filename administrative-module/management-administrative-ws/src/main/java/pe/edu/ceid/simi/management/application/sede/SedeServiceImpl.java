@@ -34,7 +34,7 @@ public class SedeServiceImpl implements SedeService {
 	}
 
 	@Override
-	public boolean deleteSede(int csede) {
+	public String deleteSede(int csede) {
 		// TODO Auto-generated method stub
 		return this.repository.deleteSede(csede);
 	}

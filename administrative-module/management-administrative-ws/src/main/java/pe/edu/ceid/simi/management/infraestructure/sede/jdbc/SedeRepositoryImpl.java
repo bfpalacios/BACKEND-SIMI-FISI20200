@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import pe.edu.ceid.simi.management.domain.idioma.model.Idioma;
 import pe.edu.ceid.simi.management.domain.sede.model.Sede;
 import pe.edu.ceid.simi.management.domain.sede.repository.SedeRepository;
 
@@ -46,6 +47,8 @@ public class SedeRepositoryImpl implements SedeRepository {
 
 	@Override
 	public List<Sede> getSedes() {
+		
+		
 		String query = "SELECT * FROM tmsede";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<Sede> sede = row.mapRowSede(rows);
@@ -53,15 +56,28 @@ public class SedeRepositoryImpl implements SedeRepository {
 	}
 
 	@Override
-	public boolean deleteSede(int csede) {
-		String query = "DELETE FROM tmsede WHERE ID_SEDE = ?";
-		int success = this.jdbcTemplate.update(query, csede);
+	public String deleteSede(int csede) {
 		
-		if (success >= 0) {
-			return true;
+		Sede sede = getSedeById(csede);
+		
+		
+		try{ String query = "DELETE FROM tmsede WHERE ID_SEDE = ?";
+			int success = this.jdbcTemplate.update(query, csede);
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.print(e);
+			return "No se puede eliminar la Sede "+ sede.getNomSede() +" porque esta siendo utilizada" ;
 		}
-		
-		return false;
+
+	
 	}
 
 	@Override

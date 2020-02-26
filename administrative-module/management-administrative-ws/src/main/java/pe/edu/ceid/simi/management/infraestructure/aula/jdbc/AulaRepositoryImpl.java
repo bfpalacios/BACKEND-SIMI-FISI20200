@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import pe.edu.ceid.simi.management.domain.aula.model.Aula;
 import pe.edu.ceid.simi.management.domain.aula.model.AulaDTO;
 import pe.edu.ceid.simi.management.domain.aula.repository.AulaRepository;
+import pe.edu.ceid.simi.management.domain.sede.model.Sede;
 
 
 @Component
@@ -76,14 +77,27 @@ public class AulaRepositoryImpl implements AulaRepository {
 	}
 
 	@Override
-	public boolean deleteAula(int id) {
-		String query = "DELETE FROM tmaula WHERE ID_AULA = ?";
-
-		int success = this.jdbcTemplate.update(query, id);
-		if (success >= 0) {
-			return true;
+	public String deleteAula(int id) {
+		
+		
+			AulaDTO aula = getAulaById(id);
+		
+		
+		try{ 
+			String query = "DELETE FROM tmaula WHERE ID_AULA = ?";
+			int success = this.jdbcTemplate.update(query, id);
+			if (success >= 0) {
+				return "true";
+			}
+			return "false";
+				
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.print(e);
+			return "No se puede eliminar el aula "+ aula.getNomAula() +" de la sede "+ aula.getNomSede()+" porque esta siendo utilizado" ;
 		}
-		return false;
+		
+		
 	}
 
 }

@@ -9,6 +9,6 @@ public interface SedeService {
 	Sede crearSede(Sede sede);
 	Sede editSede(Sede sede, int id);
 	List<Sede> getSedes();
-	boolean deleteSede(int csede);
+	String deleteSede(int csede);
 	Sede getSedeById(int id);
 }
