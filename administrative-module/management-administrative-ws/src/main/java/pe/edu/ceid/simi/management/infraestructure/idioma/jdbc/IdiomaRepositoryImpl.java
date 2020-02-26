@@ -34,7 +34,7 @@ public class IdiomaRepositoryImpl implements IdiomaRepository {
 		} catch (DuplicateKeyException ex) {	// Como mi ex :c
 			ex.printStackTrace();
 			System.out.print(ex);
-			return "El idioma "+ idioma.getNomIdioma() + " ya existe en el sistema" ;
+			return "El idioma "+ idioma.getNomIdioma() + " ya existe en el sistema." ;
 		}
 	}
 
@@ -52,7 +52,7 @@ public class IdiomaRepositoryImpl implements IdiomaRepository {
 		} catch (DuplicateKeyException ex) {	// Como mi ex :c
 			ex.printStackTrace();
 			System.out.print(ex);
-			return "El idioma "+ idioma.getNomIdioma() + " ya existe en el sistema" ;
+			return "El idioma "+ idioma.getNomIdioma() + " ya existe en el sistema." ;
 		}
 	}
 

@@ -6,8 +6,8 @@ import pe.edu.ceid.simi.management.domain.sede.model.Sede;
 
 
 public interface SedeService {
-	Sede crearSede(Sede sede);
-	Sede editSede(Sede sede, int id);
+	String crearSede(Sede sede);
+	String editSede(Sede sede, int id);
 	List<Sede> getSedes();
 	String deleteSede(int csede);
 	Sede getSedeById(int id);

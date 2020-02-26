@@ -30,7 +30,7 @@ public class SedeController {
 	}
 	
 	@PutMapping(path = {"/actualizarSede/{id}"})
-	public Sede actualizarSedeById(@RequestBody Sede sede, @PathVariable int id) {
+	public String actualizarSedeById(@RequestBody Sede sede, @PathVariable int id) {
 		
 		sede.setIdSede(id);
 		return this.service.editSede(sede, id);
@@ -42,7 +42,7 @@ public class SedeController {
 	}
 	
 	@PostMapping(path = {"/crearSede"})
-	public Sede crearSede(@RequestBody Sede sede) {
+	public String crearSede(@RequestBody Sede sede) {
 		return this.service.crearSede(sede);
 	}
 	
