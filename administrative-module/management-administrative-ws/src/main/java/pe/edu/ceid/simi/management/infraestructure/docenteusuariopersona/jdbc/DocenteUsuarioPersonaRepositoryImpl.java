@@ -127,27 +127,24 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 
 	@Override
 	public String deleteDocenteUsuarioPersona(String codDocente) {
-		
-		
 		DocenteUsuarioPersona docente = getDocenteUsuarioPersonaById(codDocente);
-		
-		
-		try{ 
-				String query = "{CALL SP_DOC_USU_PER_DELETE(?)}";
-				int success = this.jdbcTemplate.update(query, codDocente);
-				if (success >= 0) {
-					return "true";
-				}
-				return "false";
+
+		try {
+			String query = "{CALL SP_DOC_USU_PER_DELETE(?)}";
+			int success = this.jdbcTemplate.update(query, codDocente);
 			
+			if (success >= 0) {
+				return "true";
+			}
 			
-		}catch (Exception e) {
+			return "false";
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.print(e);
 			return "No se puede eliminar al docente "+ docente.getNombre() +" "+ docente.getApellidoPat()+" "+ docente.getApellidoMat()
 			+" porque tiene asignado carga académica" ;
 		}
-		
 		
 	}
 

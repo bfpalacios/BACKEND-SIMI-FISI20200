@@ -17,7 +17,6 @@ import pe.edu.ceid.simi.management.application.aula.AulaService;
 import pe.edu.ceid.simi.management.domain.aula.model.Aula;
 import pe.edu.ceid.simi.management.domain.aula.model.AulaDTO;
 
-
 @CrossOrigin(origins = "localhost:4200")
 @RestController
 @RequestMapping({"/api/v1/programacionCurso/aula"})

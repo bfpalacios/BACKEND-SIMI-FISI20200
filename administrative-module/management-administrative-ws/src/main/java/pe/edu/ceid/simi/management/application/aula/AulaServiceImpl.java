@@ -9,7 +9,6 @@ import pe.edu.ceid.simi.management.domain.aula.model.Aula;
 import pe.edu.ceid.simi.management.domain.aula.model.AulaDTO;
 import pe.edu.ceid.simi.management.domain.aula.repository.AulaRepository;
 
-
 @Service
 public class AulaServiceImpl implements AulaService {
 
