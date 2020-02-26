@@ -15,13 +15,13 @@ public class DocenteUsuarioPersonaServiceImpl implements DocenteUsuarioPersonaSe
 	private DocenteUsuarioPersonaRepository repository;
 	
 	@Override
-	public DocenteUsuarioPersona crearDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona) {
+	public String crearDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona) {
 		// TODO Auto-generated method stub
 		return this.repository.crearDocenteUsuarioPersona(docenteUsuarioPersona);
 	}
 
 	@Override
-	public DocenteUsuarioPersona editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id) {
+	public String editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id) {
 		// TODO Auto-generated method stub
 		return this.repository.editDocenteUsuarioPersona(docenteUsuarioPersona, id);
 	}
