@@ -13,5 +13,5 @@ public interface CursoService {
 	List<CursoDTO> getCursosByIdioma(int idIdioma);
 	List<CursoDTO> getCursosByDocente(int idDocente);
 	CursoDTO getCursoById(int id);
-	boolean deleteCurso(int id);
+	String deleteCurso(int id);
 }

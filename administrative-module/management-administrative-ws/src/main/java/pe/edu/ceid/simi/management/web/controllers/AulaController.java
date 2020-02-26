@@ -37,7 +37,7 @@ public class AulaController {
 	}
 
 	@DeleteMapping(path = {"/eliminarAulaById/{id}"})
-	public boolean eliminarAulaById( @PathVariable int id) {	
+	public String eliminarAulaById( @PathVariable int id) {	
 		return this.service.deleteAula(id);
 	}
 	

@@ -7,6 +7,6 @@ public interface IdiomaRepository {
 	Idioma crearIdioma(Idioma idioma);
 	Idioma editIdioma(Idioma idioma, int id);
 	List<Idioma> getIdiomas();
-	boolean deleteIdioma(int cidioma);
+	String deleteIdioma(int cidioma);
 	Idioma getIdiomaById(int id);
 }

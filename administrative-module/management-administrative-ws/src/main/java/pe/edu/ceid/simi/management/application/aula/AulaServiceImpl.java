@@ -41,7 +41,7 @@ public class AulaServiceImpl implements AulaService {
 	}
 
 	@Override
-	public boolean deleteAula(int id) {
+	public String deleteAula(int id) {
 		// TODO Auto-generated method stub
 		return this.repository.deleteAula(id);
 	}

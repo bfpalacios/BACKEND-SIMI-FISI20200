@@ -28,7 +28,7 @@ public class CursoServiceImpl implements CursoService{
 	}
 
 	@Override
-	public boolean deleteCurso(int id) {
+	public String deleteCurso(int id) {
 		// TODO Auto-generated method stub
 		return this.repository.deleteCurso(id);
 	}

@@ -38,7 +38,7 @@ public class IdiomaController {
 	}
 
 	@DeleteMapping(path = {"/eliminarIdiomaById/{id}"})
-	public boolean eliminarIdiomaById(@PathVariable int id) {	
+	public String eliminarIdiomaById(@PathVariable int id) {	
 		return this.service.deleteIdioma(id);
 	}
 	

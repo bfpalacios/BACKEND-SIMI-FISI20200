@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import pe.edu.ceid.simi.management.domain.curso.model.Curso;
 import pe.edu.ceid.simi.management.domain.curso.model.CursoDTO;
 import pe.edu.ceid.simi.management.domain.curso.repository.CursoRepository;
+import pe.edu.ceid.simi.management.domain.idioma.model.Idioma;
 
 @Component
 public class CursoRepositoryImpl implements CursoRepository {
@@ -46,15 +47,25 @@ public class CursoRepositoryImpl implements CursoRepository {
 	}
 	
 	@Override
-	public boolean deleteCurso(int id) {
-		String query = "DELETE FROM tmcurso WHERE ID_CURSO = ?";
-		int success = this.jdbcTemplate.update(query, id);
+	public String deleteCurso(int id) {
+		CursoDTO  curso= getCursoById(id);	
 		
-		if (success >= 0) {
-			return true;
+		try {
+			String query = "DELETE FROM tmcurso WHERE ID_CURSO = ?";
+			int success = this.jdbcTemplate.update(query, id);
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.print(e);
+			return "No se puede eliminar el curso "+ curso.getNomIdioma() +" "+ curso.getNomNivel()+" " +curso.getCiclo()+" porque esta siendo utilizado" ;
+	
 		}
-		
-		return false;
 	}
 	
 	@Override
