@@ -8,6 +8,7 @@ public interface DocenteUsuarioPersonaService {
 	String crearDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona);
 	String editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id);
 	List<DocenteUsuarioPersona> getDocenteUsuarioPersona();
+	List<DocenteUsuarioPersona> getDocentesByCursoPeriodo(int idCurso, int idPeriodo);
 	String deleteDocenteUsuarioPersona(String codDocente);
 	DocenteUsuarioPersona getDocenteUsuarioPersonaById(String id);
 }
