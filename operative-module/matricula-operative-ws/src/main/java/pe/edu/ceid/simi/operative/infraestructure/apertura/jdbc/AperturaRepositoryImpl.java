@@ -63,26 +63,20 @@ public class AperturaRepositoryImpl implements AperturaRepository {
 	@Override
 	public Apertura crearApertura(Apertura apertura) {
 
+		try {
 		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_SOLICITUD_INSERT");
 		
 		inParams.put("P_ID_USUARIO", apertura.getCodEstudiante());
 		inParams.put("P_ID_CURSO", apertura.getIdCurso());
 		inParams.put("P_ID_GRUPO", apertura.getIdHorarioGrupohorario());
-
-//		SqlParameterSource in = new MapSqlParameterSource().addValue("P_ID_USUARIO", apertura.getCodEstudiante())
-//				.addValue("P_ID_CURSO", apertura.getIdCurso())
-//				.addValue("P_ID_GRUPO", apertura.getIdHorarioGrupohorario());
-
+		
 		Map<String, Object> out = simpleJdbcCall.execute(inParams);
-		
-		Apertura solicitud = new Apertura();
-		
-		solicitud.setCodEstudiante(apertura.getCodEstudiante());
-		solicitud.setIdCurso(apertura.getIdCurso());
-		solicitud.setIdHorarioGrupohorario(apertura.getIdHorarioGrupohorario());
-		solicitud.setMensaje((String) out.get("P_MENSAJE"));
-		System.out.println((String)out.get("P_MENSAJE"));
-		return solicitud;
+		return apertura;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.print(e);
+			return apertura;
+		}
 
 	}
 
