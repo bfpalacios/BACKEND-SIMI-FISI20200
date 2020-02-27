@@ -1,8 +1,8 @@
 package pe.edu.ceid.simi.operative.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,9 +16,8 @@ public class AutorizacionController {
 	@Autowired
 	private AutenticacionService service;
 	
-	@GetMapping
-	public Autorizacion accederSistema() {
-		Autorizacion auth = new Autorizacion("nataly@unmsm.edu.pe", 1, 1, 1);
+	@PostMapping
+	public Autorizacion accederSistema(@RequestBody Autorizacion auth) {
 		return this.service.accederSistema(auth.getEmail(), auth.getCodigo(), auth.getTipo());
 	}
 }
