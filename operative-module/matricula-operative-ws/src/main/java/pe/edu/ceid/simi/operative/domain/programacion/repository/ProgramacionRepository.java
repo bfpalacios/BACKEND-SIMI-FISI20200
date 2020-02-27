@@ -7,4 +7,5 @@ import pe.edu.ceid.simi.operative.domain.programacion.model.ProgramacionDTO;
 
 public interface ProgramacionRepository {
 	List<ProgramacionDTO> getProgramacion();
+	List<ProgramacionDTO> getProgramacionbyID(int id);
 }

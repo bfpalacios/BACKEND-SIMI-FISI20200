@@ -1,6 +1,7 @@
 package pe.edu.ceid.simi.operative.infraestructure.programacion.jdbc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,19 @@ public class ProgramacionRepositoryImpl implements ProgramacionRepository{
 		
 	
 		Map<String, Object> result = jdbcCall.execute();
+		 List<ProgramacionDTO> programacion = new ArrayList<>();
+		 List<LinkedCaseInsensitiveMap> r = (List<LinkedCaseInsensitiveMap>) result.values().toArray()[0];
+		 r.forEach((v) -> programacion.add(row.mapRowProgramacion(v)));
+		return programacion;
+	}
+
+	@Override
+	public List<ProgramacionDTO> getProgramacionbyID(int id) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("USP_VWMATRICULA_LIST");
+		Map<String, Object> params = new HashMap<>();
+        params.put("P_ID_USUARIO", id);
+		
+		Map<String, Object> result = jdbcCall.execute(params);
 		 List<ProgramacionDTO> programacion = new ArrayList<>();
 		 List<LinkedCaseInsensitiveMap> r = (List<LinkedCaseInsensitiveMap>) result.values().toArray()[0];
 		 r.forEach((v) -> programacion.add(row.mapRowProgramacion(v)));
