@@ -14,6 +14,8 @@ public class Autorizacion {
 		this.tipo = tipo;
 	}
 	
+	public Autorizacion() {}
+	
 	public String getEmail() {
 		return email;
 	}

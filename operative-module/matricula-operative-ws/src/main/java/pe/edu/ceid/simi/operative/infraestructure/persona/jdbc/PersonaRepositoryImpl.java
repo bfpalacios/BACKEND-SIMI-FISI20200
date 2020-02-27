@@ -39,4 +39,15 @@ public class PersonaRepositoryImpl implements PersonaRepository {
 		
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public PersonaUsuario obtenerInformacionAcademica(int codUsuario) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("USP_INFORMACION_PERSONAL");
+		Map<String, Object> params = new HashMap<>();
+		params.put("P_ID_USUARIO", codUsuario);
+		Map<String, Object> result = jdbcCall.execute(params);
+		List<LinkedCaseInsensitiveMap> r = (List<LinkedCaseInsensitiveMap>) result.values().toArray()[0];
+		return row.mapRowInfoAcademica(r.get(0));
+	}
+
 }
