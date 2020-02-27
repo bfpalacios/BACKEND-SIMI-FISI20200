@@ -49,7 +49,7 @@ public class EstudianteUsuarioPersonaRowMapper implements RowMapper {
 			String email =row.get("EMAIL").toString();
 			String contrasenia =row.get("PASSWORD").toString();
 			int idRol = Integer.parseInt(row.get("FK_ID_ROL").toString());
-			String nomRol =row.get("NOM_ROL").toString();
+			String nomRol = row.get("NOM_ROL").toString();
 			int estado = Integer.parseInt(row.get("ESTADO").toString());
 			Date fechaAltaU = Tratamiento.tratarDate("FEHCA_ALTA_USU", row);
 			Date fechaBajaU = Tratamiento.tratarDate("FEHCA_BAJA_USU", row);

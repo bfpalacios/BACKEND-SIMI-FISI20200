@@ -31,7 +31,7 @@ public class IdiomaController {
 	}
 	
 	@PutMapping(path = {"/actualizarIdioma/{id}"})
-	public Idioma actualizarIdiomaById(@RequestBody Idioma idioma, @PathVariable int id) {
+	public String actualizarIdiomaById(@RequestBody Idioma idioma, @PathVariable int id) {
 		
 		idioma.setIdIdioma(id);
 		return this.service.editIdioma(idioma, id);
@@ -43,7 +43,7 @@ public class IdiomaController {
 	}
 	
 	@PostMapping(path = {"/crearIdioma"})
-	public Idioma crearIdioma(@RequestBody Idioma idioma) {
+	public String crearIdioma(@RequestBody Idioma idioma) {
 		return this.service.crearIdioma(idioma);
 	}
 	

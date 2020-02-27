@@ -7,8 +7,8 @@ import pe.edu.ceid.simi.management.domain.curso.model.CursoDTO;
 
 
 public interface CursoService {
-	Curso crearCurso(Curso curso);
-	Curso editCurso(Curso curso, int id);
+	String crearCurso(Curso curso);
+	String editCurso(Curso curso, int id);
 	List<CursoDTO> getCursos();
 	List<CursoDTO> getCursosByIdioma(int idIdioma);
 	List<CursoDTO> getCursosByDocente(int idDocente);

@@ -17,7 +17,6 @@ import pe.edu.ceid.simi.management.application.aula.AulaService;
 import pe.edu.ceid.simi.management.domain.aula.model.Aula;
 import pe.edu.ceid.simi.management.domain.aula.model.AulaDTO;
 
-
 @CrossOrigin(origins = "localhost:4200")
 @RestController
 @RequestMapping({"/api/v1/programacionCurso/aula"})
@@ -31,7 +30,7 @@ public class AulaController {
 	}
 	
 	@PutMapping(path = {"/actualizarAula/{id}"})
-	public Aula actualizarAula(@RequestBody Aula aula, @PathVariable int id) {
+	public String actualizarAula(@RequestBody Aula aula, @PathVariable int id) {
 		aula.setIdAula(id);
 		return this.service.editAula(aula, id);
 	}
@@ -42,7 +41,7 @@ public class AulaController {
 	}
 	
 	@PostMapping(path = {"/crearAula"})
-	public Aula crearAula(@RequestBody Aula aula) {
+	public String crearAula(@RequestBody Aula aula) {
 		return this.service.crearAula(aula);
 	}
 	

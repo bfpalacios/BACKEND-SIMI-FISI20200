@@ -1,4 +1,5 @@
 package pe.edu.ceid.simi.management.web.controllers;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +31,7 @@ public class CursoController {
 	}
 	
 	@PutMapping(path = {"/actualizarCurso/{id}"})
-	public Curso actualizarCurso(@RequestBody Curso curso, @PathVariable int id) {
+	public String actualizarCurso(@RequestBody Curso curso, @PathVariable int id) {
 		
 		curso.setIdCurso(id);
 		return this.service.editCurso(curso, id);
@@ -42,7 +43,7 @@ public class CursoController {
 	}
 	
 	@PostMapping(path = {"/crearCurso"})
-	public Curso crearCurso(@RequestBody Curso curso) {
+	public String crearCurso(@RequestBody Curso curso) {
 		return this.service.crearCurso(curso);
 	}
 	

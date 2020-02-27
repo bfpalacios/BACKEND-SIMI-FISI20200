@@ -23,16 +23,20 @@ public class EstudianteUsuarioPersonaController {
 
 	@Autowired
 	private EstudianteUsuarioPersonaService service;
-	
+
 	@GetMapping(path = {"/listEstudianteUsuarioPersonas"})
 	public List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonas() {
 		return this.service.getEstudianteUsuarioPersona();
 	}
+
+	@GetMapping(path = {"/listEstudiantesMatriculadosByProgCurso/{id}"})
+	public List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonasMatriculadosByProgCurso(@PathVariable int id) {
+		return this.service.getEstudianteUsuarioPersonaMatriculadosByProgCurso(id);
+	}
 	
 	@PutMapping(path = {"/actualizarEstudianteUsuarioPersona/{id}"})
-	public EstudianteUsuarioPersona actualizarEstudianteUsuarioPersonaById(@RequestBody EstudianteUsuarioPersona estUsuPer,
+	public String actualizarEstudianteUsuarioPersonaById(@RequestBody EstudianteUsuarioPersona estUsuPer,
 			@PathVariable String id) {
-		//docente.setCodDocente(id);
 		return this.service.editEstudianteUsuarioPersona(estUsuPer, id);
 	}
 	
@@ -42,7 +46,7 @@ public class EstudianteUsuarioPersonaController {
 	}
 	
 	@PostMapping(path = {"/crearEstudianteUsuarioPersona"})
-	public EstudianteUsuarioPersona crearEstudianteUsuarioPersona(@RequestBody EstudianteUsuarioPersona docUsuPer) {
+	public String crearEstudianteUsuarioPersona(@RequestBody EstudianteUsuarioPersona docUsuPer) {
 		return this.service.crearEstudianteUsuarioPersona(docUsuPer);
 	}
 	

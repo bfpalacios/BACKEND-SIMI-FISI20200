@@ -15,13 +15,13 @@ public class IdiomaServiceImpl implements IdiomaService{
 	private IdiomaRepository repository;
 	
 	@Override
-	public Idioma crearIdioma(Idioma idioma) {
+	public String crearIdioma(Idioma idioma) {
 		// TODO Auto-generated method stub
 		return this.repository.crearIdioma(idioma);
 	}
 
 	@Override
-	public Idioma editIdioma(Idioma idioma, int id) {
+	public String editIdioma(Idioma idioma, int id) {
 		// TODO Auto-generated method stub
 		return this.repository.editIdioma(idioma, id);
 	}
