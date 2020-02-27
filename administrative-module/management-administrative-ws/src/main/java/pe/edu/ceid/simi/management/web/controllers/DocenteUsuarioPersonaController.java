@@ -30,7 +30,7 @@ public class DocenteUsuarioPersonaController {
 	}
 	
 	@PutMapping(path = {"/actualizarDocenteUsuarioPersona/{id}"})
-	public DocenteUsuarioPersona actualizarDocenteUsuarioPersonaById(@RequestBody DocenteUsuarioPersona docUsuPer, @PathVariable String id) {
+	public String actualizarDocenteUsuarioPersonaById(@RequestBody DocenteUsuarioPersona docUsuPer, @PathVariable String id) {
 		//docente.setCodDocente(id);
 		return this.service.editDocenteUsuarioPersona(docUsuPer, id);
 	}
@@ -41,7 +41,7 @@ public class DocenteUsuarioPersonaController {
 	}
 	
 	@PostMapping(path = {"/crearDocenteUsuarioPersona"})
-	public DocenteUsuarioPersona crearDocenteUsuarioPersona(@RequestBody DocenteUsuarioPersona docUsuPer) {
+	public String crearDocenteUsuarioPersona(@RequestBody DocenteUsuarioPersona docUsuPer) {
 		return this.service.crearDocenteUsuarioPersona(docUsuPer);
 	}
 	

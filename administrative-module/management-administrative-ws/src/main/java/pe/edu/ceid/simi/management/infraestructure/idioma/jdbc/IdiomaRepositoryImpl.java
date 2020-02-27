@@ -1,14 +1,14 @@
 package pe.edu.ceid.simi.management.infraestructure.idioma.jdbc;
-import java.sql.SQLException;
+
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.idioma.model.Idioma;
 import pe.edu.ceid.simi.management.domain.idioma.repository.IdiomaRepository;
-
 
 @Component
 public class IdiomaRepositoryImpl implements IdiomaRepository {
@@ -20,27 +20,40 @@ public class IdiomaRepositoryImpl implements IdiomaRepository {
 	private IdiomaRowMapper row;
 
 	@Override
-	public Idioma crearIdioma(Idioma idioma) {
-		String insertQuery = "INSERT INTO tmidioma (DESC_IDIOMA, NOM_IDIOMA) VALUES (?, ?)";
-		int success = this.jdbcTemplate.update(insertQuery, idioma.getDescIdioma(), idioma.getNomIdioma());
-		
-		if (success >= 0) {
-			return idioma;
+	public String crearIdioma(Idioma idioma) {
+		try {
+			
+			String insertQuery = "INSERT INTO tmidioma (DESC_IDIOMA, NOM_IDIOMA) VALUES (?, ?)";
+			int success = this.jdbcTemplate.update(insertQuery, idioma.getDescIdioma(), idioma.getNomIdioma());
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {	// Como mi ex :c
+			ex.printStackTrace();
+			System.out.print(ex);
+			return "El idioma "+ idioma.getNomIdioma() + " ya existe en el sistema." ;
 		}
-		
-		return null;
 	}
 
 	@Override
-	public Idioma editIdioma(Idioma idioma, int id) {
-		String query = "UPDATE tmidioma SET DESC_IDIOMA = ?, NOM_IDIOMA = ? WHERE ID_IDIOMA = " + id;
-		int update = this.jdbcTemplate.update(query, idioma.getDescIdioma(), idioma.getNomIdioma());
-		
-		if (update == 1) {
-			return idioma;
+	public String editIdioma(Idioma idioma, int id) {
+		try {
+			String query = "UPDATE tmidioma SET DESC_IDIOMA = ?, NOM_IDIOMA = ? WHERE ID_IDIOMA = " + id;
+			int update = this.jdbcTemplate.update(query, idioma.getDescIdioma(), idioma.getNomIdioma());
+			
+			if (update == 1) {
+				return "true";
+			}
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {	// Como mi ex :c
+			ex.printStackTrace();
+			System.out.print(ex);
+			return "El idioma "+ idioma.getNomIdioma() + " ya existe en el sistema." ;
 		}
-		
-		return null;
 	}
 
 	@Override
@@ -55,10 +68,9 @@ public class IdiomaRepositoryImpl implements IdiomaRepository {
 
 	@Override
 	public String deleteIdioma(int cidioma)   {
-		
 		Idioma idioma = getIdiomaById(cidioma);
+		
 		try{
-			
 			String query = "DELETE FROM tmidioma WHERE ID_IDIOMA = ?";
 			int success = this.jdbcTemplate.update(query, cidioma);
 			
@@ -67,11 +79,10 @@ public class IdiomaRepositoryImpl implements IdiomaRepository {
 			}
 			
 			return "false";
-			
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.print(e);
-			return "No se puede eliminar el idioma "+ idioma.getNomIdioma() +" porque esta siendo utilizado" ;
+			return "No se puede eliminar el idioma "+ idioma.getNomIdioma() +" porque esta siendo utilizado";
 		}
 		
 	}

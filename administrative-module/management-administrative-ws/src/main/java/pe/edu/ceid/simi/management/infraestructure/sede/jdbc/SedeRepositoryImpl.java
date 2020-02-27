@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import pe.edu.ceid.simi.management.domain.idioma.model.Idioma;
 import pe.edu.ceid.simi.management.domain.sede.model.Sede;
 import pe.edu.ceid.simi.management.domain.sede.repository.SedeRepository;
-
 
 @Component
 public class SedeRepositoryImpl implements SedeRepository {
@@ -22,27 +21,39 @@ public class SedeRepositoryImpl implements SedeRepository {
 	private SedeRowMapper row;
 
 	@Override
-	public Sede crearSede(Sede sede) {
-		String insertQuery = "INSERT INTO tmsede (NOM_SEDE, DESC_SEDE, DIR_SEDE) values (?, ?, ?)";
-		
-		int success = this.jdbcTemplate.update(insertQuery, sede.getNomSede(), sede.getDescSede(), sede.getDirSede());
-		if (success >= 0) {
-			return sede;
+	public String crearSede(Sede sede) {
+		try {
+			String insertQuery = "INSERT INTO tmsede (NOM_SEDE, DESC_SEDE, DIR_SEDE) values (?, ?, ?)";
+			int success = this.jdbcTemplate.update(insertQuery, sede.getNomSede(), sede.getDescSede(), sede.getDirSede());
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {	// Como mi ex :c
+			ex.printStackTrace();
+			System.out.print(ex);
+			return "La sede "+ sede.getNomSede() + " ya existe en el sistema." ;
 		}
-		
-		return null;
 	}
 
 	@Override
-	public Sede editSede(Sede sede, int id) {
-		String query = "UPDATE tmsede SET NOM_SEDE = ?, DESC_SEDE = ?, DIR_SEDE = ? WHERE ID_SEDE = "+ id;
-		int update = this.jdbcTemplate.update(query, sede.getNomSede(), sede.getDescSede(), sede.getDirSede());
-		
-		if (update == 1) {
-			return sede;
+	public String editSede(Sede sede, int id) {
+		try {
+			String query = "UPDATE tmsede SET NOM_SEDE = ?, DESC_SEDE = ?, DIR_SEDE = ? WHERE ID_SEDE = "+ id;
+			int update = this.jdbcTemplate.update(query, sede.getNomSede(), sede.getDescSede(), sede.getDirSede());
+			
+			if (update == 1) {
+				return "true";
+			}
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {	// Como mi ex :c
+			ex.printStackTrace();
+			System.out.print(ex);
+			return "La sede "+ sede.getNomSede() + " ya existe en el sistema." ;
 		}
-		
-		return null;
 	}
 
 	@Override

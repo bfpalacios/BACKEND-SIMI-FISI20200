@@ -16,13 +16,13 @@ public class SedeServiceImpl implements SedeService {
 	private SedeRepository repository;
 	
 	@Override
-	public Sede crearSede(Sede sede) {
+	public String crearSede(Sede sede) {
 		// TODO Auto-generated method stub
 		return this.repository.crearSede(sede);
 	}
 
 	@Override
-	public Sede editSede(Sede sede, int id) {
+	public String editSede(Sede sede, int id) {
 		// TODO Auto-generated method stub
 		return this.repository.editSede(sede, id);
 	}

@@ -16,13 +16,13 @@ public class CursoServiceImpl implements CursoService{
 	private CursoRepository repository;
 	
 	@Override
-	public Curso crearCurso(Curso curso) {
+	public String crearCurso(Curso curso) {
 		// TODO Auto-generated method stub
 		return this.repository.crearCurso(curso);
 	}
 
 	@Override
-	public Curso editCurso(Curso curso, int id) {
+	public String editCurso(Curso curso, int id) {
 		// TODO Auto-generated method stub
 		return this.repository.editCurso(curso, id);
 	}

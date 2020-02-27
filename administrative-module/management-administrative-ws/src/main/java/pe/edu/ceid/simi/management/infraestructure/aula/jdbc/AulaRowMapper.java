@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import pe.edu.ceid.simi.management.domain.aula.model.AulaDTO;
 import pe.edu.ceid.simi.management.infraestructure.Tratamiento;
 
-
 @Component
 public class AulaRowMapper implements RowMapper {
 

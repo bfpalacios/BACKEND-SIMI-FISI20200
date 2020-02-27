@@ -1,4 +1,5 @@
 package pe.edu.ceid.simi.management.infraestructure.curso.jdbc;
+
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Component;
 import pe.edu.ceid.simi.management.domain.curso.model.Curso;
 import pe.edu.ceid.simi.management.domain.curso.model.CursoDTO;
 import pe.edu.ceid.simi.management.domain.curso.repository.CursoRepository;
-import pe.edu.ceid.simi.management.domain.idioma.model.Idioma;
 
 @Component
 public class CursoRepositoryImpl implements CursoRepository {
@@ -20,30 +20,43 @@ public class CursoRepositoryImpl implements CursoRepository {
 	private CursoRowMapper row;
 
 	@Override
-	public Curso crearCurso(Curso curso) {
-		String insertQuery = "INSERT INTO tmcurso (FK_ID_IDIOMA, FK_ID_NIVEL, CICLO, LIBRO) values (?, ?, ?, ?)";
-		int success = this.jdbcTemplate.update(insertQuery, curso.getIdIdioma(), curso.getIdNivel(),
-				curso.getCiclo(), curso.getLibro());
+	public String crearCurso(Curso curso) {
+		int existe = 0;
+		String query = "SELECT COUNT(*) AS CUENTA FROM tmcurso "
+				+ "WHERE FK_ID_IDIOMA = " + curso.getIdIdioma() +
+				" AND FK_ID_NIVEL = " + curso.getIdNivel() +
+				" AND CICLO = " + curso.getCiclo();
 		
-		if (success >= 0) {
-			return curso;
+		Map<String, Object> row = this.jdbcTemplate.queryForList(query).get(0);
+		existe = Integer.parseInt(row.get("CUENTA").toString());
+		
+		if (existe == 0) {
+			String insertQuery = "INSERT INTO tmcurso (FK_ID_IDIOMA, FK_ID_NIVEL, CICLO, LIBRO) values (?, ?, ?, ?)";
+			int success = this.jdbcTemplate.update(insertQuery, curso.getIdIdioma(), curso.getIdNivel(),
+					curso.getCiclo(), curso.getLibro());
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+		} else {
+			return "Este curso ya ha sido registrado";
 		}
-		
-		return null;
 	}
 
 	@Override
-	public Curso editCurso(Curso curso, int id) {
+	public String editCurso(Curso curso, int id) {
 		String query = "UPDATE tmcurso SET FK_ID_IDIOMA = ?, FK_ID_NIVEL = ?, CICLO = ?, LIBRO = ? "
 				+ "WHERE ID_CURSO = "+ id;
 		int update = this.jdbcTemplate.update(query, curso.getIdIdioma(), curso.getIdNivel(),
 				curso.getCiclo(), curso.getLibro());
 		
 		if (update == 1) {
-			return curso;
+			return "true";
 		}
 		
-		return null;
+		return "false";
 	}
 	
 	@Override

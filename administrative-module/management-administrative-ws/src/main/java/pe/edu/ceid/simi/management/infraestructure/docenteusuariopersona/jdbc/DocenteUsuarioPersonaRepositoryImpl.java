@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.docenteusuariopersona.model.DocenteUsuarioPersona;
 import pe.edu.ceid.simi.management.domain.docenteusuariopersona.repository.DocenteUsuarioPersonaRepository;
-import pe.edu.ceid.simi.management.domain.sede.model.Sede;
 
 @Component
 public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPersonaRepository {
@@ -21,42 +20,96 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 	private DocenteUsuarioPersonaRowMapper row;
 
 	@Override
-	public DocenteUsuarioPersona crearDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona) {
-//		String callQuery = "SELECT @contDoc AS COD_DOCENTE FROM DUAL";
-//		int codDocente = row.mapRowCodDocente(this.jdbcTemplate.queryForList(callQuery));
-//		System.out.println("rwqrqwerMWEQRmqwemdmAdmfasdmfadsfmadsm: " + codDocente);
-//		
-		String insertQuery = "{CALL SP_DOC_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-		int success = this.jdbcTemplate.update(insertQuery, docenteUsuarioPersona.getNombre(), docenteUsuarioPersona.getApellidoPat(),
-				docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(), docenteUsuarioPersona.getGenero(),
-				docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(), docenteUsuarioPersona.getLugarNacDist(),
-				docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(), docenteUsuarioPersona.getNacionalidad(),
-				docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone() ,docenteUsuarioPersona.getEmail(),
-				docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(), docenteUsuarioPersona.getDepartamento());
+	public String crearDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona) {
+		int existeDni = 0;
+		int existeEmail = 0;
+		int existePhone = 0;
+
+		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + docenteUsuarioPersona.getDni() + "'";
+		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + docenteUsuarioPersona.getEmail() + "'";
+		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + docenteUsuarioPersona.getPhone() + "'";
+
+		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
+		existeDni = Integer.parseInt(row.get("CUENTA").toString());
+
+		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
+		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
+
+		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
+		existePhone = Integer.parseInt(row.get("CUENTA").toString());
 		
-		if (success >= 0) {
-			return docenteUsuarioPersona;
+		if (existeDni == 0) {
+			if (existeEmail == 0) {
+				if (existePhone == 0) {
+					String insertQuery = "{CALL SP_DOC_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+					int success = this.jdbcTemplate.update(insertQuery, docenteUsuarioPersona.getNombre(), docenteUsuarioPersona.getApellidoPat(),
+							docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(), docenteUsuarioPersona.getGenero(),
+							docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(), docenteUsuarioPersona.getLugarNacDist(),
+							docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(), docenteUsuarioPersona.getNacionalidad(),
+							docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone() ,docenteUsuarioPersona.getEmail(),
+							docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(), docenteUsuarioPersona.getDepartamento());
+					
+					if (success >= 0) {
+						return "true";
+					}
+					
+					return "false";
+				} else {
+					return "Se debe ingresar otro número de teléfono.";
+				}
+			} else {
+				return "El correo electrónico consignado ya ha sido registrado.";
+			}
+		} else {
+			return "El DNI consignado ya ha sido registrado";
 		}
-		
-		return null;
 	}
 
 	@Override
-	public DocenteUsuarioPersona editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id) {
-		String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-		int success = this.jdbcTemplate.update(insertQuery, id, docenteUsuarioPersona.getNombre(),
-				docenteUsuarioPersona.getApellidoPat(), docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(),
-				docenteUsuarioPersona.getGenero(), docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(),
-				docenteUsuarioPersona.getLugarNacDist(), docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(),
-				docenteUsuarioPersona.getNacionalidad(), docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone(),
-				docenteUsuarioPersona.getEmail(), docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(),
-				docenteUsuarioPersona.getDepartamento());
+	public String editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id) {
+		int existeDni = 0;
+		int existeEmail = 0;
+		int existePhone = 0;
 		
-		if (success >= 0) {
-			return docenteUsuarioPersona;
+		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + docenteUsuarioPersona.getDni() + "'";
+		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + docenteUsuarioPersona.getEmail() + "'";
+		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + docenteUsuarioPersona.getPhone() + "'";
+
+		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
+		existeDni = Integer.parseInt(row.get("CUENTA").toString());
+
+		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
+		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
+
+		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
+		existePhone = Integer.parseInt(row.get("CUENTA").toString());
+		
+		if (existeDni == 0) {
+			if (existeEmail == 0) {
+				if (existePhone == 0) {
+					String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+					int success = this.jdbcTemplate.update(insertQuery, id, docenteUsuarioPersona.getNombre(),
+							docenteUsuarioPersona.getApellidoPat(), docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(),
+							docenteUsuarioPersona.getGenero(), docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(),
+							docenteUsuarioPersona.getLugarNacDist(), docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(),
+							docenteUsuarioPersona.getNacionalidad(), docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone(),
+							docenteUsuarioPersona.getEmail(), docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(),
+							docenteUsuarioPersona.getDepartamento());
+					
+					if (success >= 0) {
+						return "true";
+					}
+					
+					return "false";
+				} else {
+					return "Se debe ingresar otro número de teléfono.";
+				}
+			} else {
+				return "El correo electrónico consignado ya ha sido registrado.";
+			}
+		} else {
+			return "El DNI consignado ya ha sido registrado";
 		}
-		
-		return null;
 	}
 
 	@Override
@@ -74,27 +127,24 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 
 	@Override
 	public String deleteDocenteUsuarioPersona(String codDocente) {
-		
-		
 		DocenteUsuarioPersona docente = getDocenteUsuarioPersonaById(codDocente);
-		
-		
-		try{ 
-				String query = "{CALL SP_DOC_USU_PER_DELETE(?)}";
-				int success = this.jdbcTemplate.update(query, codDocente);
-				if (success >= 0) {
-					return "true";
-				}
-				return "false";
+
+		try {
+			String query = "{CALL SP_DOC_USU_PER_DELETE(?)}";
+			int success = this.jdbcTemplate.update(query, codDocente);
 			
+			if (success >= 0) {
+				return "true";
+			}
 			
-		}catch (Exception e) {
+			return "false";
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.print(e);
 			return "No se puede eliminar al docente "+ docente.getNombre() +" "+ docente.getApellidoPat()+" "+ docente.getApellidoMat()
 			+" porque tiene asignado carga académica" ;
 		}
-		
 		
 	}
 
