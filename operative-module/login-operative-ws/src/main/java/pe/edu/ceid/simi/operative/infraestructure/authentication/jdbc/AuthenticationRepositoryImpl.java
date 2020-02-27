@@ -26,13 +26,11 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 	@Override
 	public Authentication findUserByEmail(String email) {
 		System.out.println("findUserByEmail");
-		StringBuilder sql = new StringBuilder("SELECT ID_USUARIO, FK_ID_ROL, EMAIL FROM TMUSUARIO ")
+		StringBuilder sql = new StringBuilder("SELECT ID_USUARIO, EMAIL FROM TMUSUARIO ")
 				.append("WHERE EMAIL = ? ");
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql.toString(), new Object[] { email });
-		System.out.println("queryForList");
 		Authentication auth = rows.isEmpty() ? null : row.mapRowFindEmail(rows.get(0));
 		if (auth != null) {
-			System.out.println("email");
 			return auth;
 		}
 		return null;
@@ -43,7 +41,7 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 		Authentication auth = this.findUserByEmail(email);
 		if (auth != null) {
 			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT ID_USUARIO, EMAIL, PASSWORD FROM TMUSUARIO ");
+			sql.append("SELECT ID_USUARIO, FK_ID_ROL, EMAIL, PASSWORD FROM TMUSUARIO ");
 			sql.append("WHERE EMAIL = ? AND ID_USUARIO = ? ");
 			List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql.toString(),
 					new Object[] { email, auth.getId() });
@@ -61,10 +59,8 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
 	@Override
 	public Authentication signInInvited(Authentication auth) {
-		System.out.println("signInInvited invitado");
 		Authentication authenticated = this.findUserByEmail(auth.getEmail());
 		if (authenticated != null) {
-			System.out.println("authenticated.getRolId()");
 			if(authenticated.getRolId().equals("0")) {
 				return authenticated;
 			}
