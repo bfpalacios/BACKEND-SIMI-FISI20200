@@ -19,5 +19,10 @@ public class ProgramacionServiceImpl implements ProgramacionService {
 	
 		return this.repository.getProgramacion();
 	}
+	
+	@Override
+	public List<ProgramacionDTO> getProgramacionbyID(int id){
+		return this.repository.getProgramacionbyID(id);
+	}
 
 }

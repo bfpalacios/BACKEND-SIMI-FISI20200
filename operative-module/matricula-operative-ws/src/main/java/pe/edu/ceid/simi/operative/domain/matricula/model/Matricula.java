@@ -8,6 +8,9 @@ public class Matricula {
 	private int estadoMat;
 	private String fechaMat;
 	
+	public Matricula() {
+	}
+	
 	public Matricula(int idMatricula, int codEstudiante, int idProgcurso, int numvouvher, int estadoMat,
 			String fechaMat) {
 		super();

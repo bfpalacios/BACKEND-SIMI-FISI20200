@@ -18,7 +18,7 @@ import pe.edu.ceid.simi.management.domain.rol.model.Rol;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/rol"})
+@RequestMapping({"/api/v1/procesomatricula/rol"})
 public class RolController {
 	
 	@Autowired
