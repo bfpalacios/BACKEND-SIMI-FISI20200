@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,26 +22,27 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 
 	@Override
 	public String crearDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona) {
-		int existeDni = 0;
-		int existeEmail = 0;
-		int existePhone = 0;
-
-		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + docenteUsuarioPersona.getDni() + "'";
-		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + docenteUsuarioPersona.getEmail() + "'";
-		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + docenteUsuarioPersona.getPhone() + "'";
-
-		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
-		existeDni = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
-		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
-		existePhone = Integer.parseInt(row.get("CUENTA").toString());
-		
-		if (existeDni == 0) {
-			if (existeEmail == 0) {
-				if (existePhone == 0) {
+//		int existeDni = 0;
+//		int existeEmail = 0;
+//		int existePhone = 0;
+//
+//		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + docenteUsuarioPersona.getDni() + "'";
+//		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + docenteUsuarioPersona.getEmail() + "'";
+//		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + docenteUsuarioPersona.getPhone() + "'";
+//
+//		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
+//		existeDni = Integer.parseInt(row.get("CUENTA").toString());
+//
+//		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
+//		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
+//
+//		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
+//		existePhone = Integer.parseInt(row.get("CUENTA").toString());
+//		
+//		if (existeDni == 0) {
+//			if (existeEmail == 0) {
+//				if (existePhone == 0) {
+		try {
 					String insertQuery = "{CALL SP_DOC_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 					int success = this.jdbcTemplate.update(insertQuery, docenteUsuarioPersona.getNombre(), docenteUsuarioPersona.getApellidoPat(),
 							docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(), docenteUsuarioPersona.getGenero(),
@@ -54,15 +56,26 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 					}
 					
 					return "false";
-				} else {
-					return "Se debe ingresar otro número de teléfono.";
-				}
-			} else {
+		} catch (DuplicateKeyException ex) {
+//			System.out.println("Mensaje: " + ex.getMessage());
+			if (ex.getMessage().contains("EMAIL_UNIQUE")) {
 				return "El correo electrónico consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("DNI_UNIQUE")) {
+				return "El DNI consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("PHONE_UNIQUE")) {
+				return "Se debe ingresar otro número de teléfono.";
 			}
-		} else {
-			return "El DNI consignado ya ha sido registrado";
+			return "Algo salió mal.";
 		}
+//				} else {
+//					return "Se debe ingresar otro número de teléfono.";
+//				}
+//			} else {
+//				return "El correo electrónico consignado ya ha sido registrado.";
+//			}
+//		} else {
+//			return "El DNI consignado ya ha sido registrado";
+//		}
 	}
 
 	@Override
@@ -87,20 +100,33 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 //		if (existeDni == 0) {
 //			if (existeEmail == 0) {
 //				if (existePhone == 0) {
-					String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-					int success = this.jdbcTemplate.update(insertQuery, id, docenteUsuarioPersona.getNombre(),
-							docenteUsuarioPersona.getApellidoPat(), docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(),
-							docenteUsuarioPersona.getGenero(), docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(),
-							docenteUsuarioPersona.getLugarNacDist(), docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(),
-							docenteUsuarioPersona.getNacionalidad(), docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone(),
-							docenteUsuarioPersona.getEmail(), docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(),
-							docenteUsuarioPersona.getDepartamento());
-					
-					if (success >= 0) {
-						return "true";
-					}
-					
-					return "false";
+		try {
+			String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+			int success = this.jdbcTemplate.update(insertQuery, id, docenteUsuarioPersona.getNombre(),
+					docenteUsuarioPersona.getApellidoPat(), docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(),
+					docenteUsuarioPersona.getGenero(), docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(),
+					docenteUsuarioPersona.getLugarNacDist(), docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(),
+					docenteUsuarioPersona.getNacionalidad(), docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone(),
+					docenteUsuarioPersona.getEmail(), docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(),
+					docenteUsuarioPersona.getDepartamento());
+			
+			if (success >= 0) {
+				return "true";
+			}
+
+			return "false";
+		} catch (DuplicateKeyException ex) {
+	//		System.out.println("Mensaje: " + ex.getMessage());
+			if (ex.getMessage().contains("EMAIL_UNIQUE")) {
+				return "El correo electrónico consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("DNI_UNIQUE")) {
+				return "El DNI consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("PHONE_UNIQUE")) {
+				return "Se debe ingresar otro número de teléfono.";
+			}
+			
+			return "Algo salió mal.";
+		}
 //				} else {
 //					return "Se debe ingresar otro número de teléfono.";
 //				}
