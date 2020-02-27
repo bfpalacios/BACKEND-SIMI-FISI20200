@@ -7,5 +7,6 @@ import pe.edu.ceid.simi.operative.domain.apertura.model.AperturaDTO;
 
 public interface AperturaService {
 	List<AperturaDTO> getApertura();
+	List<AperturaDTO> getAperturabyID(int id);
 	public Apertura crearApertura(Apertura apertura);
 }
