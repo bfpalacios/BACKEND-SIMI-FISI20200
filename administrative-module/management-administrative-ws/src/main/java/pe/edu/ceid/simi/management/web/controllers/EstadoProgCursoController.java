@@ -18,7 +18,7 @@ import pe.edu.ceid.simi.management.domain.estadoprogcurso.model.EstadoProgCurso;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/estadoprogcurso"})
+@RequestMapping({"/api/v1/programacionCurso/estadoprogcurso"})
 public class EstadoProgCursoController {
 	
 	@Autowired

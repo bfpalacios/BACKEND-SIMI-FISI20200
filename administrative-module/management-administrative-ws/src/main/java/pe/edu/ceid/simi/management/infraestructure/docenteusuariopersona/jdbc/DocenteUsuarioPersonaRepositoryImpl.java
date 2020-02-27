@@ -67,7 +67,7 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 
 	@Override
 	public String editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id) {
-		int existeDni = 0;
+	/*	int existeDni = 0;
 		int existeEmail = 0;
 		int existePhone = 0;
 		
@@ -83,10 +83,10 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 
 		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
 		existePhone = Integer.parseInt(row.get("CUENTA").toString());
-		
-		if (existeDni == 0) {
-			if (existeEmail == 0) {
-				if (existePhone == 0) {
+		*/
+//		if (existeDni == 0) {
+//			if (existeEmail == 0) {
+//				if (existePhone == 0) {
 					String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 					int success = this.jdbcTemplate.update(insertQuery, id, docenteUsuarioPersona.getNombre(),
 							docenteUsuarioPersona.getApellidoPat(), docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(),
@@ -101,15 +101,15 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 					}
 					
 					return "false";
-				} else {
-					return "Se debe ingresar otro número de teléfono.";
-				}
-			} else {
-				return "El correo electrónico consignado ya ha sido registrado.";
-			}
-		} else {
-			return "El DNI consignado ya ha sido registrado";
-		}
+//				} else {
+//					return "Se debe ingresar otro número de teléfono.";
+//				}
+//			} else {
+//				return "El correo electrónico consignado ya ha sido registrado.";
+//			}
+//		} else {
+//			return "El DNI consignado ya ha sido registrado";
+//		}
 	}
 
 	@Override

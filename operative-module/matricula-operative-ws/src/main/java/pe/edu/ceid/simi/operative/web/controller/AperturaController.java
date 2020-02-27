@@ -29,6 +29,11 @@ public class AperturaController {
 		return this.service.getApertura();
 	}
 	
+	@GetMapping (path = {"/listApertura/{id}"})
+	public List<AperturaDTO> getAperturabyID(@PathVariable int id) {
+		return this.service.getAperturabyID(id);
+	}
+	
 	@PostMapping (path = {"/crearApertura"})
 	public Apertura crearApertura(@RequestBody Apertura apertura) {
 		return this.service.crearApertura(apertura);

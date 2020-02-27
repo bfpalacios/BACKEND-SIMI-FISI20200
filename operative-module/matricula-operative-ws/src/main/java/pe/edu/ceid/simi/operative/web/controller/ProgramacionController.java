@@ -28,4 +28,9 @@ public class ProgramacionController {
 	public List<ProgramacionDTO> getProgramacion() {
 		return this.service.getProgramacion();
 	}
+	
+	@GetMapping(path = {"/listProgramacionbyID/{id}"})
+	public List<ProgramacionDTO> getProgramacionbyID(@PathVariable int id) {
+		return this.service.getProgramacionbyID(id);
+	}
 }

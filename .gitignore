@@ -26,3 +26,5 @@ dist/
 nbdist/
 .nb-gradle/
 /~$NUAL DE USUARIO SIMI.docx
+
+administrative-module/management-administrative-ws/src/main/java/pe/edu/ceid/simi/management/security
