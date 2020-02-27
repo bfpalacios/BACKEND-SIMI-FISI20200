@@ -22,26 +22,6 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 
 	@Override
 	public String crearDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona) {
-//		int existeDni = 0;
-//		int existeEmail = 0;
-//		int existePhone = 0;
-//
-//		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + docenteUsuarioPersona.getDni() + "'";
-//		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + docenteUsuarioPersona.getEmail() + "'";
-//		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + docenteUsuarioPersona.getPhone() + "'";
-//
-//		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
-//		existeDni = Integer.parseInt(row.get("CUENTA").toString());
-//
-//		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
-//		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
-//
-//		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
-//		existePhone = Integer.parseInt(row.get("CUENTA").toString());
-//		
-//		if (existeDni == 0) {
-//			if (existeEmail == 0) {
-//				if (existePhone == 0) {
 		try {
 					String insertQuery = "{CALL SP_DOC_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 					int success = this.jdbcTemplate.update(insertQuery, docenteUsuarioPersona.getNombre(), docenteUsuarioPersona.getApellidoPat(),
@@ -67,39 +47,10 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 			}
 			return "Algo salió mal.";
 		}
-//				} else {
-//					return "Se debe ingresar otro número de teléfono.";
-//				}
-//			} else {
-//				return "El correo electrónico consignado ya ha sido registrado.";
-//			}
-//		} else {
-//			return "El DNI consignado ya ha sido registrado";
-//		}
 	}
 
 	@Override
 	public String editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id) {
-	/*	int existeDni = 0;
-		int existeEmail = 0;
-		int existePhone = 0;
-		
-		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + docenteUsuarioPersona.getDni() + "'";
-		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + docenteUsuarioPersona.getEmail() + "'";
-		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + docenteUsuarioPersona.getPhone() + "'";
-
-		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
-		existeDni = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
-		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
-		existePhone = Integer.parseInt(row.get("CUENTA").toString());
-		*/
-//		if (existeDni == 0) {
-//			if (existeEmail == 0) {
-//				if (existePhone == 0) {
 		try {
 			String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 			int success = this.jdbcTemplate.update(insertQuery, id, docenteUsuarioPersona.getNombre(),
@@ -127,15 +78,6 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 			
 			return "Algo salió mal.";
 		}
-//				} else {
-//					return "Se debe ingresar otro número de teléfono.";
-//				}
-//			} else {
-//				return "El correo electrónico consignado ya ha sido registrado.";
-//			}
-//		} else {
-//			return "El DNI consignado ya ha sido registrado";
-//		}
 	}
 
 	@Override
