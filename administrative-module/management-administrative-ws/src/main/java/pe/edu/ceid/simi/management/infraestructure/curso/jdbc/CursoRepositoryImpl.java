@@ -160,7 +160,7 @@ public class CursoRepositoryImpl implements CursoRepository {
 
 	@Override
 	public List<CursoDTO> getCursosByPeriodo(int idPeriodo) {
-		String query = "SELECT *, CONCAT(NOM_IDIOMA, '-', NOM_NIVEL, '-', pac.ID_PERIODO) AS GRUPO\r\n" + 
+	/*	String query = "SELECT *, CONCAT(NOM_IDIOMA, '-', NOM_NIVEL, '-', pac.ID_PERIODO) AS GRUPO\r\n" + 
 				"FROM tpprog_curso AS pgc\r\n" + 
 				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
 				"		INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
@@ -169,6 +169,17 @@ public class CursoRepositoryImpl implements CursoRepository {
 				"			INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA\r\n" + 
 				"WHERE pdc.FK_ID_PERIODO = " + idPeriodo + "\r\n" + 
 				"GROUP BY GRUPO";
+		*/
+		
+	
+		String query = 	" SELECT DISTINCT ID_CURSO , FK_ID_IDIOMA, FK_ID_NIVEL,  ID_NIVEL,ID_IDIOMA,NOM_IDIOMA,NOM_NIVEL, CICLO \r\n" +
+	     "  FROM      tmcurso AS cur \r\n" +
+			"			INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" +
+			"			INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA \r\n" +
+			"			LEFT JOIN tpprog_doc_curso AS pdc ON pdc.FK_ID_CURSO = cur.ID_CURSO \r\n" +
+			"			LEFT JOIN tpprog_curso AS pgc ON pgc.FK_ID_PROG_DOC_CUR = pdc.ID_PROG_DOC_CUR \r\n" +
+		"WHERE pdc.FK_ID_PERIODO = " + idPeriodo ;
+		 
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<CursoDTO> cursos = row.mapRowCurso(rows);
 		return cursos;
