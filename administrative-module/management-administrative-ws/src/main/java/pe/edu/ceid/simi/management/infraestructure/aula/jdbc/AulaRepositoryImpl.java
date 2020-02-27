@@ -23,15 +23,7 @@ public class AulaRepositoryImpl implements AulaRepository {
 
 	@Override
 	public String crearAula(Aula aula) {
-		int existe = 0;
-		String query = "SELECT COUNT(*) AS CUENTA FROM tmaula "
-				+ "WHERE NOM_AULA = " + aula.getNomAula() +
-				" AND FK_ID_SEDE = " + aula.getIdSede();
-		
-		Map<String, Object> row = this.jdbcTemplate.queryForList(query).get(0);
-		existe = Integer.parseInt(row.get("CUENTA").toString());
-		
-		if (existe == 0) {
+		try {
 			String insertQuery = "INSERT INTO tmaula (NOM_AULA, REF_AULA, FK_ID_SEDE) values (?, ?, ?)";
 			int success = this.jdbcTemplate.update(insertQuery, aula.getNomAula(), aula.getRefAula(),
 					 aula.getIdSede());
@@ -41,8 +33,9 @@ public class AulaRepositoryImpl implements AulaRepository {
 			}
 			
 			return "false";
-		} else {
-			return "Esta aula ya existe en esta sede";
+		} catch (DuplicateKeyException e) {
+			e.printStackTrace();
+			return "El aula" + aula.getNomAula() +" ya existe en esta sede.";
 		}
 	}
 
@@ -82,7 +75,7 @@ public class AulaRepositoryImpl implements AulaRepository {
 		} catch (DuplicateKeyException ex) {	// Como mi ex :c
 			ex.printStackTrace();
 			System.out.print(ex);
-			return "El aula" +aula.getNomAula()+" ya existe en esta sede";
+			return "El aula" + aula.getNomAula() +" ya existe en esta sede.";
 		}
 		
 	}
