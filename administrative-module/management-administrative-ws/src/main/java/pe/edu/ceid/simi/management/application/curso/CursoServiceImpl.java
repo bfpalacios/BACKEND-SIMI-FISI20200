@@ -57,4 +57,10 @@ public class CursoServiceImpl implements CursoService{
 		return this.repository.getCursosByDocente(idDocente);
 	}
 
+	@Override
+	public List<CursoDTO> getCursosByPeriodo(int idPeriodo) {
+		// TODO Auto-generated method stub
+		return this.repository.getCursosByPeriodo(idPeriodo);
+	}
+
 }
