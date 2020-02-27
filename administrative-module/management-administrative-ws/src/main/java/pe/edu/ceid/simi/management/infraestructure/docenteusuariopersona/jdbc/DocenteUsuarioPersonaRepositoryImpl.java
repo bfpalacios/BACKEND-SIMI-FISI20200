@@ -94,6 +94,21 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 	}
 
 	@Override
+	public List<DocenteUsuarioPersona> getDocentesByCursoPeriodo(int idCurso, int idPeriodo) {
+		String query = "SELECT * FROM tmdocente AS doc\r\n" + 
+				"	INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
+				"		INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.FK_ID_DOCENTE = doc.COD_DOCENTE_CI\r\n" + 
+				"		INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"        INNER JOIN tmperiodo_academico AS pac ON pac.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
+				"	INNER JOIN tpprog_curso AS pgc ON pgc.FK_ID_PROG_DOC_CUR = pdc.ID_PROG_DOC_CUR\r\n" + 
+				"WHERE cur.ID_CURSO = " + idCurso + " AND pac.ID_PERIODO = " + idPeriodo;
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<DocenteUsuarioPersona> docUsuPer = row.mapRowDocenteUsuarioPersona(rows);
+		return docUsuPer;
+	}
+
+	@Override
 	public String deleteDocenteUsuarioPersona(String codDocente) {
 		DocenteUsuarioPersona docente = getDocenteUsuarioPersonaById(codDocente);
 

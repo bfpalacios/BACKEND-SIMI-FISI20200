@@ -44,4 +44,10 @@ public class DocenteUsuarioPersonaServiceImpl implements DocenteUsuarioPersonaSe
 		return this.repository.getDocenteUsuarioPersonaById(id);
 	}
 
+	@Override
+	public List<DocenteUsuarioPersona> getDocentesByCursoPeriodo(int idCurso, int idPeriodo) {
+		// TODO Auto-generated method stub
+		return this.repository.getDocentesByCursoPeriodo(idCurso, idPeriodo);
+	}
+
 }
