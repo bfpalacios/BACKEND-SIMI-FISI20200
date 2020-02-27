@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +48,7 @@ public class AulaRepositoryImpl implements AulaRepository {
 
 	@Override
 	public String editAula(Aula aula, int id) {
-		int existe = 0;
+	/*	int existe = 0;
 		String query = "SELECT COUNT(*) AS CUENTA FROM tmaula "
 				+ "WHERE NOM_AULA = " + aula.getNomAula() +
 				" AND FK_ID_SEDE = " + aula.getIdSede();
@@ -67,7 +68,25 @@ public class AulaRepositoryImpl implements AulaRepository {
 		} else {
 			return "Esta aula ya existe en esta sede";
 		}
+		*/
+		try {
+			String updateQuery = "UPDATE tmaula SET NOM_AULA = ?, REF_AULA = ? , FK_ID_SEDE = ? WHERE ID_AULA = "+ id;
+			int update = this.jdbcTemplate.update(updateQuery, aula.getNomAula(), aula.getRefAula(), aula.getIdSede());
+			
+			if (update == 1) {
+				return "true";
+			}
+			
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {	// Como mi ex :c
+			ex.printStackTrace();
+			System.out.print(ex);
+			return "El aula" +aula.getNomAula()+" ya existe en esta sede";
+		}
+		
 	}
+	
 
 	@Override
 	public List<AulaDTO> getAulas() {
