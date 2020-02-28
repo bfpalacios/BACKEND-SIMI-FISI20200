@@ -1,7 +1,6 @@
 package pe.edu.ceid.simi.operative.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,5 +19,10 @@ public class PersonaController {
 	@GetMapping(path = {"/datosUsuario/{id}"})
 	public PersonaUsuario obtenerDatosUsuario(@PathVariable("id") int codUsuario) {
 		return this.service.obtenerDatosUsuario(codUsuario);
+	}
+	
+	@GetMapping(path = {"/informacionAcademica/{id}"})
+	public PersonaUsuario obtenerInformacionAcademica(@PathVariable("id") int codUsuario) {
+		return this.service.obtenerInformacionAcademica(codUsuario);
 	}
 }

@@ -47,6 +47,18 @@ public class AperturaRepositoryImpl implements AperturaRepository {
 		r.forEach((v) -> aperturas.add(row.mapRow(v)));
 		return aperturas;
 	}
+	
+	@Override
+	public List<AperturaDTO> getAperturabyID(int id) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("USP_SOLICITUD_LIST");
+		inParams.put("P_ID_USUARIO", id);
+		
+		Map<String, Object> result = jdbcCall.execute(inParams);
+		List<AperturaDTO> aperturas = new ArrayList<>();
+		List<LinkedCaseInsensitiveMap> r = (List<LinkedCaseInsensitiveMap>) result.values().toArray()[0];
+		r.forEach((v) -> aperturas.add(row.mapRow(v)));
+		return aperturas;
+	}
 
 	@Override
 	public Apertura crearApertura(Apertura apertura) {
@@ -71,17 +83,6 @@ public class AperturaRepositoryImpl implements AperturaRepository {
 		solicitud.setMensaje((String) out.get("P_MENSAJE"));
 		System.out.println((String)out.get("P_MENSAJE"));
 		return solicitud;
-		
-		//return (String) out.get("P_MENSAJE");
-
-		// String query = "{CALL SP_SOLICITUD_INSERT(?, ?, ?, ?)}";
-//		int success = this.jdbcTemplate.update(query, apertura.getCodEstudiante(),apertura.getIdCurso(), apertura.getIdHorarioGrupohorario(), apertura.getMensaje());
-//
-//		if(success >= 0) {
-//			return apertura;
-//		}
-//		
-//		return null;
 
 	}
 

@@ -23,5 +23,8 @@ public class AperturaServiceImpl implements AperturaService{
 		return this.repository.crearApertura(apertura);
 	}
 	
+	public List<AperturaDTO> getAperturabyID(int id){
+		return this.repository.getAperturabyID(id);
+	}
 
 }

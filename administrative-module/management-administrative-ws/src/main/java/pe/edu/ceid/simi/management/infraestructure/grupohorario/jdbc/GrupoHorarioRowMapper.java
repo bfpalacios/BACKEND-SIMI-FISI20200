@@ -26,7 +26,7 @@ public class GrupoHorarioRowMapper implements RowMapper {
 		for(Map<String, Object> row: rows) {
 			int idGrupoHorario = Integer.parseInt(row.get("ID_GRUPOHORARIO").toString());
 			String nomGrupoHorario = row.get("NOM_GRUPOHORARIO").toString();
-			String listaHorarios = row.get("LISTA_HORARIOS").toString();
+			String listaHorarios = row.get("LISTA_HORARIO").toString();
 			
 			GrupoHorarioDTO g = new GrupoHorarioDTO(idGrupoHorario, nomGrupoHorario, listaHorarios);
 			

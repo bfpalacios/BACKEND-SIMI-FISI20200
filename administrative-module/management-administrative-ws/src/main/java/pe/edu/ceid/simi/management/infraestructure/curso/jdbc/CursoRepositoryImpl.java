@@ -47,16 +47,42 @@ public class CursoRepositoryImpl implements CursoRepository {
 
 	@Override
 	public String editCurso(Curso curso, int id) {
-		String query = "UPDATE tmcurso SET FK_ID_IDIOMA = ?, FK_ID_NIVEL = ?, CICLO = ?, LIBRO = ? "
-				+ "WHERE ID_CURSO = "+ id;
-		int update = this.jdbcTemplate.update(query, curso.getIdIdioma(), curso.getIdNivel(),
-				curso.getCiclo(), curso.getLibro());
+		int existe = 0;
+		String query1 = "SELECT COUNT(*) AS CUENTA FROM tmcurso "
+				+ "WHERE FK_ID_IDIOMA = " + curso.getIdIdioma() +
+				" AND FK_ID_NIVEL = " + curso.getIdNivel() +
+				" AND CICLO = " + curso.getCiclo();
 		
-		if (update == 1) {
-			return "true";
+		Map<String, Object> row = this.jdbcTemplate.queryForList(query1).get(0);
+		existe = Integer.parseInt(row.get("CUENTA").toString());
+		
+		if (existe == 0) {
+				String query = "UPDATE tmcurso SET FK_ID_IDIOMA = ?, FK_ID_NIVEL = ?, CICLO = ?, LIBRO = ? "
+						+ "WHERE ID_CURSO = "+ id;
+				int update = this.jdbcTemplate.update(query, curso.getIdIdioma(), curso.getIdNivel(),
+						curso.getCiclo(), curso.getLibro());
+				
+				if (update == 1) {			return "true";		}
+				return "false";
+		} else {
+			return "Este curso ya existe";
 		}
 		
-		return "false";
+		/*
+		
+		try {
+			String query = "UPDATE tmcurso SET FK_ID_IDIOMA = ?, FK_ID_NIVEL = ?, CICLO = ?, LIBRO = ? "
+					+ "WHERE ID_CURSO = "+ id;
+			int update = this.jdbcTemplate.update(query, curso.getIdIdioma(), curso.getIdNivel(),
+					curso.getCiclo(), curso.getLibro());
+			
+			if (update == 1) {			return "true";		}
+			return "false";
+		} catch (DuplicateKeyException ex) {	// Como mi ex :c
+			ex.printStackTrace();
+			System.out.print(ex);
+			return "El curso ya existe en el sistema." ;
+		}*/
 	}
 	
 	@Override
@@ -127,6 +153,33 @@ public class CursoRepositoryImpl implements CursoRepository {
 				+ "INNER JOIN tmdocente AS doc ON doc.ID_DOCENTE = pdc.FK_ID_DOCENTE "
 				+ "WHERE id.ID_IDIOMA = " + idDocente
 				+ " ORDER BY id.ID_IDIOMA, ni.ID_NIVEL, cu.CICLO";
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<CursoDTO> cursos = row.mapRowCurso(rows);
+		return cursos;
+	}
+
+	@Override
+	public List<CursoDTO> getCursosByPeriodo(int idPeriodo) {
+	/*	String query = "SELECT *, CONCAT(NOM_IDIOMA, '-', NOM_NIVEL, '-', pac.ID_PERIODO) AS GRUPO\r\n" + 
+				"FROM tpprog_curso AS pgc\r\n" + 
+				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
+				"		INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"        INNER JOIN tmperiodo_academico AS pac ON pac.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
+				"			INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" + 
+				"			INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA\r\n" + 
+				"WHERE pdc.FK_ID_PERIODO = " + idPeriodo + "\r\n" + 
+				"GROUP BY GRUPO";
+		*/
+		
+	
+		String query = 	" SELECT DISTINCT ID_CURSO , FK_ID_IDIOMA, FK_ID_NIVEL,  ID_NIVEL,ID_IDIOMA,NOM_IDIOMA,NOM_NIVEL, CICLO \r\n" +
+	     "  FROM      tmcurso AS cur \r\n" +
+			"			INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" +
+			"			INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA \r\n" +
+			"			LEFT JOIN tpprog_doc_curso AS pdc ON pdc.FK_ID_CURSO = cur.ID_CURSO \r\n" +
+			"			LEFT JOIN tpprog_curso AS pgc ON pgc.FK_ID_PROG_DOC_CUR = pdc.ID_PROG_DOC_CUR \r\n" +
+		"WHERE pdc.FK_ID_PERIODO = " + idPeriodo ;
+		 
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<CursoDTO> cursos = row.mapRowCurso(rows);
 		return cursos;

@@ -15,5 +15,12 @@ public class PersonaServiceImpl implements PersonaService{
 	public PersonaUsuario obtenerDatosUsuario(int codUsuario) {
 		return this.repository.obtenerDatosUsuario(codUsuario);
 	}
+	@Override
+	public PersonaUsuario obtenerInformacionAcademica(int codUsuario) {
+		if (codUsuario != 0) {
+			return this.repository.obtenerInformacionAcademica(codUsuario);
+		}
+		return null;
+	}
 
 }
