@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pe.edu.ceid.simi.operative.domain.matricula.model.Matricula;
 import pe.edu.ceid.simi.operative.domain.matricula.model.MatriculaDTO;
+import pe.edu.ceid.simi.operative.domain.programacion.model.ProgramacionDTO;
 import pe.edu.ceid.simi.operative.domain.voucher.model.VoucherDTO;
 import pe.edu.ceid.simi.operative.application.matricula.MatriculaService;
 
@@ -56,4 +57,14 @@ public class MatriculaOnlineController {
 		return this.service.obtenerpagosSinUsar(codUser);
 	}
 	
+	
+	@PostMapping(path = {"/matricularAlumno/{userId}"})
+	public boolean crearCurso(@PathVariable int userId, @RequestBody List<ProgramacionDTO> cursosSeleccionados) {
+		System.out.println("Programacion CursoId: " + cursosSeleccionados.size());
+		for(ProgramacionDTO a : cursosSeleccionados) {
+			System.out.println("Programacion CursoId: " + a.getDocente());
+		}
+		//return this.service.matricularOnline(matricula);
+		return true;
+	}
 }
