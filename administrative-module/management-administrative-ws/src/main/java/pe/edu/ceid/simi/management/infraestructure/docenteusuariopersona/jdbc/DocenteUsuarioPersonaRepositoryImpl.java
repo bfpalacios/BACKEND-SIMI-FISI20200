@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,26 +22,7 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 
 	@Override
 	public String crearDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona) {
-		int existeDni = 0;
-		int existeEmail = 0;
-		int existePhone = 0;
-
-		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + docenteUsuarioPersona.getDni() + "'";
-		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + docenteUsuarioPersona.getEmail() + "'";
-		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + docenteUsuarioPersona.getPhone() + "'";
-
-		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
-		existeDni = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
-		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
-		existePhone = Integer.parseInt(row.get("CUENTA").toString());
-		
-		if (existeDni == 0) {
-			if (existeEmail == 0) {
-				if (existePhone == 0) {
+		try {
 					String insertQuery = "{CALL SP_DOC_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 					int success = this.jdbcTemplate.update(insertQuery, docenteUsuarioPersona.getNombre(), docenteUsuarioPersona.getApellidoPat(),
 							docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(), docenteUsuarioPersona.getGenero(),
@@ -54,62 +36,48 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 					}
 					
 					return "false";
-				} else {
-					return "Se debe ingresar otro número de teléfono.";
-				}
-			} else {
+		} catch (DuplicateKeyException ex) {
+//			System.out.println("Mensaje: " + ex.getMessage());
+			if (ex.getMessage().contains("EMAIL_UNIQUE")) {
 				return "El correo electrónico consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("DNI_UNIQUE")) {
+				return "El DNI consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("PHONE_UNIQUE")) {
+				return "Se debe ingresar otro número de teléfono.";
 			}
-		} else {
-			return "El DNI consignado ya ha sido registrado";
+			return "Algo salió mal.";
 		}
 	}
 
 	@Override
 	public String editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id) {
-	/*	int existeDni = 0;
-		int existeEmail = 0;
-		int existePhone = 0;
-		
-		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + docenteUsuarioPersona.getDni() + "'";
-		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + docenteUsuarioPersona.getEmail() + "'";
-		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + docenteUsuarioPersona.getPhone() + "'";
+		try {
+			String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+			int success = this.jdbcTemplate.update(insertQuery, id, docenteUsuarioPersona.getNombre(),
+					docenteUsuarioPersona.getApellidoPat(), docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(),
+					docenteUsuarioPersona.getGenero(), docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(),
+					docenteUsuarioPersona.getLugarNacDist(), docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(),
+					docenteUsuarioPersona.getNacionalidad(), docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone(),
+					docenteUsuarioPersona.getEmail(), docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(),
+					docenteUsuarioPersona.getDepartamento());
+			
+			if (success >= 0) {
+				return "true";
+			}
 
-		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
-		existeDni = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
-		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
-		existePhone = Integer.parseInt(row.get("CUENTA").toString());
-		*/
-//		if (existeDni == 0) {
-//			if (existeEmail == 0) {
-//				if (existePhone == 0) {
-					String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-					int success = this.jdbcTemplate.update(insertQuery, id, docenteUsuarioPersona.getNombre(),
-							docenteUsuarioPersona.getApellidoPat(), docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(),
-							docenteUsuarioPersona.getGenero(), docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(),
-							docenteUsuarioPersona.getLugarNacDist(), docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(),
-							docenteUsuarioPersona.getNacionalidad(), docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone(),
-							docenteUsuarioPersona.getEmail(), docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(),
-							docenteUsuarioPersona.getDepartamento());
-					
-					if (success >= 0) {
-						return "true";
-					}
-					
-					return "false";
-//				} else {
-//					return "Se debe ingresar otro número de teléfono.";
-//				}
-//			} else {
-//				return "El correo electrónico consignado ya ha sido registrado.";
-//			}
-//		} else {
-//			return "El DNI consignado ya ha sido registrado";
-//		}
+			return "false";
+		} catch (DuplicateKeyException ex) {
+	//		System.out.println("Mensaje: " + ex.getMessage());
+			if (ex.getMessage().contains("EMAIL_UNIQUE")) {
+				return "El correo electrónico consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("DNI_UNIQUE")) {
+				return "El DNI consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("PHONE_UNIQUE")) {
+				return "Se debe ingresar otro número de teléfono.";
+			}
+			
+			return "Algo salió mal.";
+		}
 	}
 
 	@Override
@@ -120,6 +88,21 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 				"	INNER JOIN tmusuario AS us ON us.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
 				"		INNER JOIN tmpersona AS pe ON pe.ID_PERSONA = us.FK_ID_PERSONA\r\n" + 
 				"		INNER JOIN tmrol AS ro ON ro.ID_ROL = us.FK_ID_ROL";
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<DocenteUsuarioPersona> docUsuPer = row.mapRowDocenteUsuarioPersona(rows);
+		return docUsuPer;
+	}
+
+	@Override
+	public List<DocenteUsuarioPersona> getDocentesByCursoPeriodo(int idCurso, int idPeriodo) {
+		String query = "SELECT * FROM tmdocente AS doc\r\n" + 
+				"	INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
+				"		INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.FK_ID_DOCENTE = doc.COD_DOCENTE_CI\r\n" + 
+				"		INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"        INNER JOIN tmperiodo_academico AS pac ON pac.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
+				"	INNER JOIN tpprog_curso AS pgc ON pgc.FK_ID_PROG_DOC_CUR = pdc.ID_PROG_DOC_CUR\r\n" + 
+				"WHERE cur.ID_CURSO = " + idCurso + " AND pac.ID_PERIODO = " + idPeriodo;
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<DocenteUsuarioPersona> docUsuPer = row.mapRowDocenteUsuarioPersona(rows);
 		return docUsuPer;

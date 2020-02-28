@@ -56,5 +56,10 @@ public class CursoController {
 	public List<CursoDTO> getCursosByIdioma(@PathVariable int id) {
 		return this.service.getCursosByIdioma(id);
 	}
+
+	@GetMapping(path = {"/listCursosByPeriodo/{id}"})
+	public List<CursoDTO> getCursosByPeriodo(@PathVariable int id) {
+		return this.service.getCursosByPeriodo(id);
+	}
 	
 }
