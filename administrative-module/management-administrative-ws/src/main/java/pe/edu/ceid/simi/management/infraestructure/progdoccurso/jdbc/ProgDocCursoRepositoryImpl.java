@@ -62,14 +62,16 @@ public class ProgDocCursoRepositoryImpl implements ProgDocCursoRepository {
 
 	@Override
 	public List<ProgDocCursoDTO> getProgDocCursos() {
-		String query = "SELECT * FROM tpprog_doc_curso AS pdc\r\n" + 
+		String query = "SELECT *\r\n" + 
+				"FROM tpprog_doc_curso AS pdc\r\n" + 
 				"	INNER JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 
 				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
 				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
-				"	INNER JOIN tmcurso AS cu ON cu.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
-				"		INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cu.FK_ID_NIVEL\r\n" + 
-				"		INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cu.FK_ID_IDIOMA\r\n" + 
-				"	INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO";
+				"	INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"		INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" + 
+				"		INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA\r\n" + 
+				"	INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
+				"ORDER BY doc.COD_DOCENTE_CI, id.NOM_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<ProgDocCursoDTO> progs = row.mapRowProgDocCurso(rows);
@@ -79,15 +81,17 @@ public class ProgDocCursoRepositoryImpl implements ProgDocCursoRepository {
 
 	@Override
 	public List<ProgDocCursoDTO> getProgDocCursosByPeriodo(int idPeriodo) {
-		String query = "SELECT * FROM tpprog_doc_curso AS pdc\r\n" + 
+		String query = "SELECT * "
+				+ "FROM tpprog_doc_curso AS pdc\r\n" + 
 				"	INNER JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 
 				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
 				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
-				"	INNER JOIN tmcurso AS cu ON cu.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
-				"		INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cu.FK_ID_NIVEL\r\n" + 
-				"		INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cu.FK_ID_IDIOMA\r\n" + 
-				"	INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO " +
-				"	WHERE pdc.FK_ID_PERIODO = " + idPeriodo;
+				"	INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"		INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" + 
+				"		INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA\r\n" + 
+				"	INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" +
+				"WHERE pdc.FK_ID_PERIODO = " + idPeriodo + " " +
+				"ORDER BY doc.COD_DOCENTE_CI, id.NOM_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<ProgDocCursoDTO> progs = row.mapRowProgDocCurso(rows);
@@ -101,11 +105,12 @@ public class ProgDocCursoRepositoryImpl implements ProgDocCursoRepository {
 				"	INNER JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 
 				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
 				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
-				"	INNER JOIN tmcurso AS cu ON cu.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
-				"		INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cu.FK_ID_NIVEL\r\n" + 
-				"		INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cu.FK_ID_IDIOMA\r\n" + 
+				"	INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"		INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" + 
+				"		INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA\r\n" + 
 				"	INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO " +
-				"	WHERE ID_PROG_DOC_CUR = " + id;
+				"	WHERE ID_PROG_DOC_CUR = " + id + " " +
+				"ORDER BY doc.COD_DOCENTE_CI, id.NOM_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		List<ProgDocCursoDTO> progs = this.row.mapRowProgDocCurso(this.jdbcTemplate.queryForList(query));
 		
 		if (progs.size() > 0) {
@@ -121,11 +126,32 @@ public class ProgDocCursoRepositoryImpl implements ProgDocCursoRepository {
 				"	INNER JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 
 				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
 				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
-				"	INNER JOIN tmcurso AS cu ON cu.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
-				"		INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cu.FK_ID_NIVEL\r\n" + 
-				"		INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cu.FK_ID_IDIOMA\r\n" + 
+				"	INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"		INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" + 
+				"		INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA\r\n" + 
 				"	INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO " +
-				"	WHERE pdc.FK_ID_PERIODO = " + idPeriodo + " AND id.ID_IDIOMA = " + idIdioma;
+				"	WHERE pdc.FK_ID_PERIODO = " + idPeriodo + " AND id.ID_IDIOMA = " + idIdioma + " " +
+				"ORDER BY doc.COD_DOCENTE_CI, id.NOM_IDIOMA, ni.ID_NIVEL, cur.CICLO";
+		
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<ProgDocCursoDTO> progs = row.mapRowProgDocCurso(rows);
+		
+		return progs;
+	}
+
+	@Override
+	public List<ProgDocCursoDTO> getProgDocCursosByDocenteCursoPeriodo(String codDocente, int idCurso, int idPeriodo) {
+		String query = "SELECT * FROM tpprog_doc_curso AS pdc\r\n" + 
+				"	INNER JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 
+				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
+				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+				"	INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"		INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" + 
+				"		INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA\r\n" + 
+				"	INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO " +
+				"	WHERE doc.COD_DOCENTE_CI = '" + codDocente + "' AND cur.ID_CURSO = " + idCurso + " AND " +
+				"		pa.ID_PERIODO = " + idPeriodo + " " + 
+				"ORDER BY doc.COD_DOCENTE_CI, id.NOM_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<ProgDocCursoDTO> progs = row.mapRowProgDocCurso(rows);

@@ -12,5 +12,6 @@ public interface ProgDocCursoService {
 	List<ProgDocCursoDTO> getProgDocCursos();
 	List<ProgDocCursoDTO> getProgDocCursosByPeriodo(int idPeriodo);
 	List<ProgDocCursoDTO> getProgDocCursosByPeriodoIdioma(int idPeriodo, int idIdioma);
+	List<ProgDocCursoDTO> getProgDocCursosByDocenteCursoPeriodo(String codDocente, int idCurso, int idPeriodo);
 	ProgDocCursoDTO getProgDocCursoById(int id);
 }
