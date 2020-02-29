@@ -33,6 +33,11 @@ public class EstudianteUsuarioPersonaController {
 	public List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonasMatriculadosByProgCurso(@PathVariable int id) {
 		return this.service.getEstudianteUsuarioPersonaMatriculadosByProgCurso(id);
 	}
+
+	@GetMapping(path = {"/listEstudiantesByTipoEstudiante/{id}"})
+	public List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonaByTipoEstudiante(@PathVariable int id) {
+		return this.service.getEstudianteUsuarioPersonaByTipoEstudiante(id);
+	}
 	
 	@PutMapping(path = {"/actualizarEstudianteUsuarioPersona/{id}"})
 	public String actualizarEstudianteUsuarioPersonaById(@RequestBody EstudianteUsuarioPersona estUsuPer,
