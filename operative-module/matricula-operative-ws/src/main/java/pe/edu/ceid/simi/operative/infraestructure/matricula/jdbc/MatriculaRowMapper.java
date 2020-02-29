@@ -21,19 +21,20 @@ public class MatriculaRowMapper implements RowMapper {
 		return null;
 	}
 	
-	public List<MatriculaDTO> mapRowMatricula(List<Map<String, Object>> rows){
+	@SuppressWarnings("rawtypes")
+	public MatriculaDTO mapRowMatricula(LinkedCaseInsensitiveMap row){
 		List<MatriculaDTO> matriculas = new ArrayList<MatriculaDTO>();
 		
-		for(Map<String, Object> row: rows) {
 			int idMatricula = Integer.parseInt(row.get("ID_MATRICULA").toString());
-			int codEstudiante = Integer.parseInt(row.get("FK_COD_ESTUDIANTE_CI").toString());
+			String codEstudiante = row.get("FK_COD_ESTUDIANTE_CI").toString();
 			int idProgcurso = Integer.parseInt(row.get("FK_ID_PROGCURSO").toString());
-			int numvouvher = Integer.parseInt(row.get("FK_NUM_VOUCHER").toString());
+			int numvouvher = Integer.parseInt(row.get("FK_SEC_VOUCHER").toString());
 			int estadoMat = Integer.parseInt(row.get("FK_ID_ESTADO_MATRICULA").toString());
 			String fechaMat = row.get("FECHA_MATRICULA").toString();
 			String nomEstado = row.get("NOM_ESTADO_MATRICULA").toString();
 			String nomIdioma= row.get("NOM_IDIOMA").toString();
 			String nomNivel= row.get("NOM_NIVEL").toString();
+			int ciclo = Integer.parseInt(row.get("CICLO").toString());
 			String nomDocente= row.get("NOMBRE").toString();
 			String appatDocente= row.get("APELLIDO_PAT").toString();
 			String apmatDocente= row.get("APELLIDO_MAT").toString();
@@ -42,11 +43,9 @@ public class MatriculaRowMapper implements RowMapper {
 			String horaFin = row.get("HORA_SALIDA").toString();
 			
 			MatriculaDTO i = new MatriculaDTO(idMatricula, codEstudiante, idProgcurso, numvouvher, estadoMat, fechaMat,
-					nomEstado, nomIdioma, nomNivel, nomDocente, appatDocente, apmatDocente, nomGrupoH, horaInicio, horaFin);
-			
-			matriculas.add(i);
-		}
-		return matriculas;
+					nomEstado, nomIdioma, nomNivel, ciclo, nomDocente, appatDocente, apmatDocente, nomGrupoH, horaInicio, horaFin);
+		
+		return i;
 	}
 	
 	public VoucherDTO mapRowVoucherSinPagar(LinkedCaseInsensitiveMap row){
