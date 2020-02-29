@@ -42,6 +42,8 @@ public class NotaRepositoryImpl implements NotaRepository {
 		r.forEach((v) -> notas.add(row.mapRow(v)));
 		return notas;
 	}
+	
+	// Métodos para docente
 
 	@Override
 	public boolean crearDetalle(List<DetalleNota> detalle) {
