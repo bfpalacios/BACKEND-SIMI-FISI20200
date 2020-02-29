@@ -47,4 +47,10 @@ public class HorarioServiceImpl implements HorarioService {
 		return this.repository.getHorariosById(id);
 	}
 
+	@Override
+	public List<HorarioDTO> getHorariosByCursoPeriodo(int idCurso, int idPeriodo) {
+		// TODO Auto-generated method stub
+		return this.repository.getHorariosByCursoPeriodo(idCurso, idPeriodo);
+	}
+
 }

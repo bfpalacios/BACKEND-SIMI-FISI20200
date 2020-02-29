@@ -9,6 +9,7 @@ public interface HorarioRepository {
 	Horario crearHorario(Horario horario);
 	Horario editHorario(Horario horario, int id);
 	List<HorarioDTO> getHorarios();
+	List<HorarioDTO> getHorariosByCursoPeriodo(int idCurso, int idPeriodo);
 	boolean deleteHorario(int idHorario);
 	List<HorarioDTO> getHorariosById(int id);
 }

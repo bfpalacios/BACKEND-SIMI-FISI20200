@@ -84,4 +84,21 @@ public class HorarioRepositoryImpl implements HorarioRepository {
 		return horario;
 	}
 
+	@Override
+	public List<HorarioDTO> getHorariosByCursoPeriodo(int idCurso, int idPeriodo) {
+//		String query = "SELECT *\r\n" + 
+//				"FROM tpprog_curso AS pgc\r\n" + 
+//				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
+//				"		INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+//				"        INNER JOIN tmperiodo_academico AS pac ON pac.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
+//				"    INNER JOIN tmhorario_grupo_horario AS hgh ON hgh.ID_HORARIO_GRUPOHORARIO = pgc.FK_ID_HORARIO_GRUPOHORARIO\r\n" + 
+//				"		INNER JOIN tmgrupo_horario AS gho ON gho.ID_GRUPOHORARIO = hgh.FK_ID_GRUPOHORARIO\r\n" + 
+//				"		INNER JOIN txhoras_clase AS hcl ON hcl.ID_HORA = hgh.FK_ID_HORA\r\n" + 
+//				"        INNER JOIN txdias_clase aS dcl ON dcl.ID_DIA = hgh.FK_ID_DIA\r\n" + 
+//				"WHERE cur.ID_CURSO = " + idCurso + " AND pac.ID_PERIODO = " + idPeriodo;
+//		List<HorarioDTO> horario = this.row.mapRowHorario(this.jdbcTemplate.queryForList(query));
+//		return horario;
+		return null;
+	}
+
 }
