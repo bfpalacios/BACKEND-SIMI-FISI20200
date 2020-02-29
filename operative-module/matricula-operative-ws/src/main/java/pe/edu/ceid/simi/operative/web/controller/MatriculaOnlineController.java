@@ -25,10 +25,6 @@ public class MatriculaOnlineController {
 	@Autowired
 	private MatriculaService service;
 	
-	@GetMapping(path = {"/listMatriculas"})
-	public List<MatriculaDTO> getMatricula() {
-		return this.service.getMatricula();
-	}
 	
 	@PutMapping(path = {"/actualizarMatricula/{id}"})
 	public Matricula actualizarMatricula(@RequestBody Matricula matricula, @PathVariable int id) {
@@ -42,14 +38,14 @@ public class MatriculaOnlineController {
 		return this.service.deleteMatricula(id);
 	}
 	
-	@PostMapping(path = {"/crearMatricula"})
-	public Matricula crearCurso(@RequestBody Matricula matricula) {
-		return this.service.crearMatricula(matricula);
+	@PostMapping(path = {"/crearMatricula/{id}"})
+	public boolean crearCurso(@RequestBody List<Matricula> matricula, @PathVariable int id) {
+		return this.service.crearMatricula(matricula, id);
 	}
 	
-	@GetMapping(path= {"/obtenerMatriculaById/{id}"})
-	public MatriculaDTO obtenerMatriculaById(@PathVariable int id) {
-		return this.service.getMatriculaById(id);
+	@GetMapping(path= {"/obtenerMatriculaById/{id}/{estado}"})
+	public List<MatriculaDTO> obtenerMatriculaById(@PathVariable int id, @PathVariable int estado) {
+		return this.service.getMatriculaById(id, estado);
 	}
 	
 	@GetMapping(path= {"/pagosSinUsar/{id}"})

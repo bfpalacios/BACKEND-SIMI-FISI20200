@@ -17,9 +17,9 @@ public class MatriculaServiceImpl implements MatriculaService{
 	private MatriculaRepository repository;
 	
 	@Override
-	public Matricula crearMatricula(Matricula matricula) {
+	public boolean crearMatricula(List<Matricula> matricula, int id) {
 		// TODO Auto-generated method stub
-		return this.repository.crearMatricula(matricula);
+		return this.repository.crearMatricula(matricula, id);
 	}
 
 	@Override
@@ -34,16 +34,16 @@ public class MatriculaServiceImpl implements MatriculaService{
 		return this.repository.deleteMatricula(id);
 	}
 
-	@Override
-	public List<MatriculaDTO> getMatricula() {
-		// TODO Auto-generated method stub
-		return this.repository.getMatricula();
-	}
+//	@Override
+//	public List<MatriculaDTO> getMatricula(int id, int estado) {
+//		// TODO Auto-generated method stub
+//		return this.repository.getMatricula(id, estado);
+//	}
 
 	@Override
-	public MatriculaDTO getMatriculaById(int id) {
+	public List<MatriculaDTO> getMatriculaById(int id, int estado) {
 		// TODO Auto-generated method stub
-		return this.repository.getMatriculaById(id);
+		return this.repository.getMatriculaById(id, estado);
 	}
 
 	@Override
