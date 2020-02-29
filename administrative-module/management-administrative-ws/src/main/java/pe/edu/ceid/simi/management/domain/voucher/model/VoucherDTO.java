@@ -24,6 +24,18 @@ public class VoucherDTO {
 		this.fecha = fecha;
 		this.hora = hora;
 	}
+
+	public VoucherDTO(int codigo, int secuencia, String descripcion, String nroDocumento, float importe,
+			String fecha, String hora) {
+		super();
+		this.codigo = codigo;
+		this.secuencia = secuencia;
+		this.descripcion = descripcion;
+		this.nroDocumento = nroDocumento;
+		this.importe = importe;
+		this.fecha = fecha;
+		this.hora = hora;
+	}
 	
 	public VoucherDTO() {
 		

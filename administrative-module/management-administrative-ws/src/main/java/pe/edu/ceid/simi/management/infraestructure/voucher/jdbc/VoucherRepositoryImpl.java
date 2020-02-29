@@ -67,6 +67,15 @@ public class VoucherRepositoryImpl implements VoucherRepository {
 		});
 		return this.statusInsert == 1 ? true : false;
 	}
+
+	@Override
+	public boolean existeVoucher(int codvoucher) {
+		String query = "SELECT * FROM tmvoucher WHERE SEC = " + codvoucher;
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<VoucherDTO> vouchers = row.mapRowVoucher(rows);
+		
+		return !vouchers.isEmpty();
+	}
 	
 	
 
