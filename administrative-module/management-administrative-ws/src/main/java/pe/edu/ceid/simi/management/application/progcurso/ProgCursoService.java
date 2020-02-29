@@ -11,5 +11,6 @@ public interface ProgCursoService {
 	boolean deleteProgCurso(int id);
 	List<ProgCursoDTO> getProgCursos();
 	List<ProgCursoDTO> getProgCursosByCursoPeriodo(int idCurso, int idPeriodo);
+	List<ProgCursoDTO> getProgCursosByCursoHorarioPeriodo(int idCurso, int idHorario, int idPeriodo);
 	ProgCursoDTO getProgCursoById(int id);
 }

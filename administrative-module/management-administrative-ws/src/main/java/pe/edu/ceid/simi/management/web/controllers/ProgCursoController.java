@@ -29,10 +29,16 @@ public class ProgCursoController {
 	public List<ProgCursoDTO> getProgCursos() {
 		return this.service.getProgCursos();
 	}
-	
+
 	@GetMapping(path = {"/listProgCursosByDocenteCurso/{idCurso}/{idPeriodo}"})
 	public List<ProgCursoDTO> getProgCursosByDocenteCurso(@PathVariable int idCurso, @PathVariable int idPeriodo) {
 		return this.service.getProgCursosByCursoPeriodo(idCurso, idPeriodo);
+	}
+
+	@GetMapping(path = {"/listProgCursosByCursoHorarioPeriodo/{idCurso}/{idHorario}/{idPeriodo}"})
+	public List<ProgCursoDTO> getProgCursosByCursoHorarioPeriodo(@PathVariable int idCurso,
+			@PathVariable int idHorario, @PathVariable int idPeriodo) {
+		return this.service.getProgCursosByCursoHorarioPeriodo(idCurso, idHorario, idPeriodo);
 	}
 	
 	@PutMapping(path = {"/actualizarProgCurso/{id}"})

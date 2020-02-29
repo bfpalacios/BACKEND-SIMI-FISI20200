@@ -134,4 +134,30 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 		return progs;
 	}
 
+	@Override
+	public List<ProgCursoDTO> getProgCursosByCursoHorarioPeriodo(int idCurso, int idHorario, int idPeriodo) {
+		String query = "SELECT *\r\n" + 
+				"FROM tpprog_curso AS pgc\r\n" + 
+				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
+				"		INNER JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 
+				"			INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
+				"				INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+				"		INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"			INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" + 
+				"			INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA\r\n" + 
+				"        INNER JOIN tmperiodo_academico AS pac ON pac.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
+				"    LEFT JOIN tmaula AS aul ON aul.ID_AULA = pgc.FK_ID_AULA\r\n" + 
+				"		LEFT JOIN tmsede AS sed ON sed.ID_SEDE = aul.FK_ID_SEDE\r\n" + 
+				"    INNER JOIN tmhorario_grupo_horario AS hgh ON hgh.ID_HORARIO_GRUPOHORARIO = pgc.FK_ID_HORARIO_GRUPOHORARIO\r\n" + 
+				"		INNER JOIN tmgrupo_horario AS gho ON gho.ID_GRUPOHORARIO = hgh.FK_ID_GRUPOHORARIO\r\n" + 
+				"		INNER JOIN txhoras_clase AS dcl ON dcl.ID_HORA = hgh.FK_ID_HORA\r\n" + 
+				"	INNER JOIN txestado_progcurso AS ep ON ep.ID_ESTADO_PROGCURSO = pgc.FK_ID_ESTADO_PROGCURSO\r\n" + 
+				"WHERE cur.ID_CURSO = " + idCurso + " AND hgh.ID_HORARIO_GRUPOHORARIO = " + idHorario +
+				" AND pac.ID_PERIODO = " + idPeriodo;
+		
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<ProgCursoDTO> progs = row.mapRowProgCurso(rows);
+		return progs;
+	}
+
 }

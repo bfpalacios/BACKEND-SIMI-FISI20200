@@ -32,7 +32,6 @@ public class CursoController {
 	
 	@PutMapping(path = {"/actualizarCurso/{id}"})
 	public String actualizarCurso(@RequestBody Curso curso, @PathVariable int id) {
-		
 		curso.setIdCurso(id);
 		return this.service.editCurso(curso, id);
 	}
