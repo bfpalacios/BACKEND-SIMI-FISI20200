@@ -31,7 +31,7 @@ public class ProgCursoController {
 	}
 
 	@GetMapping(path = {"/listProgCursosByDocenteCurso/{idCurso}/{idPeriodo}"})
-	public List<ProgCursoDTO> getProgCursosByDocenteCurso(@PathVariable int idCurso, @PathVariable int idPeriodo) {
+	public List<ProgCursoDTO> getProgCursosByCursoPeriodo(@PathVariable int idCurso, @PathVariable int idPeriodo) {
 		return this.service.getProgCursosByCursoPeriodo(idCurso, idPeriodo);
 	}
 
