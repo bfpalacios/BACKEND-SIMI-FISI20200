@@ -40,6 +40,11 @@ public class ProgCursoController {
 			@PathVariable int idHorario, @PathVariable int idPeriodo) {
 		return this.service.getProgCursosByCursoHorarioPeriodo(idCurso, idHorario, idPeriodo);
 	}
+
+	@GetMapping(path = {"/listProgCursosByPeriodo/{idPeriodo}"})
+	public List<ProgCursoDTO> getProgCursosByCursoHorarioPeriodo(@PathVariable int idPeriodo) {
+		return this.service.getProgCursosByPeriodo(idPeriodo);
+	}
 	
 	@PutMapping(path = {"/actualizarProgCurso/{id}"})
 	public ProgCurso actualizarProgCurso(@RequestBody ProgCurso progCurso, @PathVariable int id) {

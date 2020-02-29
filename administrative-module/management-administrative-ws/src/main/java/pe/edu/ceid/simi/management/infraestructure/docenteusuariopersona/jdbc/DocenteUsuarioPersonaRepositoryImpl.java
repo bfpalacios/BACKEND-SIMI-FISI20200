@@ -23,19 +23,20 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 	@Override
 	public String crearDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona) {
 		try {
-					String insertQuery = "{CALL SP_DOC_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-					int success = this.jdbcTemplate.update(insertQuery, docenteUsuarioPersona.getNombre(), docenteUsuarioPersona.getApellidoPat(),
-							docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(), docenteUsuarioPersona.getGenero(),
-							docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(), docenteUsuarioPersona.getLugarNacDist(),
-							docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(), docenteUsuarioPersona.getNacionalidad(),
-							docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone() ,docenteUsuarioPersona.getEmail(),
-							docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(), docenteUsuarioPersona.getDepartamento());
-					
-					if (success >= 0) {
-						return "true";
-					}
-					
-					return "false";
+			String insertQuery = "{CALL SP_DOC_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+			int success = this.jdbcTemplate.update(insertQuery, docenteUsuarioPersona.getNombre(), docenteUsuarioPersona.getApellidoPat(),
+					docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(), docenteUsuarioPersona.getGenero(),
+					docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(), docenteUsuarioPersona.getLugarNacDist(),
+					docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(), docenteUsuarioPersona.getNacionalidad(),
+					docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone(), docenteUsuarioPersona.getFechaNacimiento(),
+					docenteUsuarioPersona.getEmail(), docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(),
+					docenteUsuarioPersona.getDepartamento());
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
 		} catch (DuplicateKeyException ex) {
 //			System.out.println("Mensaje: " + ex.getMessage());
 			if (ex.getMessage().contains("EMAIL_UNIQUE")) {
@@ -52,14 +53,14 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 	@Override
 	public String editDocenteUsuarioPersona(DocenteUsuarioPersona docenteUsuarioPersona, String id) {
 		try {
-			String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+			String insertQuery = "{CALL SP_DOC_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 			int success = this.jdbcTemplate.update(insertQuery, id, docenteUsuarioPersona.getNombre(),
 					docenteUsuarioPersona.getApellidoPat(), docenteUsuarioPersona.getApellidoMat(), docenteUsuarioPersona.getDni(),
 					docenteUsuarioPersona.getGenero(), docenteUsuarioPersona.getEdad(), docenteUsuarioPersona.getUniversity(),
 					docenteUsuarioPersona.getLugarNacDist(), docenteUsuarioPersona.getLugarNacProv(), docenteUsuarioPersona.getLugarNacDep(),
 					docenteUsuarioPersona.getNacionalidad(), docenteUsuarioPersona.getAddress(), docenteUsuarioPersona.getPhone(),
-					docenteUsuarioPersona.getEmail(), docenteUsuarioPersona.getContrasenia(), docenteUsuarioPersona.getEstado(),
-					docenteUsuarioPersona.getDepartamento());
+					docenteUsuarioPersona.getFechaNacimiento(), docenteUsuarioPersona.getEmail(), docenteUsuarioPersona.getContrasenia(),
+					docenteUsuarioPersona.getEstado(), docenteUsuarioPersona.getDepartamento());
 			
 			if (success >= 0) {
 				return "true";
