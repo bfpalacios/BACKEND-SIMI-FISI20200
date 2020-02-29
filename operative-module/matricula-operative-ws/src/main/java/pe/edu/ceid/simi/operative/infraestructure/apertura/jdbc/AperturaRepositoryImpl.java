@@ -25,14 +25,6 @@ public class AperturaRepositoryImpl implements AperturaRepository {
 
 	@Autowired
 	private AperturaRowMapper row;
-
-	private String mensaje;
-
-	private int grupo;
-
-	private int curso;
-
-	private String  id;
 	
 	Map<String, Object> inParams = new HashMap<>();
 
