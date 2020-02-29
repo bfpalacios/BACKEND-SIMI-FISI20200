@@ -10,6 +10,7 @@ public interface EstudianteUsuarioPersonaRepository {
 	List<EstudianteUsuarioPersona> getEstudianteUsuarioPersona();
 	List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonaMatriculadosByProgCurso(int idProgCurso);
 	List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonaByTipoEstudiante(int idTipoEstudiante);
+	List<EstudianteUsuarioPersona> getEstudiantesByCursoPeriodo(int idCurso, int idPeriodo);
 	boolean deleteEstudianteUsuarioPersona(String codEstudiante);
 	EstudianteUsuarioPersona getEstudianteUsuarioPersonaById(String codEstudiante);
 }

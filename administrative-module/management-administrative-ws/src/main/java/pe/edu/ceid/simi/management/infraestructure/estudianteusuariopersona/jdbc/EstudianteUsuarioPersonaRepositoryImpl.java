@@ -152,4 +152,22 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 		return null;
 	}
 
+	@Override
+	public List<EstudianteUsuarioPersona> getEstudiantesByCursoPeriodo(int idCurso, int idPeriodo) {
+		String query = "SELECT *\r\n" + 
+				"FROM tpmatricula AS mat\r\n" + 
+				"	INNER JOIN tpprog_curso AS pgc ON pgc.ID_PROGCURSO = mat.FK_ID_PROGCURSO\r\n" + 
+				"		INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
+				"			INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"	INNER JOIN tmestudiante AS est ON est.COD_ESTUDIANTE_CI = mat.FK_COD_ESTUDIANTE_CI\r\n" + 
+				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = est.FK_ID_USUARIO\r\n" + 
+				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+				"			INNER JOIN tmrol AS rol ON rol.ID_ROL = usu.FK_ID_ROL\r\n" + 
+				"WHERE cur.ID_CURSO = " + idCurso + " AND pdc.FK_ID_PERIODO = " + idPeriodo;
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<EstudianteUsuarioPersona> estUsuPer = row.mapRowEstudianteUsuarioPersona(rows);
+		
+		return estUsuPer;
+	}
+
 }
