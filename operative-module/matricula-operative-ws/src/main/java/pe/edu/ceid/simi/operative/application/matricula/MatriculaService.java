@@ -13,4 +13,5 @@ public interface MatriculaService {
 	//List<MatriculaDTO> getMatricula(int id, int estado);
 	List<MatriculaDTO> getMatriculaById(int id, int estado);
 	List<VoucherDTO> obtenerpagosSinUsar(int codUser);
+	boolean matricularOnline(List<Matricula> matricula, int id);
 }
