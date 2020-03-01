@@ -19,7 +19,7 @@ import pe.edu.ceid.simi.management.domain.matricula.model.MatriculaDTO;
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/procesoMatricula/matricula"})
+@RequestMapping({"/api/v1/procesoMatricula/matricula"})
 public class MatriculaController {
 
 	@Autowired

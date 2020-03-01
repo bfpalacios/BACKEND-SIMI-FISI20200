@@ -18,7 +18,7 @@ import pe.edu.ceid.simi.management.domain.estudianteusuariopersona.model.Estudia
 
 @CrossOrigin(origins = "localhost:4200")
 @RestController
-@RequestMapping({"/api/v1/programacionDocente/estudianteusuariopersona"})
+@RequestMapping({"/api/v1/procesomatricula/estudianteusuariopersona"})
 public class EstudianteUsuarioPersonaController {
 
 	@Autowired
