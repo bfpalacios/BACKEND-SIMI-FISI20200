@@ -52,7 +52,7 @@ public class ProgCursoController {
 	}
 	
 	@PutMapping(path = {"/actualizarProgCurso/{id}"})
-	public ProgCurso actualizarProgCurso(@RequestBody ProgCurso progCurso, @PathVariable int id) {
+	public String actualizarProgCurso(@RequestBody ProgCurso progCurso, @PathVariable int id) {
 		progCurso.setIdProgDocCur(id);
 		return this.service.editProgCurso(progCurso, id);
 	}
@@ -63,7 +63,7 @@ public class ProgCursoController {
 	}
 	
 	@PostMapping(path = {"/crearProgCurso"})
-	public ProgCurso crearProgCurso(@RequestBody ProgCurso progCurso) {
+	public String crearProgCurso(@RequestBody ProgCurso progCurso) {
 		return this.service.crearProgCurso(progCurso);
 	}
 	

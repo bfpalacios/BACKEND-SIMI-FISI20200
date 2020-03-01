@@ -6,8 +6,8 @@ import pe.edu.ceid.simi.management.domain.progcurso.model.ProgCurso;
 import pe.edu.ceid.simi.management.domain.progcurso.model.ProgCursoDTO;
 
 public interface ProgCursoService {
-	ProgCurso crearProgCurso(ProgCurso progCurso);
-	ProgCurso editProgCurso(ProgCurso progCurso, int id);
+	String crearProgCurso(ProgCurso progCurso);
+	String editProgCurso(ProgCurso progCurso, int id);
 	boolean deleteProgCurso(int id);
 	List<ProgCursoDTO> getProgCursos();
 	List<ProgCursoDTO> getProgCursosByCursoPeriodo(int idCurso, int idPeriodo);

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,32 +22,40 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 	private ProgCursoRowMapper row;
 
 	@Override
-	public ProgCurso crearProgCurso(ProgCurso progCurso) {
-		String insertQuery = "INSERT INTO tpprog_curso "
-				+ "(FK_ID_PROG_DOC_CUR, FK_ID_AULA, FK_ID_HORARIO_GRUPOHORARIO, FK_ID_ESTADO_PROGCURSO) "
-				+ "VALUES (?, ?, ?, ?)";
-		int success = this.jdbcTemplate.update(insertQuery, progCurso.getIdProgDocCur(),
-				progCurso.getIdAula(), progCurso.getIdHorarioGrupoHorario(), progCurso.getIdEstadoProgCurso());
-		
-		if (success >= 0) {
-			return progCurso;
+	public String crearProgCurso(ProgCurso progCurso) {
+		try {
+			String insertQuery = "INSERT INTO tpprog_curso "
+					+ "(FK_ID_PROG_DOC_CUR, FK_ID_AULA, FK_ID_HORARIO_GRUPOHORARIO, FK_ID_ESTADO_PROGCURSO) "
+					+ "VALUES (?, ?, ?, ?)";
+			int success = this.jdbcTemplate.update(insertQuery, progCurso.getIdProgDocCur(),
+					progCurso.getIdAula(), progCurso.getIdHorarioGrupoHorario(), progCurso.getIdEstadoProgCurso());
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {
+			return "No es posible ingresar registros duplicados.";
 		}
-		
-		return null;
 	}
 
 	@Override
-	public ProgCurso editProgCurso(ProgCurso progCurso, int id) {
-		String query = "UPDATE tpprog_curso SET FK_ID_PROG_DOC_CUR = ?, FK_ID_AULA = ? , FK_ID_HORARIO_GRUPOHORARIO = ?,"
-				+ " FK_ID_ESTADO_PROGCURSO = ? WHERE ID_PROGCURSO = " + id;
-		int update = this.jdbcTemplate.update(query, progCurso.getIdProgDocCur(),
-				progCurso.getIdAula(), progCurso.getIdHorarioGrupoHorario(), progCurso.getIdEstadoProgCurso());
-		
-		if (update == 1) {
-			return progCurso;
+	public String editProgCurso(ProgCurso progCurso, int id) {
+		try {
+			String query = "UPDATE tpprog_curso SET FK_ID_PROG_DOC_CUR = ?, FK_ID_AULA = ? , FK_ID_HORARIO_GRUPOHORARIO = ?,"
+					+ " FK_ID_ESTADO_PROGCURSO = ? WHERE ID_PROGCURSO = " + id;
+			int update = this.jdbcTemplate.update(query, progCurso.getIdProgDocCur(),
+					progCurso.getIdAula(), progCurso.getIdHorarioGrupoHorario(), progCurso.getIdEstadoProgCurso());
+			
+			if (update == 1) {
+				return "true";
+			}
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {
+			return "Los datos actualizados se repiten en otro registro.";
 		}
-		
-		return null;
 	}
 
 	@Override

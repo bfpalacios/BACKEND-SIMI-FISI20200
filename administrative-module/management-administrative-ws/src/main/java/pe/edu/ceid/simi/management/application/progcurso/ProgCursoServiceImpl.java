@@ -16,13 +16,13 @@ public class ProgCursoServiceImpl implements ProgCursoService {
 	private ProgCursoRepository repository;
 
 	@Override
-	public ProgCurso crearProgCurso(ProgCurso progCurso) {
+	public String crearProgCurso(ProgCurso progCurso) {
 		// TODO Auto-generated method stub
 		return this.repository.crearProgCurso(progCurso);
 	}
 
 	@Override
-	public ProgCurso editProgCurso(ProgCurso progCurso, int id) {
+	public String editProgCurso(ProgCurso progCurso, int id) {
 		// TODO Auto-generated method stub
 		return this.repository.editProgCurso(progCurso, id);
 	}
