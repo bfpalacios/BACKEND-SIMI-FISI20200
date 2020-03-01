@@ -25,6 +25,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+.vscode/
 /~$NUAL DE USUARIO SIMI.docx
 
 administrative-module/management-administrative-ws/src/main/java/pe/edu/ceid/simi/management/security

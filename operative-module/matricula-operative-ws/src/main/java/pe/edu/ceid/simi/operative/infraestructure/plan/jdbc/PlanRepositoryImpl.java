@@ -1,6 +1,7 @@
 package pe.edu.ceid.simi.operative.infraestructure.plan.jdbc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class PlanRepositoryImpl implements PlanRepository{
 	public List<PlanDTO> getPlan() {
 		
 		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_PLAN_LIST");
+
 		
 		 Map<String, Object> result = jdbcCall.execute();
 		 List<PlanDTO> plan = new ArrayList<>();

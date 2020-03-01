@@ -1,7 +1,6 @@
 package pe.edu.ceid.simi.operative.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +23,6 @@ public class MatriculaOnlineController {
 	@Autowired
 	private MatriculaService service;
 	
-	@GetMapping(path = {"/listMatriculas"})
-	public List<MatriculaDTO> getMatricula() {
-		return this.service.getMatricula();
-	}
 	
 	@PutMapping(path = {"/actualizarMatricula/{id}"})
 	public Matricula actualizarMatricula(@RequestBody Matricula matricula, @PathVariable int id) {
@@ -41,14 +36,14 @@ public class MatriculaOnlineController {
 		return this.service.deleteMatricula(id);
 	}
 	
-	@PostMapping(path = {"/crearMatricula"})
-	public Matricula crearCurso(@RequestBody Matricula matricula) {
-		return this.service.crearMatricula(matricula);
+	@PostMapping(path = {"/crearMatricula/{id}"})
+	public boolean crearCurso(@RequestBody List<Matricula> matricula, @PathVariable int id) {
+		return this.service.crearMatricula(matricula, id);
 	}
 	
-	@GetMapping(path= {"/obtenerMatriculaById/{id}"})
-	public MatriculaDTO obtenerMatriculaById(@PathVariable int id) {
-		return this.service.getMatriculaById(id);
+	@GetMapping(path= {"/obtenerMatriculaById/{id}/{estado}"})
+	public List<MatriculaDTO> obtenerMatriculaById(@PathVariable int id, @PathVariable int estado) {
+		return this.service.getMatriculaById(id, estado);
 	}
 	
 	@GetMapping(path= {"/pagosSinUsar/{id}"})
@@ -56,4 +51,8 @@ public class MatriculaOnlineController {
 		return this.service.obtenerpagosSinUsar(codUser);
 	}
 	
+	@PostMapping(path = {"/matricularAlumno/{userId}"})
+	public boolean crearCurso(@PathVariable int userId, @RequestBody List<Matricula> matriculas) {
+		return this.service.matricularOnline(matriculas, userId);
+	}
 }
