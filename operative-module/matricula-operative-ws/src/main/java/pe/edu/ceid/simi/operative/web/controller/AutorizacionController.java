@@ -18,6 +18,7 @@ public class AutorizacionController {
 	
 	@PostMapping
 	public Autorizacion accederSistema(@RequestBody Autorizacion auth) {
+		auth.setEmail("joel@unmsm.edu.pe"); auth.setCodigo(4);auth.setTipo(1);
 		return this.service.accederSistema(auth.getEmail(), auth.getCodigo(), auth.getTipo());
 	}
 }

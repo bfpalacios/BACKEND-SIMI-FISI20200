@@ -12,12 +12,9 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedCaseInsensitiveMap;
-
-import pe.edu.ceid.simi.operative.domain.apertura.model.Apertura;
 import pe.edu.ceid.simi.operative.domain.matricula.model.Matricula;
 import pe.edu.ceid.simi.operative.domain.matricula.model.MatriculaDTO;
 import pe.edu.ceid.simi.operative.domain.matricula.repository.MatriculaRepository;
-import pe.edu.ceid.simi.operative.domain.nota.model.NotaDTO;
 import pe.edu.ceid.simi.operative.domain.voucher.model.VoucherDTO;
 
 @Component
@@ -37,7 +34,6 @@ public class MatriculaRepositoryImpl implements MatriculaRepository {
 		this.statusInsert = 0;
 		String query = "CALL SP_MATRICULA_INSERT (?, ?, ?) ";
 		matricula.forEach(m -> {
-			System.out.println("Entrando -> " + id);
 			this.statusInsert = 
 			this.jdbcTemplate.update(query, 
 					id, m.getIdProgcurso(), m.getNumvouvher());
@@ -82,6 +78,7 @@ public class MatriculaRepositoryImpl implements MatriculaRepository {
 		return matriculas;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List<VoucherDTO> obtenerpagosSinUsar(int codUser) {
 		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("USP_VOUCHERS_SIN_USAR_LIST");
@@ -90,6 +87,7 @@ public class MatriculaRepositoryImpl implements MatriculaRepository {
 
 		Map<String, Object> result = jdbcCall.execute(params);
 		List<VoucherDTO> vouchers = new ArrayList<>();
+		@SuppressWarnings("unchecked")
 		List<LinkedCaseInsensitiveMap> r = (List<LinkedCaseInsensitiveMap>) result.values().toArray()[0];
 		r.forEach((v) -> vouchers.add(row.mapRowVoucherSinPagar(v)));
 		return vouchers;
