@@ -21,6 +21,9 @@ public class ProgCursoDTO {
 	private int idEstadoProgCurso;
 	private String nomEstado;
 
+	private int idSede, idPeriodo , idCurso;
+	private String codDocenteCI;
+	
 	public ProgCursoDTO() {}
 
 	public ProgCursoDTO(int idProgCurso, int idProgDocCur, String nombre, String apellidoPat, String apellidoMat,
@@ -47,6 +50,7 @@ public class ProgCursoDTO {
 		this.idEstadoProgCurso = idEstadoProgCurso;
 		this.nomEstado = nomEstado;
 	}
+	
 
 	public ProgCursoDTO(int idProgCurso, int idProgDocCur, String nombre, String apellidoPat, String apellidoMat,
 			String nomIdioma, String nomNivel, String nomPeriodo, int ciclo, int idAula, String nomAula, String nomSede,
@@ -79,6 +83,37 @@ public class ProgCursoDTO {
 		this.idEstadoProgCurso = idEstadoProgCurso;
 	}
 	
+	
+	
+	public ProgCursoDTO(int idProgCurso, int idProgDocCur, String nombre, String apellidoPat, String apellidoMat,
+			String nomIdioma, String nomNivel, String nomPeriodo, int ciclo, int idAula, String nomAula, String nomSede,
+			int idHorarioGrupoHorario, String nomGrupoHorario, String horaInicio, String horaSalida,
+			int idEstadoProgCurso, String nomEstado, int idSede, int idPeriodo, int idCurso, String codDocenteCI) {
+		super();
+		this.idProgCurso = idProgCurso;
+		this.idProgDocCur = idProgDocCur;
+		this.nombre = nombre;
+		this.apellidoPat = apellidoPat;
+		this.apellidoMat = apellidoMat;
+		this.nomIdioma = nomIdioma;
+		this.nomNivel = nomNivel;
+		this.nomPeriodo = nomPeriodo;
+		this.ciclo = ciclo;
+		this.idAula = idAula;
+		this.nomAula = nomAula;
+		this.nomSede = nomSede;
+		this.idHorarioGrupoHorario = idHorarioGrupoHorario;
+		this.nomGrupoHorario = nomGrupoHorario;
+		this.horaInicio = horaInicio;
+		this.horaSalida = horaSalida;
+		this.idEstadoProgCurso = idEstadoProgCurso;
+		this.nomEstado = nomEstado;
+		this.idSede = idSede;
+		this.idPeriodo = idPeriodo;
+		this.idCurso = idCurso;
+		this.codDocenteCI = codDocenteCI;
+	}
+
 	public int getIdProgCurso() {
 		return idProgCurso;
 	}
@@ -189,5 +224,41 @@ public class ProgCursoDTO {
 	public void setHoraSalida(String horaSalida) {
 		this.horaSalida = horaSalida;
 	}
+
+	public int getIdSede() {
+		return idSede;
+	}
+
+	public void setIdSede(int idSede) {
+		this.idSede = idSede;
+	}
+
+	public int getIdPeriodo() {
+		return idPeriodo;
+	}
+
+	public void setIdPeriodo(int idPeriodo) {
+		this.idPeriodo = idPeriodo;
+	}
+
+	public int getIdCurso() {
+		return idCurso;
+	}
+
+	public void setIdCurso(int idCurso) {
+		this.idCurso = idCurso;
+	}
+
+	public String getCodDocenteCI() {
+		return codDocenteCI;
+	}
+
+	public void setCodDocenteCI(String codDocenteCI) {
+		this.codDocenteCI = codDocenteCI;
+	}
+	
+	
+	
+	
 	
 }

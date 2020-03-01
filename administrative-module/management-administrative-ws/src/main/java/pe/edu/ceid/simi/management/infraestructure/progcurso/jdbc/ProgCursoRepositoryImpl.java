@@ -110,7 +110,7 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 				"        INNER JOIN txhoras_clase AS dc ON dc.ID_HORA = hgh.FK_ID_HORA\r\n" + 
 				"	INNER JOIN txestado_progcurso AS ep ON ep.ID_ESTADO_PROGCURSO = pc.FK_ID_ESTADO_PROGCURSO " +
 				"	WHERE ID_PROGCURSO  = " + id;
-		List<ProgCursoDTO> progs = this.row.mapRowProgCurso(this.jdbcTemplate.queryForList(query));
+		List<ProgCursoDTO> progs = this.row.mapRowProgCursogetOne(this.jdbcTemplate.queryForList(query));
 		
 		if (progs.size() > 0) {
 			return progs.get(0);

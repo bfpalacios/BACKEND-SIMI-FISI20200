@@ -97,8 +97,8 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 	@Override
 	public List<DocenteUsuarioPersona> getDocentesByCursoPeriodo(int idCurso, int idPeriodo) {
 		String query = "SELECT *\r\n" + 
-				"FROM tpprog_curso AS pgc\r\n" + 
-				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
+				"FROM tpprog_doc_curso AS pdc\r\n" + 
+			
 				"        INNER JOIN tmperiodo_academico AS pac ON pac.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
 				"		INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
 				"			INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" + 
