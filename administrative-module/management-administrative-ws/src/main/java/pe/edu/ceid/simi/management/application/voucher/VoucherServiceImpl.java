@@ -24,4 +24,10 @@ public class VoucherServiceImpl implements VoucherService{
 	public boolean saveVouchers(List<Voucher> vouchers) {
 		return this.repository.saveVouchers(vouchers);
 	}
+
+	@Override
+	public boolean existeVoucher(int codvoucher) {
+		// TODO Auto-generated method stub
+		return this.repository.existeVoucher(codvoucher);
+	}
 }

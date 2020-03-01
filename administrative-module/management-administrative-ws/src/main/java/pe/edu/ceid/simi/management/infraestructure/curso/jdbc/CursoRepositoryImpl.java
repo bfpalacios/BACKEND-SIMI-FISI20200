@@ -109,10 +109,10 @@ public class CursoRepositoryImpl implements CursoRepository {
 	
 	@Override
 	public List<CursoDTO> getCursos() {
-		String query = "SELECT * FROM tmcurso AS cu "
-				+ "INNER JOIN tmidioma AS id ON cu.FK_ID_IDIOMA = id.ID_IDIOMA "
-				+ "INNER JOIN txnivel AS ni ON cu.FK_ID_NIVEL = ni.ID_NIVEL "
-				+ "ORDER BY id.ID_IDIOMA, ni.ID_NIVEL, cu.CICLO";
+		String query = "SELECT * FROM tmcurso AS cur "
+				+ "INNER JOIN tmidioma AS id ON cur.FK_ID_IDIOMA = id.ID_IDIOMA "
+				+ "INNER JOIN txnivel AS ni ON cur.FK_ID_NIVEL = ni.ID_NIVEL "
+				+ "ORDER BY id.ID_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<CursoDTO> cursos = row.mapRowCurso(rows);
 		return cursos;
@@ -120,11 +120,11 @@ public class CursoRepositoryImpl implements CursoRepository {
 
 	@Override
 	public List<CursoDTO> getCursosByIdioma(int idIdioma) {
-		String query = "SELECT * FROM tmcurso AS cu "
-				+ "INNER JOIN tmidioma AS id ON cu.FK_ID_IDIOMA = id.ID_IDIOMA "
-				+ "INNER JOIN txnivel AS ni ON cu.FK_ID_NIVEL = ni.ID_NIVEL "
+		String query = "SELECT * FROM tmcurso AS cur "
+				+ "INNER JOIN tmidioma AS id ON cur.FK_ID_IDIOMA = id.ID_IDIOMA "
+				+ "INNER JOIN txnivel AS ni ON cur.FK_ID_NIVEL = ni.ID_NIVEL "
 				+ "WHERE id.ID_IDIOMA = " + idIdioma
-				+ " ORDER BY id.ID_IDIOMA, ni.ID_NIVEL, cu.CICLO";
+				+ " ORDER BY id.ID_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<CursoDTO> cursos = row.mapRowCurso(rows);
 		return cursos;
@@ -132,9 +132,9 @@ public class CursoRepositoryImpl implements CursoRepository {
 
 	@Override
 	public CursoDTO getCursoById(int id) {
-		String query = "SELECT * FROM tmcurso AS cu "
-				+ "INNER JOIN tmidioma AS id ON cu.FK_ID_IDIOMA = id.ID_IDIOMA "
-				+ "INNER JOIN txnivel AS ni ON cu.FK_ID_NIVEL = ni.ID_NIVEL WHERE ID_CURSO = " + id;
+		String query = "SELECT * FROM tmcurso AS cur "
+				+ "INNER JOIN tmidioma AS id ON cur.FK_ID_IDIOMA = id.ID_IDIOMA "
+				+ "INNER JOIN txnivel AS ni ON cur.FK_ID_NIVEL = ni.ID_NIVEL WHERE ID_CURSO = " + id;
 		List<CursoDTO> curso = this.row.mapRowCurso(this.jdbcTemplate.queryForList(query));
 		
 		if (curso.size() > 0) {
@@ -146,13 +146,13 @@ public class CursoRepositoryImpl implements CursoRepository {
 
 	@Override
 	public List<CursoDTO> getCursosByDocente(int idDocente) {
-		String query = "SELECT * FROM tmcurso AS cu "
-				+ "INNER JOIN tmidioma AS id ON cu.FK_ID_IDIOMA = id.ID_IDIOMA "
-				+ "INNER JOIN txnivel AS ni ON cu.FK_ID_NIVEL = ni.ID_NIVEL "
-				+ "INNER JOIN tpprog_doc_curso AS pdc ON pdc.FK_ID_CURSO = cu.ID_CURSO "
+		String query = "SELECT * FROM tmcurso AS cur "
+				+ "INNER JOIN tmidioma AS id ON cur.FK_ID_IDIOMA = id.ID_IDIOMA "
+				+ "INNER JOIN txnivel AS ni ON cur.FK_ID_NIVEL = ni.ID_NIVEL "
+				+ "INNER JOIN tpprog_doc_curso AS pdc ON pdc.FK_ID_CURSO = cur.ID_CURSO "
 				+ "INNER JOIN tmdocente AS doc ON doc.ID_DOCENTE = pdc.FK_ID_DOCENTE "
 				+ "WHERE id.ID_IDIOMA = " + idDocente
-				+ " ORDER BY id.ID_IDIOMA, ni.ID_NIVEL, cu.CICLO";
+				+ " ORDER BY id.ID_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<CursoDTO> cursos = row.mapRowCurso(rows);
 		return cursos;
@@ -180,6 +180,25 @@ public class CursoRepositoryImpl implements CursoRepository {
 			"			LEFT JOIN tpprog_curso AS pgc ON pgc.FK_ID_PROG_DOC_CUR = pdc.ID_PROG_DOC_CUR \r\n" +
 		"WHERE pdc.FK_ID_PERIODO = " + idPeriodo ;
 		 
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<CursoDTO> cursos = row.mapRowCurso(rows);
+		return cursos;
+	}
+
+	@Override
+	public List<CursoDTO> getCursosByIdiomaSedePeriodo(int idIdioma, int idSede, int idPeriodo) {
+		String query = "SELECT *\r\n" + 
+				"FROM tpprog_curso AS pgc\r\n" + 
+				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
+				"		INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"			INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" + 
+				"			INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA\r\n" + 
+				"        INNER JOIN tmperiodo_academico AS pac ON pac.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
+				"    LEFT JOIN tmaula AS aul ON aul.ID_AULA = pgc.FK_ID_AULA\r\n" + 
+				"		LEFT JOIN tmsede AS sed ON sed.ID_SEDE = aul.FK_ID_SEDE\r\n" + 
+				"WHERE cur.FK_ID_IDIOMA = " + idIdioma +  " AND aul.FK_ID_SEDE = " + idSede +
+				" AND pdc.FK_ID_PERIODO = " + idPeriodo
+				+ " ORDER BY id.ID_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<CursoDTO> cursos = row.mapRowCurso(rows);
 		return cursos;

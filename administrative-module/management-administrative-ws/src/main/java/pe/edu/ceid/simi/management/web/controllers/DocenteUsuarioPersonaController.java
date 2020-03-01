@@ -49,6 +49,11 @@ public class DocenteUsuarioPersonaController {
 	public DocenteUsuarioPersona obtenerDocenteUsuarioPersona(@PathVariable String id) {
 		return this.service.getDocenteUsuarioPersonaById(id);
 	}
+
+	@GetMapping(path = {"/listDocentesByCursoPeriodo/{idCurso}/{idPeriodo}"})
+	public List<DocenteUsuarioPersona> getDocentesByCursoPeriodo(@PathVariable int idCurso, @PathVariable int idPeriodo) {
+		return this.service.getDocentesByCursoPeriodo(idCurso, idPeriodo);
+	}
 	
 }
 

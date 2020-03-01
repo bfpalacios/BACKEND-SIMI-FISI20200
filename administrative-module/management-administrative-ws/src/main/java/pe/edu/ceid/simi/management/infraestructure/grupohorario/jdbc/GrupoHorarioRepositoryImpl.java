@@ -46,7 +46,8 @@ public class GrupoHorarioRepositoryImpl implements GrupoHorarioRepository {
 	@Override
 	public List<GrupoHorarioDTO> getGrupoHorario() {
 		String query = "SELECT *, gh.ID_GRUPOHORARIO, gh.NOM_GRUPOHORARIO,\r\n" + 
-				"	GROUP_CONCAT(CONCAT(dc.NOM_DIA, \" de \", hc.HORA_INICIO, \" a \", hc.HORA_SALIDA) SEPARATOR ', ') AS LISTA_HORARIO\r\n" + 
+				"	CONCAT(GROUP_CONCAT(dc.NOM_DIA SEPARATOR ', '), ' de ', hc.HORA_INICIO, ' a ', hc.HORA_SALIDA)\r\n" + 
+				"    AS LISTA_HORARIO\r\n" + 
 				"FROM tmgrupo_horario AS gh\r\n" + 
 				"INNER JOIN tmhorario_grupo_horario AS hgh ON hgh.FK_ID_GRUPOHORARIO = gh.ID_GRUPOHORARIO\r\n" + 
 				"	LEFT JOIN txdias_clase AS dc ON dc.ID_DIA = hgh.FK_ID_DIA\r\n" + 
@@ -61,13 +62,14 @@ public class GrupoHorarioRepositoryImpl implements GrupoHorarioRepository {
 	@Override
 	public GrupoHorarioDTO getGrupoHorarioById(int id) {
 		String query = "SELECT *, gh.ID_GRUPOHORARIO, gh.NOM_GRUPOHORARIO,\r\n" + 
-				"	GROUP_CONCAT(CONCAT(dc.NOM_DIA, \" de \", hc.HORA_INICIO, \" a \", hc.HORA_SALIDA) SEPARATOR ', ') AS LISTA_HORARIO\r\n" + 
+				"	CONCAT(GROUP_CONCAT(dc.NOM_DIA SEPARATOR ', '), ' de ', hc.HORA_INICIO, ' a ', hc.HORA_SALIDA)\r\n" + 
+				"    AS LISTA_HORARIO\r\n" + 
 				"FROM tmgrupo_horario AS gh\r\n" + 
 				"INNER JOIN tmhorario_grupo_horario AS hgh ON hgh.FK_ID_GRUPOHORARIO = gh.ID_GRUPOHORARIO\r\n" + 
 				"	LEFT JOIN txdias_clase AS dc ON dc.ID_DIA = hgh.FK_ID_DIA\r\n" + 
 				"	INNER JOIN txhoras_clase AS hc ON hc.ID_HORA = hgh.FK_ID_HORA\r\n" + 
-				"GROUP BY gh.ID_GRUPOHORARIO " + 
-				"WHERE gh.ID_GRUPOHORARIO = " + id;
+				"WHERE gh.ID_GRUPOHORARIO = " + id + " " +
+				"GROUP BY gh.ID_GRUPOHORARIO";
 		List<GrupoHorarioDTO> grupoHorario = this.row.mapRowGrupoHorario(this.jdbcTemplate.queryForList(query));
 		if (grupoHorario.size() > 0) {
 			return grupoHorario.get(0);

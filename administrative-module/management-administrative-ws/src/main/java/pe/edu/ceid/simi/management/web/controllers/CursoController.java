@@ -32,7 +32,6 @@ public class CursoController {
 	
 	@PutMapping(path = {"/actualizarCurso/{id}"})
 	public String actualizarCurso(@RequestBody Curso curso, @PathVariable int id) {
-		
 		curso.setIdCurso(id);
 		return this.service.editCurso(curso, id);
 	}
@@ -60,6 +59,12 @@ public class CursoController {
 	@GetMapping(path = {"/listCursosByPeriodo/{id}"})
 	public List<CursoDTO> getCursosByPeriodo(@PathVariable int id) {
 		return this.service.getCursosByPeriodo(id);
+	}
+
+	@GetMapping(path = {"/listCursosByIdiomaSedePeriodo/{idIdioma}/{idSede}/{idPeriodo}"})
+	public List<CursoDTO> getCursosByIdiomaSedePeriodo(@PathVariable int idIdioma,
+			@PathVariable int idSede, @PathVariable int idPeriodo) {
+		return this.service.getCursosByIdiomaSedePeriodo(idIdioma, idSede, idPeriodo);
 	}
 	
 }

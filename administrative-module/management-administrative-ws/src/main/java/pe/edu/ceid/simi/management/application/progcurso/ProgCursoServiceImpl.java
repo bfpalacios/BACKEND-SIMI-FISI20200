@@ -16,13 +16,13 @@ public class ProgCursoServiceImpl implements ProgCursoService {
 	private ProgCursoRepository repository;
 
 	@Override
-	public ProgCurso crearProgCurso(ProgCurso progCurso) {
+	public String crearProgCurso(ProgCurso progCurso) {
 		// TODO Auto-generated method stub
 		return this.repository.crearProgCurso(progCurso);
 	}
 
 	@Override
-	public ProgCurso editProgCurso(ProgCurso progCurso, int id) {
+	public String editProgCurso(ProgCurso progCurso, int id) {
 		// TODO Auto-generated method stub
 		return this.repository.editProgCurso(progCurso, id);
 	}
@@ -49,6 +49,24 @@ public class ProgCursoServiceImpl implements ProgCursoService {
 	public ProgCursoDTO getProgCursoById(int id) {
 		// TODO Auto-generated method stub
 		return this.repository.getProgCursoById(id);
+	}
+
+	@Override
+	public List<ProgCursoDTO> getProgCursosByCursoHorarioPeriodo(int idCurso, int idHorario, int idPeriodo) {
+		// TODO Auto-generated method stub
+		return this.repository.getProgCursosByCursoHorarioPeriodo(idCurso, idHorario, idPeriodo);
+	}
+
+	@Override
+	public List<ProgCursoDTO> getProgCursosByPeriodo(int idPeriodo) {
+		// TODO Auto-generated method stub
+		return this.repository.getProgCursosByPeriodo(idPeriodo);
+	}
+
+	@Override
+	public List<ProgCursoDTO> getProgCursosBySedePeriodo(int idSede, int idPeriodo) {
+		// TODO Auto-generated method stub
+		return this.repository.getProgCursosBySedePeriodo(idSede, idPeriodo);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,96 +22,62 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 
 	@Override
 	public String crearEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona) {
-
-		int existeDni = 0;
-		int existeEmail = 0;
-		int existePhone = 0;
-
-		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + estudianteUsuarioPersona.getDni() + "'";
-		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + estudianteUsuarioPersona.getEmail() + "'";
-		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + estudianteUsuarioPersona.getPhone() + "'";
-
-		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
-		existeDni = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
-		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
-		existePhone = Integer.parseInt(row.get("CUENTA").toString());
-		
-		if (existeDni == 0) {
-			if (existeEmail == 0) {
-				if (existePhone == 0) {
-					String insertQuery = "{CALL SP_EST_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-					int success = this.jdbcTemplate.update(insertQuery, estudianteUsuarioPersona.getNombre(), estudianteUsuarioPersona.getApellidoPat(),
-							estudianteUsuarioPersona.getApellidoMat(), estudianteUsuarioPersona.getDni(), estudianteUsuarioPersona.getGenero(),
-							estudianteUsuarioPersona.getEdad(), estudianteUsuarioPersona.getUniversity(), estudianteUsuarioPersona.getLugarNacDist(),
-							estudianteUsuarioPersona.getLugarNacProv(), estudianteUsuarioPersona.getLugarNacDep(), estudianteUsuarioPersona.getNacionalidad(),
-							estudianteUsuarioPersona.getAddress(), estudianteUsuarioPersona.getPhone(),  estudianteUsuarioPersona.getEmail(),
-							estudianteUsuarioPersona.getContrasenia(), estudianteUsuarioPersona.getEstado(), estudianteUsuarioPersona.getIdTipoEstudiante());
-					
-					if (success >= 0) {
-						return "true";
-					}
-					
-					return "false";
-				} else {
-					return "Se debe ingresar otro número de teléfono.";
-				}
-			} else {
-				return "El correo electrónico consignado ya ha sido registrado.";
+		try {
+			String insertQuery = "{CALL SP_EST_USU_PER_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+			int success = this.jdbcTemplate.update(insertQuery, estudianteUsuarioPersona.getNombre(), estudianteUsuarioPersona.getApellidoPat(),
+					estudianteUsuarioPersona.getApellidoMat(), estudianteUsuarioPersona.getDni(), estudianteUsuarioPersona.getGenero(),
+					estudianteUsuarioPersona.getEdad(), estudianteUsuarioPersona.getUniversity(), estudianteUsuarioPersona.getLugarNacDist(),
+					estudianteUsuarioPersona.getLugarNacProv(), estudianteUsuarioPersona.getLugarNacDep(), estudianteUsuarioPersona.getNacionalidad(),
+					estudianteUsuarioPersona.getAddress(), estudianteUsuarioPersona.getPhone(), estudianteUsuarioPersona.getFechaNacimiento(),
+					estudianteUsuarioPersona.getEmail(), estudianteUsuarioPersona.getContrasenia(), estudianteUsuarioPersona.getEstado(),
+					estudianteUsuarioPersona.getIdTipoEstudiante());
+			
+			if (success >= 0) {
+				return "true";
 			}
-		} else {
-			return "El DNI consignado ya ha sido registrado";
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {
+//			System.out.println("Mensaje: " + ex.getMessage());
+			if (ex.getMessage().contains("EMAIL_UNIQUE")) {
+				return "El correo electrónico consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("DNI_UNIQUE")) {
+				return "El DNI consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("PHONE_UNIQUE")) {
+				return "Se debe ingresar otro número de teléfono.";
+			}
+			return "Algo salió mal.";
 		}
 		
 	}
 
 	@Override
 	public String editEstudianteUsuarioPersona(EstudianteUsuarioPersona estudianteUsuarioPersona, String id) {
-		int existeDni = 0;
-		int existeEmail = 0;
-		int existePhone = 0;
-		
-		String queryDni = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE DNI = '" + estudianteUsuarioPersona.getDni() + "'";
-		String queryEmail = "SELECT COUNT(*) AS CUENTA FROM tmusuario WHERE EMAIL = '" + estudianteUsuarioPersona.getEmail() + "'";
-		String queryPhone = "SELECT COUNT(*) AS CUENTA FROM tmpersona WHERE PHONE = '" + estudianteUsuarioPersona.getPhone() + "'";
-
-		Map<String, Object> row = this.jdbcTemplate.queryForList(queryDni).get(0);
-		existeDni = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryEmail).get(0);
-		existeEmail = Integer.parseInt(row.get("CUENTA").toString());
-
-		row = this.jdbcTemplate.queryForList(queryPhone).get(0);
-		existePhone = Integer.parseInt(row.get("CUENTA").toString());
-		
-		if (existeDni == 0) {
-			if (existeEmail == 0) {
-				if (existePhone == 0) {
-					String insertQuery = "{CALL SP_EST_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-					int success = this.jdbcTemplate.update(insertQuery, id, estudianteUsuarioPersona.getNombre(),
-							estudianteUsuarioPersona.getApellidoPat(), estudianteUsuarioPersona.getApellidoMat(), estudianteUsuarioPersona.getDni(),
-							estudianteUsuarioPersona.getGenero(), estudianteUsuarioPersona.getEdad(), estudianteUsuarioPersona.getUniversity(),
-							estudianteUsuarioPersona.getLugarNacDist(), estudianteUsuarioPersona.getLugarNacProv(), estudianteUsuarioPersona.getLugarNacDep(),
-							estudianteUsuarioPersona.getNacionalidad(), estudianteUsuarioPersona.getAddress(), estudianteUsuarioPersona.getPhone(), 
-							estudianteUsuarioPersona.getEmail(), estudianteUsuarioPersona.getContrasenia(), estudianteUsuarioPersona.getEstado(),
-							estudianteUsuarioPersona.getIdTipoEstudiante());
-					
-					if (success >= 0) {
-						return "true";
-					}
-					
-					return "false";
-				} else {
-					return "Se debe ingresar otro número de teléfono.";
-				}
-			} else {
-				return "El correo electrónico consignado ya ha sido registrado.";
+		try {
+			String insertQuery = "{CALL SP_EST_USU_PER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+			int success = this.jdbcTemplate.update(insertQuery, id, estudianteUsuarioPersona.getNombre(),
+					estudianteUsuarioPersona.getApellidoPat(), estudianteUsuarioPersona.getApellidoMat(), estudianteUsuarioPersona.getDni(),
+					estudianteUsuarioPersona.getGenero(), estudianteUsuarioPersona.getEdad(), estudianteUsuarioPersona.getUniversity(),
+					estudianteUsuarioPersona.getLugarNacDist(), estudianteUsuarioPersona.getLugarNacProv(), estudianteUsuarioPersona.getLugarNacDep(),
+					estudianteUsuarioPersona.getNacionalidad(), estudianteUsuarioPersona.getAddress(), estudianteUsuarioPersona.getPhone(),
+					estudianteUsuarioPersona.getFechaNacimiento(), estudianteUsuarioPersona.getEmail(), estudianteUsuarioPersona.getContrasenia(),
+					estudianteUsuarioPersona.getEstado(), estudianteUsuarioPersona.getIdTipoEstudiante());
+			
+			if (success >= 0) {
+				return "true";
 			}
-		} else {
-			return "El DNI consignado ya ha sido registrado";
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {
+//			System.out.println("Mensaje: " + ex.getMessage());
+			if (ex.getMessage().contains("EMAIL_UNIQUE")) {
+				return "El correo electrónico consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("DNI_UNIQUE")) {
+				return "El DNI consignado ya ha sido registrado.";
+			} else if (ex.getMessage().contains("PHONE_UNIQUE")) {
+				return "Se debe ingresar otro número de teléfono.";
+			}
+			return "Algo salió mal.";
 		}
 	}
 
@@ -143,6 +110,22 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 	}
 
 	@Override
+	public List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonaByTipoEstudiante(int idTipoEstudiante) {
+		String query = "SELECT * FROM tmestudiante AS est\r\n" + 
+				"INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = est.FK_ID_USUARIO\r\n" + 
+				"	INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+				"	INNER JOIN tmrol AS rol ON rol.ID_ROL = usu.FK_ID_ROL\r\n" + 
+				"INNER JOIN tpmatricula AS mat ON mat.FK_COD_ESTUDIANTE_CI = est.COD_ESTUDIANTE_CI\r\n" + 
+				"	INNER JOIN tpprog_curso AS pgc ON pgc.ID_PROGCURSO = mat.FK_ID_PROGCURSO\r\n" + 
+				"		INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
+				"WHERE est.FK_ID_TIPO_ESTUDIANTE = " + idTipoEstudiante;
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<EstudianteUsuarioPersona> estUsuPer = row.mapRowEstudianteUsuarioPersona(rows);
+		
+		return estUsuPer;
+	}
+
+	@Override
 	public boolean deleteEstudianteUsuarioPersona(String cosEstudiante) {
 		String query = "{CALL SP_EST_USU_PER_DELETE(?)}";
 		int success = this.jdbcTemplate.update(query, cosEstudiante);
@@ -167,6 +150,24 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 		}
 	
 		return null;
+	}
+
+	@Override
+	public List<EstudianteUsuarioPersona> getEstudiantesByCursoPeriodo(int idCurso, int idPeriodo) {
+		String query = "SELECT *\r\n" + 
+				"FROM tpmatricula AS mat\r\n" + 
+				"	INNER JOIN tpprog_curso AS pgc ON pgc.ID_PROGCURSO = mat.FK_ID_PROGCURSO\r\n" + 
+				"		INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
+				"			INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"	INNER JOIN tmestudiante AS est ON est.COD_ESTUDIANTE_CI = mat.FK_COD_ESTUDIANTE_CI\r\n" + 
+				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = est.FK_ID_USUARIO\r\n" + 
+				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+				"			INNER JOIN tmrol AS rol ON rol.ID_ROL = usu.FK_ID_ROL\r\n" + 
+				"WHERE cur.ID_CURSO = " + idCurso + " AND pdc.FK_ID_PERIODO = " + idPeriodo;
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<EstudianteUsuarioPersona> estUsuPer = row.mapRowEstudianteUsuarioPersona(rows);
+		
+		return estUsuPer;
 	}
 
 }

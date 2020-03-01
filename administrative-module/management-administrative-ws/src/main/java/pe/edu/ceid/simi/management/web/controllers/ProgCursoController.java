@@ -29,14 +29,30 @@ public class ProgCursoController {
 	public List<ProgCursoDTO> getProgCursos() {
 		return this.service.getProgCursos();
 	}
-	
+
 	@GetMapping(path = {"/listProgCursosByDocenteCurso/{idCurso}/{idPeriodo}"})
-	public List<ProgCursoDTO> getProgCursosByDocenteCurso(@PathVariable int idCurso, @PathVariable int idPeriodo) {
+	public List<ProgCursoDTO> getProgCursosByCursoPeriodo(@PathVariable int idCurso, @PathVariable int idPeriodo) {
 		return this.service.getProgCursosByCursoPeriodo(idCurso, idPeriodo);
+	}
+
+	@GetMapping(path = {"/listProgCursosByCursoHorarioPeriodo/{idCurso}/{idHorario}/{idPeriodo}"})
+	public List<ProgCursoDTO> getProgCursosByCursoHorarioPeriodo(@PathVariable int idCurso,
+			@PathVariable int idHorario, @PathVariable int idPeriodo) {
+		return this.service.getProgCursosByCursoHorarioPeriodo(idCurso, idHorario, idPeriodo);
+	}
+
+	@GetMapping(path = {"/listProgCursosByPeriodo/{idPeriodo}"})
+	public List<ProgCursoDTO> getProgCursosByCursoHorarioPeriodo(@PathVariable int idPeriodo) {
+		return this.service.getProgCursosByPeriodo(idPeriodo);
+	}
+
+	@GetMapping(path = {"/listProgCursosBySedePeriodo/{idSede}/{idPeriodo}"})
+	public List<ProgCursoDTO> getProgCursosBySedePeriodo(@PathVariable int idSede, @PathVariable int idPeriodo) {
+		return this.service.getProgCursosBySedePeriodo(idSede, idPeriodo);
 	}
 	
 	@PutMapping(path = {"/actualizarProgCurso/{id}"})
-	public ProgCurso actualizarProgCurso(@RequestBody ProgCurso progCurso, @PathVariable int id) {
+	public String actualizarProgCurso(@RequestBody ProgCurso progCurso, @PathVariable int id) {
 		progCurso.setIdProgDocCur(id);
 		return this.service.editProgCurso(progCurso, id);
 	}
@@ -47,7 +63,7 @@ public class ProgCursoController {
 	}
 	
 	@PostMapping(path = {"/crearProgCurso"})
-	public ProgCurso crearProgCurso(@RequestBody ProgCurso progCurso) {
+	public String crearProgCurso(@RequestBody ProgCurso progCurso) {
 		return this.service.crearProgCurso(progCurso);
 	}
 	
