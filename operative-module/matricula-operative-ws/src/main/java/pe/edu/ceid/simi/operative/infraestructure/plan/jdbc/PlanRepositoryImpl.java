@@ -23,13 +23,12 @@ public class PlanRepositoryImpl implements PlanRepository{
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<PlanDTO> getPlan(int id) {
+	public List<PlanDTO> getPlan() {
 		
 		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_PLAN_LIST");
-		Map<String, Object> params = new HashMap<>();
-        params.put("P_ID_IDIOMA", id);
+
 		
-		 Map<String, Object> result = jdbcCall.execute(params);
+		 Map<String, Object> result = jdbcCall.execute();
 		 List<PlanDTO> plan = new ArrayList<>();
 		 List<LinkedCaseInsensitiveMap> r = (List<LinkedCaseInsensitiveMap>) result.values().toArray()[0];
 		 r.forEach((v) -> plan.add(row.mapRowPlan(v)));

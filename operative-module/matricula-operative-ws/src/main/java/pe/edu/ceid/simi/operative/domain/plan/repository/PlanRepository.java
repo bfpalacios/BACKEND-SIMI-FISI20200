@@ -6,5 +6,5 @@ import pe.edu.ceid.simi.operative.domain.plan.model.Plan;
 import pe.edu.ceid.simi.operative.domain.plan.model.PlanDTO;
 
 public interface PlanRepository {
-	List<PlanDTO> getPlan(int id);
+	List<PlanDTO> getPlan();
 }
