@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,31 +22,39 @@ public class ProgDocCursoRepositoryImpl implements ProgDocCursoRepository {
 	private ProgDocCursoRowMapper row;
 
 	@Override
-	public ProgDocCurso crearProgDocCurso(ProgDocCurso progDocCurso) {
-		String insertQuery = "INSERT INTO tpprog_doc_curso (FK_ID_DOCENTE, FK_ID_CURSO, FK_ID_PERIODO) "
-				+ "VALUES (?, ?, ?)";
-		int success = this.jdbcTemplate.update(insertQuery, progDocCurso.getIdDocente(), progDocCurso.getIdCurso(),
-				progDocCurso.getIdPeriodo());
-		
-		if (success >= 0) {
-			return progDocCurso;
+	public String crearProgDocCurso(ProgDocCurso progDocCurso) {
+		try {
+			String insertQuery = "INSERT INTO tpprog_doc_curso (FK_ID_DOCENTE, FK_ID_CURSO, FK_ID_PERIODO) "
+					+ "VALUES (?, ?, ?)";
+			int success = this.jdbcTemplate.update(insertQuery, progDocCurso.getIdDocente(), progDocCurso.getIdCurso(),
+					progDocCurso.getIdPeriodo());
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {
+			return "No es posible ingresar registros duplicados.";
 		}
-		
-		return null;
 	}
 
 	@Override
-	public ProgDocCurso editProgDocCurso(ProgDocCurso progDocCurso, int id) {
-		String query = "UPDATE tpprog_doc_curso SET FK_ID_DOCENTE = ?, FK_ID_CURSO = ?, FK_ID_PERIODO = ? "
-				+ "WHERE ID_PROG_DOC_CUR = "+ id;
-		int update = this.jdbcTemplate.update(query, progDocCurso.getIdDocente(), progDocCurso.getIdCurso(),
-				progDocCurso.getIdPeriodo());
-		
-		if (update == 1) {
-			return progDocCurso;
+	public String editProgDocCurso(ProgDocCurso progDocCurso, int id) {
+		try {
+			String query = "UPDATE tpprog_doc_curso SET FK_ID_DOCENTE = ?, FK_ID_CURSO = ?, FK_ID_PERIODO = ? "
+					+ "WHERE ID_PROG_DOC_CUR = "+ id;
+			int update = this.jdbcTemplate.update(query, progDocCurso.getIdDocente(), progDocCurso.getIdCurso(),
+					progDocCurso.getIdPeriodo());
+			
+			if (update == 1) {
+				return "true";
+			}
+			
+			return "false";
+		} catch (DuplicateKeyException ex) {
+			return "Los datos actualizados se repiten en otro registro.";
 		}
-		
-		return null;
 	}
 
 	@Override
