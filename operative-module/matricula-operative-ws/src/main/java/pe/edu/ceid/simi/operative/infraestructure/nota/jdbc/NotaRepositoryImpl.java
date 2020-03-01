@@ -86,7 +86,7 @@ public class NotaRepositoryImpl implements NotaRepository {
 	@Override
 	public List<DetalleNota> getDetallebyID(int id) {
 		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("USP_HISTORIAL_DETALLE_LIST");
-		inParams.put("P_ID_NOTA", id);
+		inParams.put("P_ID_MATRICULA", id);
 		
 		Map<String, Object> result = jdbcCall.execute(inParams);
 		List<DetalleNota> detalles = new ArrayList<>();
