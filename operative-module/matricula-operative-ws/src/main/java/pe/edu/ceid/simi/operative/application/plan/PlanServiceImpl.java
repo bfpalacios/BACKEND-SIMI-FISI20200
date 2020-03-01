@@ -14,9 +14,9 @@ public class PlanServiceImpl implements PlanService{
 	@Autowired
 	private PlanRepository repository;
 	
-	public List<PlanDTO> getPlan(int id) {
+	public List<PlanDTO> getPlan() {
 		// TODO Auto-generated method stub
-		return this.repository.getPlan(id);
+		return this.repository.getPlan();
 	}
 
 }

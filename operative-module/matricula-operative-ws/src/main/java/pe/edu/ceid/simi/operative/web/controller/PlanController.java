@@ -26,8 +26,8 @@ public class PlanController {
 	private PlanService service;
 	
 	
-	@GetMapping(path = {"/listPlan/{id}"})
-	public List<PlanDTO> getPlan(@PathVariable int id) {
-		return this.service.getPlan(id);
+	@GetMapping(path = {"/listPlan"})
+	public List<PlanDTO> getPlan() {
+		return this.service.getPlan();
 	}
 }

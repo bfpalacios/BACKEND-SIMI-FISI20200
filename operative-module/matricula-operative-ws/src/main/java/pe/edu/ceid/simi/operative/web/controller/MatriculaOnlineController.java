@@ -53,7 +53,6 @@ public class MatriculaOnlineController {
 		return this.service.obtenerpagosSinUsar(codUser);
 	}
 	
-	
 	@PostMapping(path = {"/matricularAlumno/{userId}"})
 	public boolean crearCurso(@PathVariable int userId, @RequestBody List<ProgramacionDTO> cursosSeleccionados) {
 		System.out.println("Programacion CursoId: " + cursosSeleccionados.size());
