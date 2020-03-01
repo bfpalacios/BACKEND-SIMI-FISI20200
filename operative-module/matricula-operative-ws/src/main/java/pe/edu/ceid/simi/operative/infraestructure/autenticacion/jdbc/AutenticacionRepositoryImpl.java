@@ -3,6 +3,7 @@ package pe.edu.ceid.simi.operative.infraestructure.autenticacion.jdbc;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -23,15 +24,19 @@ public class AutenticacionRepositoryImpl implements AutorizacionRepository{
 	 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Autorizacion buscarCodigo(String email, int codigo, int tipo) {
-		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("USP_AUTORIZACION");
-		Map<String, Object> params = new HashMap<>();
-        params.put("P_EMAIL", email);
-        params.put("P_ID_USUARIO", codigo);
-        params.put("P_ID_ROL", tipo);
 		
-		Map<String, Object> result = jdbcCall.execute(params);
-		List<LinkedCaseInsensitiveMap> r = (List<LinkedCaseInsensitiveMap>) result.values().toArray()[0];
-	    return r.isEmpty() ? null : row.mapRow(r.get(0));
+		try {
+			SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("USP_AUTORIZACION");
+			Map<String, Object> params = new HashMap<>();
+	        params.put("P_EMAIL", email);
+	        params.put("P_ID_USUARIO", codigo);
+	        params.put("P_ID_ROL", tipo);
+			Map<String, Object> result = jdbcCall.execute(params);
+			List<LinkedCaseInsensitiveMap> r = (List<LinkedCaseInsensitiveMap>) result.values().toArray()[0];
+		    return r.isEmpty() ? null : row.mapRow(r.get(0));
+		} catch(Exception e) {
+			return null;
+		}
 	}
 	
 	@Override
