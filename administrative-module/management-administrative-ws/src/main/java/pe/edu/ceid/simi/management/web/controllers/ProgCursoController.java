@@ -58,7 +58,7 @@ public class ProgCursoController {
 	}
 
 	@DeleteMapping(path = {"/eliminarProgCursoById/{id}"})
-	public boolean eliminarProgCursoById( @PathVariable int id) {	
+	public String eliminarProgCursoById( @PathVariable int id) {	
 		return this.service.deleteProgCurso(id);
 	}
 	
