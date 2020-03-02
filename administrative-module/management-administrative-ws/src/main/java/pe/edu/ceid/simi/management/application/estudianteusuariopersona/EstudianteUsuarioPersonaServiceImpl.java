@@ -69,4 +69,10 @@ public class EstudianteUsuarioPersonaServiceImpl implements EstudianteUsuarioPer
 		return this.repository.validarPasswdEstudiante(codEstudiante, passwd);
 	}
 
+//	@Override
+//	public List<EstudianteUsuarioPersona> getEstudiantesMatriculadosByProgCurso(int idProgCurso) {
+//		// TODO Auto-generated method stub
+//		return this.repository.getEstudiantesMatriculadosByProgCurso(idProgCurso);
+//	}
+
 }

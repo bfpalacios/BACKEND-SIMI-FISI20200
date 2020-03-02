@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -58,15 +59,19 @@ public class ProgDocCursoRepositoryImpl implements ProgDocCursoRepository {
 	}
 
 	@Override
-	public boolean deleteProgDocCurso(int id) {
-		String query = "DELETE FROM tpprog_doc_curso WHERE ID_PROG_DOC_CUR = ?";
-		int success = this.jdbcTemplate.update(query, id);
-		
-		if (success >= 0) {
-			return true;
+	public String deleteProgDocCurso(int id) {
+		try {
+			String query = "DELETE FROM tpprog_doc_curso WHERE ID_PROG_DOC_CUR = ?";
+			int success = this.jdbcTemplate.update(query, id);
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+		} catch (DataIntegrityViolationException ex) { 		//como mi ex :c
+			return "No es posible eliminar un registro en uso";
 		}
-		
-		return false;
 	}
 
 	@Override
