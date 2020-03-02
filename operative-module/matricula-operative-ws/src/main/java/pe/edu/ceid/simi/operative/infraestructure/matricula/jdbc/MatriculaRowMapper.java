@@ -10,6 +10,7 @@ import javax.swing.tree.TreePath;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedCaseInsensitiveMap;
 
+import pe.edu.ceid.simi.operative.domain.curso.model.CursoDTO;
 import pe.edu.ceid.simi.operative.domain.matricula.model.MatriculaDTO;
 import pe.edu.ceid.simi.operative.domain.voucher.model.VoucherDTO;
 
@@ -69,6 +70,15 @@ public class MatriculaRowMapper implements RowMapper {
 				.importe(importe)
 				.fecha(fecha)
 				.estado(estado).build();
+	}
+	
+	public CursoDTO mapRowCursos(LinkedCaseInsensitiveMap row){
+		String nombreCurso = 
+				row.get("NOM_IDIOMA").toString() + " " + row.get("NOM_NIVEL").toString() + " " + row.get("CICLO").toString();
+		String nombreDocente =
+				row.get("NOMBRE").toString() + " " + row.get("APELLIDO_PAT").toString() + " " + row.get("APELLIDO_MAT").toString();
+		
+		return new CursoDTO(0, 0, nombreCurso, nombreDocente);
 	}
 	
 }

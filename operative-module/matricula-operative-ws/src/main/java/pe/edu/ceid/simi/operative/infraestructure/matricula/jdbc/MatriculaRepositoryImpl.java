@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedCaseInsensitiveMap;
+
+import pe.edu.ceid.simi.operative.domain.curso.model.CursoDTO;
 import pe.edu.ceid.simi.operative.domain.matricula.model.Matricula;
 import pe.edu.ceid.simi.operative.domain.matricula.model.MatriculaDTO;
 import pe.edu.ceid.simi.operative.domain.matricula.repository.MatriculaRepository;
@@ -92,6 +94,36 @@ public class MatriculaRepositoryImpl implements MatriculaRepository {
 		r.forEach((v) -> vouchers.add(row.mapRowVoucherSinPagar(v)));
 		return vouchers;
 
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List<VoucherDTO> obtenerpagosRealizados(int codUser) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("USP_VOUCHERS_LIST");
+		Map<String, Object> params = new HashMap<>();
+		params.put("P_ID_USUARIO", codUser);
+
+		Map<String, Object> result = jdbcCall.execute(params);
+		List<VoucherDTO> vouchers = new ArrayList<>();
+		@SuppressWarnings("unchecked")
+		List<LinkedCaseInsensitiveMap> r = (List<LinkedCaseInsensitiveMap>) result.values().toArray()[0];
+		r.forEach((v) -> vouchers.add(row.mapRowVoucherSinPagar(v)));
+		return vouchers;
+	}
+
+	@Override
+	public List<CursoDTO> getCursosDelAlumno(int codUser) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("USP_MATRICULA_LIST");
+		Map<String, Object> params = new HashMap<>();
+		params.put("P_ID_USUARIO", codUser);
+		params.put("P_ESTADO", 4);
+
+		Map<String, Object> result = jdbcCall.execute(params);
+		List<CursoDTO> cursos = new ArrayList<>();
+		@SuppressWarnings("unchecked")
+		List<LinkedCaseInsensitiveMap> r = (List<LinkedCaseInsensitiveMap>) result.values().toArray()[0];
+		r.forEach((v) -> cursos.add(row.mapRowCursos(v)));
+		return cursos;
 	}
 
 }

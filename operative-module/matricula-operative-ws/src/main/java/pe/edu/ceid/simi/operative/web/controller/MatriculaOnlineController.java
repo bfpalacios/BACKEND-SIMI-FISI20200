@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pe.edu.ceid.simi.operative.domain.curso.model.CursoDTO;
 import pe.edu.ceid.simi.operative.domain.matricula.model.Matricula;
 import pe.edu.ceid.simi.operative.domain.matricula.model.MatriculaDTO;
 import pe.edu.ceid.simi.operative.domain.voucher.model.VoucherDTO;
@@ -49,6 +50,16 @@ public class MatriculaOnlineController {
 	@GetMapping(path= {"/pagosSinUsar/{id}"})
 	public List<VoucherDTO> obtenerpagosSinUsar(@PathVariable("id") int codUser) {
 		return this.service.obtenerpagosSinUsar(codUser);
+	}
+	
+	@GetMapping(path= {"/pagosRealizados/{id}"})
+	public List<VoucherDTO> obtenerpagosRealizados(@PathVariable("id") int codUser) {
+		return this.service.obtenerpagosRealizados(codUser);
+	}
+	
+	@GetMapping(path= {"/cursosAlumno/{id}"})
+	public List<CursoDTO> getCursosDelAlumno(@PathVariable("id") int codUser) {
+		return this.service.getCursosDelAlumno(codUser);
 	}
 	
 	@PostMapping(path = {"/matricularAlumno/{userId}"})
