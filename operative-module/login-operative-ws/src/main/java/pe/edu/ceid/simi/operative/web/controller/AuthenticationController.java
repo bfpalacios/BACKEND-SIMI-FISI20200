@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pe.edu.ceid.simi.operative.application.authentication.AuthenticationService;
 import pe.edu.ceid.simi.operative.domain.authentication.model.Authentication;
+import pe.edu.ceid.simi.operative.domain.authentication.model.User;
 
 @RestController
 @RequestMapping({ "/api/v1/authentication" })
@@ -34,7 +35,12 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping(path = {"/signUpWithEmailAndPassword"})
-	public Authentication signUpWithEmailAndPassword(@RequestBody Authentication auth) {
-		return this.service.signInInvited(auth);
+	public User signUpWithEmailAndPassword(@RequestBody User user) {
+		return this.service.signUpWithEmailAndPassword(user);
+	}
+	
+	@PostMapping(path = {"/validarUsuario"})
+	public boolean validarUsuario(@RequestBody Authentication auth) {
+		return this.service.validarUsuario(auth);
 	}
 }
