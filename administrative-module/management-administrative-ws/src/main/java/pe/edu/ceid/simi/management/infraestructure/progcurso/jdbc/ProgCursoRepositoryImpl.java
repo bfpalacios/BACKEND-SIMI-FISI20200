@@ -229,4 +229,23 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 		return progs;
 	}
 
+	@Override
+	public boolean docenteOcupadoByDocenteHorarioPeriodo(int idProgDoc, int idHorario, int idPeriodo) {
+		String query = "SELECT *\r\n" + 
+				"FROM tpprog_curso AS pgc\r\n" + 
+				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
+				"		LEFT JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 
+				"WHERE doc.COD_DOCENTE_CI = (SELECT FK_ID_DOCENTE FROM tpprog_doc_curso WHERE ID_PROG_DOC_CUR = " +
+				idProgDoc + ") AND pgc.FK_ID_HORARIO_GRUPOHORARIO = " + idHorario +"\r\n" + 
+				"	AND pdc.FK_ID_PERIODO  = " + idPeriodo;
+		
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		
+		if (rows.isEmpty()) {
+			return false;
+		}
+		
+		return true;
+	}
+
 }

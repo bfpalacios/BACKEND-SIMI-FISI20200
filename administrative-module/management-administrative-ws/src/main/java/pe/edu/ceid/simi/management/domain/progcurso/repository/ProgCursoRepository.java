@@ -15,4 +15,5 @@ public interface ProgCursoRepository {
 	List<ProgCursoDTO> getProgCursosByPeriodo(int idPeriodo);
 	List<ProgCursoDTO> getProgCursosBySedePeriodo(int idSede, int idPeriodo);
 	ProgCursoDTO getProgCursoById(int id);
+	boolean docenteOcupadoByDocenteHorarioPeriodo(int idProgDoc, int idHorario, int idPeriodo);
 }
