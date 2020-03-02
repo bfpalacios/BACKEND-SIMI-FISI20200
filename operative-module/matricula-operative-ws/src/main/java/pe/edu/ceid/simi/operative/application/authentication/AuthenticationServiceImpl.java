@@ -44,7 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	}
 
 	@Override
-	public User signUpWithEmailAndPassword(User user) {
+	public boolean signUpWithEmailAndPassword(User user) {
 		return this.repository.signUpWithEmailAndPassword(user);
 	}
 

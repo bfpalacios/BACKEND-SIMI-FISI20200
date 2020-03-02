@@ -3,14 +3,14 @@ package pe.edu.ceid.simi.operative.domain.autorizacion.model;
 public class Autorizacion {
 
 	private String email;
-	private int codigo;
+	private int id;
 	private int codPersona;
 	private int tipo;
 	
-	public Autorizacion(String email, int codigo, int codPersona, int tipo) {
+	public Autorizacion(String email, int id, int codPersona, int tipo) {
 		this.email = email;
 		this.codPersona = codPersona;
-		this.codigo = codigo;
+		this.id = id;
 		this.tipo = tipo;
 	}
 	
@@ -24,11 +24,11 @@ public class Autorizacion {
 		this.email = email;
 	}
 
-	public int getCodigo() {
-		return codigo;
+	public int getId() {
+		return id;
 	}
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public int getCodPersona() {
@@ -53,7 +53,7 @@ public class Autorizacion {
 	public static class AutorizacionBuilder {
 		
 		private String email;
-		private int codigo;
+		private int id;
 		private int codPersona;
 		private int tipo;
 		
@@ -65,8 +65,8 @@ public class Autorizacion {
 			return this;
 		}
 		
-		public AutorizacionBuilder codigo(int codigo) {
-			this.codigo = codigo;
+		public AutorizacionBuilder codigo(int id) {
+			this.id = id;
 			return this;
 		}
 		
@@ -81,7 +81,7 @@ public class Autorizacion {
 		}
 		
 		public Autorizacion build() {
-			return new Autorizacion(email, codigo, codPersona, tipo);
+			return new Autorizacion(email, id, codPersona, tipo);
 		}
 	}
 }

@@ -67,30 +67,33 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
 
 	@Override
-	public User signUpWithEmailAndPassword(User user) {
+	public boolean signUpWithEmailAndPassword(User user) {
 		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_EST_USU_PER_INSERT");
 		Map<String, Object> params = new HashMap<String, Object>();
         params.put("nombre", user.getNames());
         params.put("apellidoPat", user.getLastNameP());
         params.put("apellidoMat", user.getLastNameM());
         params.put("dni", user.getDocNumber());
-        params.put("genero", "1");
-        params.put("edad", "22");
-        params.put("university", " - ");
-        params.put("lugarNacDist", " - ");
-        params.put("lugarNacProv", " - ");
-        params.put("lugarNacDep", " - ");
-        params.put("nacionalidad", " - ");
-        params.put("address", " - ");
-        params.put("phone", " - ");
-        params.put("fechaNac", "2020-02-02");
+        params.put("genero", user.getGenero());
+        params.put("edad", "20");
+        params.put("university", user.getUniversity());
+        params.put("lugarNacDist", user.getLugarNacDist());
+        params.put("lugarNacProv", user.getLugarNacProv());
+        params.put("lugarNacDep", user.getLugarNacDep());
+        params.put("nacionalidad", user.getNacionalidad());
+        params.put("address", user.getAddress());
+        params.put("phone", user.getPhone());
+        params.put("fechaNac", user.getBirthday());
         params.put("email", user.getEmail());
         params.put("passwd", user.getPassword());
         params.put("estado", "1");
         params.put("idTipoEstudiante", "1");
 		
 		Map<String, Object> result = jdbcCall.execute(params);
-		return null;
+		if (result.size() > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

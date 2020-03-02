@@ -7,5 +7,5 @@ public interface AuthenticationRepository {
 	Authentication signInWithEmailAndPassword(String email, String password);
 	Authentication findUserByEmail(String email);
 	Authentication signInInvited(Authentication auth);
-	User signUpWithEmailAndPassword(User user);
+	boolean signUpWithEmailAndPassword(User user);
 }

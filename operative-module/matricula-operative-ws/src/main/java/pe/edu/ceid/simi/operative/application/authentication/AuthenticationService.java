@@ -8,5 +8,5 @@ public interface AuthenticationService {
 	Authentication findUserByEmail(String email);
 	Authentication signInInvited(Authentication auth);
 	boolean validarUsuario(Authentication auth);
-	User signUpWithEmailAndPassword(User user);
+	boolean signUpWithEmailAndPassword(User user);
 }
