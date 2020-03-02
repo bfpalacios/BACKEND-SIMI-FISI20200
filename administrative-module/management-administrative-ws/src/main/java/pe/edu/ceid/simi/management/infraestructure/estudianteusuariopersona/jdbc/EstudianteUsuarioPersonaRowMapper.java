@@ -58,11 +58,12 @@ public class EstudianteUsuarioPersonaRowMapper implements RowMapper {
 			
 			String codEstudiante = Tratamiento.tratarString("COD_ESTUDIANTE_CI", row);
 			int idTipoEstudiante = Tratamiento.tratarEntero("FK_ID_TIPO_ESTUDIANTE", row);
+			String nomTipoEstudiante = Tratamiento.tratarString("NOM_TIPO_ESTUDIANTE", row);
 
 			EstudianteUsuarioPersona e = new EstudianteUsuarioPersona(idPersona, nombre, apellidoPat, apellidoMat, dni,
 					genero, edad, fechaAltaP, fechaModP, university, fechaNacimiento, lugarNacDist, lugarNacProv,
 					lugarNacDep, nacionalidad, address, phone, idUsuario, email, contrasenia, idRol, nomRol, estado,
-					fechaAltaU, fechaBajaU, fechaModU, idUsuarioMod, codEstudiante, idTipoEstudiante);
+					fechaAltaU, fechaBajaU, fechaModU, idUsuarioMod, codEstudiante, idTipoEstudiante, nomTipoEstudiante);
 			
 			estudiantes.add(e);
 		}
@@ -105,8 +106,8 @@ public class EstudianteUsuarioPersonaRowMapper implements RowMapper {
 			
 			String codEstudiante = Tratamiento.tratarString("COD_ESTUDIANTE_CI", row);
 			int idTipoEstudiante = Tratamiento.tratarEntero("FK_ID_TIPO_ESTUDIANTE", row);
-//			String nomTipoEstudiante =  Tratamiento.tratarString("NOM_TIPO_ESTUDIANTE", row);
-			String nomTipoEstudiante =  row.get("NOM_TIPO_ESTUDIANTE").toString();
+			String nomTipoEstudiante =  Tratamiento.tratarString("NOM_TIPO_ESTUDIANTE", row);
+//			String nomTipoEstudiante =  row.get("NOM_TIPO_ESTUDIANTE").toString();
 
 
 			EstudianteUsuarioPersona e = new EstudianteUsuarioPersona(idPersona, nombre, apellidoPat, apellidoMat, dni,
