@@ -2,48 +2,49 @@ package pe.edu.ceid.simi.management.domain.horario.model;
 
 public class HorarioDTO {
 
+	private int idHorario;
 	private int idGrupoHorario;
-	private int idDia;
-	private String nomDia;	//cdia
+	private String nomGrupoHorario;
 	private int idHora;
-	private String horaInicio;	//chora
-	private String horaSalida;	//chora
+	private String horaInicio;	//idHora
+	private String horaSalida;	//idHora
 
 	public HorarioDTO() {}
 
-	public HorarioDTO(int idGrupoHorario, int idDia, String nomDia, int idHora, String horaInicio, String horaSalida) {
+	public HorarioDTO(int idHorario, int idGrupoHorario, String nomGrupoHorario, int idHora, String horaInicio, String horaSalida) {
 		super();
+		this.idHorario = idHorario;
 		this.idGrupoHorario = idGrupoHorario;
-		this.idDia = idDia;
-		this.nomDia = nomDia;
+		this.nomGrupoHorario = nomGrupoHorario;
 		this.idHora = idHora;
 		this.horaInicio = horaInicio;
 		this.horaSalida = horaSalida;
 	}
 
-	public HorarioDTO(int chorario, int cdia, int chora) {
+	public HorarioDTO(int idHorario, int idGrupoHorario, int idHora) {
 		super();
-		this.idGrupoHorario = chorario;
-		this.idDia = cdia;
-		this.idHora = chora;
+		this.idHorario = idHorario;
+		this.idGrupoHorario = idGrupoHorario;
+		this.idHora = idHora;
 	}
 
+	public int getIdHorario() {
+		return idHorario;
+	}
+	public void setIdHorario(int idHorario) {
+		this.idHorario = idHorario;
+	}
 	public int getIdGrupoHorario() {
 		return idGrupoHorario;
 	}
 	public void setIdGrupoHorario(int idGrupoHorario) {
 		this.idGrupoHorario = idGrupoHorario;
-	} int getIdDia() {
-		return idDia;
 	}
-	public void setIdDia(int idDia) {
-		this.idDia = idDia;
+	public String getNomGrupoHorario() {
+		return nomGrupoHorario;
 	}
-	public String getNomDia() {
-		return nomDia;
-	}
-	public void setNomDia(String nomDia) {
-		this.nomDia = nomDia;
+	public void setNomGrupoHorario(String nomGrupoHorario) {
+		this.nomGrupoHorario = nomGrupoHorario;
 	}
 	public int getIdHora() {
 		return idHora;
@@ -61,8 +62,7 @@ public class HorarioDTO {
 		return horaSalida;
 	}
 	public void setHoraSalida(String horaSalida) {
-		this.horaInicio = horaSalida;
+		this.horaSalida = horaSalida;
 	}
-	
-	
+
 }

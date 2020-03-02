@@ -24,10 +24,9 @@ public class HorarioRepositoryImpl implements HorarioRepository {
 
 	@Override
 	public Horario crearHorario(Horario horario) {
-		String insertQuery = "INSERT INTO tmhorario_grupo_horario (FK_ID_GRUPOHORARIO, FK_ID_HORA, FK_ID_DIA) "
-				+ "VALUES (?, ?, ?)";
-		int success = this.jdbcTemplate.update(insertQuery, horario.getIdGrupoHorario(),
-				 horario.getIdHora(), horario.getIdDia());
+		String insertQuery = "INSERT INTO tmhorario_grupo_horario (FK_ID_GRUPOHORARIO, FK_ID_HORA) "
+				+ "VALUES (?, ?)";
+		int success = this.jdbcTemplate.update(insertQuery, horario.getIdGrupoHorario(), horario.getIdHora());
 		
 		if (success >= 0) {
 			return horario;
@@ -38,10 +37,9 @@ public class HorarioRepositoryImpl implements HorarioRepository {
 
 	@Override
 	public Horario editHorario(Horario horario, int id) {
-		String query = "UPDATE tmhorario_grupo_horario SET FK_ID_GRUPOHORARIO = ?, FK_ID_HORA = ?, FK_ID_DIA = ? "
+		String query = "UPDATE tmhorario_grupo_horario SET FK_ID_GRUPOHORARIO = ?, FK_ID_HORA = ? "
 				+ "WHERE ID_HORARIO_GRUPOHORARIO = " + id;
-		int update = this.jdbcTemplate.update(query, horario.getIdGrupoHorario(),
-				 horario.getIdHora(), horario.getIdDia());
+		int update = this.jdbcTemplate.update(query, horario.getIdGrupoHorario(), horario.getIdHora());
 		
 		if (update == 1) {
 			return horario;
@@ -63,10 +61,9 @@ public class HorarioRepositoryImpl implements HorarioRepository {
 	@Override
 	public List<HorarioDTO> getHorarios() {
 		String query = "SELECT *\r\n" + 
-				"FROM tmhorario_grupo_horario AS ho\r\n" + 
-				"INNER JOIN tmgrupo_horario AS gh ON gh.ID_GRUPOHORARIO = ho.FK_ID_GRUPOHORARIO\r\n" + 
-				"LEFT JOIN txdias_clase AS di ON di.ID_DIA = ho.FK_ID_DIA\r\n" + 
-				"INNER JOIN txhoras_clase AS hr ON hr.ID_HORA = ho.FK_ID_HORA";
+				"FROM tmhorario_grupo_horario AS hgh\r\n" + 
+				"	INNER JOIN tmgrupo_horario AS gho ON gho.ID_GRUPOHORARIO = hgh.FK_ID_GRUPOHORARIO\r\n" + 
+				"    INNER JOIN txhoras_clase AS hcl ON hcl.ID_HORA = hgh.FK_ID_HORA";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<HorarioDTO> horarios = row.mapRowHorario(rows);
 		return horarios;
@@ -75,11 +72,10 @@ public class HorarioRepositoryImpl implements HorarioRepository {
 	@Override
 	public List<HorarioDTO> getHorariosById(int id) {
 		String query = "SELECT *\r\n" + 
-				"FROM tmhorario_grupo_horario AS ho\r\n" + 
-				"INNER JOIN tmgrupo_horario AS gh ON gh.ID_GRUPOHORARIO = ho.FK_ID_GRUPOHORARIO\r\n" + 
-				"LEFT JOIN txdias_clase AS di ON di.ID_DIA = ho.FK_ID_DIA\r\n" + 
-				"INNER JOIN txhoras_clase AS hr ON hr.ID_HORA = ho.FK_ID_HORA "
-				+ "WHERE FK_ID_GRUPOHORARIO = " + id;
+				"FROM tmhorario_grupo_horario AS hgh\r\n" + 
+				"	INNER JOIN tmgrupo_horario AS gho ON gho.ID_GRUPOHORARIO = hgh.FK_ID_GRUPOHORARIO\r\n" + 
+				"    INNER JOIN txhoras_clase AS hcl ON hcl.ID_HORA = hgh.FK_ID_HORA "
+				+ "WHERE ID_HORARIO_GRUPOHORARIO = " + id;
 		List<HorarioDTO> horario = this.row.mapRowHorario(this.jdbcTemplate.queryForList(query));
 		return horario;
 	}

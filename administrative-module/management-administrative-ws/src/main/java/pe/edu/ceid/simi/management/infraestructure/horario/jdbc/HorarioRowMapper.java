@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.horario.model.HorarioDTO;
-import pe.edu.ceid.simi.management.infraestructure.Tratamiento;
 
 import javax.swing.tree.RowMapper;
 import javax.swing.tree.TreePath;
@@ -25,14 +24,14 @@ public class HorarioRowMapper implements RowMapper {
 		List<HorarioDTO> horarioss = new ArrayList<HorarioDTO>();
 		
 		for(Map<String, Object> row: rows) {
+			int idHorario = Integer.parseInt(row.get("ID_HORARIO_GRUPOHORARIO").toString());
 			int idGrupoHorario = Integer.parseInt(row.get("FK_ID_GRUPOHORARIO").toString());
-			int idDia = Tratamiento.tratarEntero("FK_ID_DIA", row);
-			String nomDia = Tratamiento.tratarString("NOM_DIA", row);
+			String nomGrupoHorario = row.get("NOM_GRUPOHORARIO").toString();
 			int idHora = Integer.parseInt(row.get("FK_ID_HORA").toString());
 			String horaInicio = row.get("HORA_INICIO").toString();
 			String horaSalida = row.get("HORA_SALIDA").toString();
-						
-			HorarioDTO h = new HorarioDTO(idGrupoHorario, idDia, nomDia, idHora, horaInicio, horaSalida);
+			
+			HorarioDTO h = new HorarioDTO(idHorario, idGrupoHorario, nomGrupoHorario, idHora, horaInicio, horaSalida);
 			horarioss.add(h);
 		}
 		
