@@ -111,7 +111,7 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 				"		INNER JOIN tmgrupo_horario AS gh ON gh.ID_GRUPOHORARIO = hgh.FK_ID_GRUPOHORARIO\r\n" + 
 				"        INNER JOIN txhoras_clase AS dc ON dc.ID_HORA = hgh.FK_ID_HORA\r\n" + 
 				"	INNER JOIN txestado_progcurso AS ep ON ep.ID_ESTADO_PROGCURSO = pc.FK_ID_ESTADO_PROGCURSO "
-				+ "ORDER BY doc.COD_DOCENTE_CI, cu.ID_CURSO";
+				+ "ORDER BY doc.COD_DOCENTE_CI, id.NOM_IDIOMA, ni.ID_NIVEL, cu.CICLO";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<ProgCursoDTO> progs = row.mapRowProgCurso(rows);
 		return progs;
@@ -162,7 +162,7 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 				"        INNER JOIN txhoras_clase AS dc ON dc.ID_HORA = hgh.FK_ID_HORA\r\n" + 
 				"	INNER JOIN txestado_progcurso AS ep ON ep.ID_ESTADO_PROGCURSO = pc.FK_ID_ESTADO_PROGCURSO " +
 				"	WHERE cu.ID_CURSO  = '" + idCurso + "' AND pa.ID_PERIODO = " + idPeriodo
-				+ " ORDER BY doc.COD_DOCENTE_CI, cu.ID_CURSO";
+				+ " ORDER BY doc.COD_DOCENTE_CI, id.NOM_IDIOMA, ni.ID_NIVEL, cu.CICLO";
 		
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<ProgCursoDTO> progs = row.mapRowProgCurso(rows);
@@ -189,7 +189,7 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 				"	INNER JOIN txestado_progcurso AS ep ON ep.ID_ESTADO_PROGCURSO = pgc.FK_ID_ESTADO_PROGCURSO\r\n" + 
 				"WHERE cur.ID_CURSO = " + idCurso + " AND hgh.ID_HORARIO_GRUPOHORARIO = " + idHorario +
 				" AND pac.ID_PERIODO = " + idPeriodo
-				+ " ORDER BY doc.COD_DOCENTE_CI, cur.ID_CURSO";
+				+ " ORDER BY doc.COD_DOCENTE_CI, id.NOM_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<ProgCursoDTO> progs = row.mapRowProgCurso(rows);
@@ -215,7 +215,7 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 				"		INNER JOIN txhoras_clase AS dcl ON dcl.ID_HORA = hgh.FK_ID_HORA\r\n" + 
 				"	INNER JOIN txestado_progcurso AS ep ON ep.ID_ESTADO_PROGCURSO = pgc.FK_ID_ESTADO_PROGCURSO\r\n" + 
 				"WHERE pac.ID_PERIODO = " + idPeriodo
-				+ " ORDER BY cur.ID_CURSO, doc.COD_DOCENTE_CI";
+				+ " ORDER BY doc.COD_DOCENTE_CI, id.NOM_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<ProgCursoDTO> progs = row.mapRowProgCurso(rows);
@@ -241,7 +241,7 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 				"		INNER JOIN txhoras_clase AS dcl ON dcl.ID_HORA = hgh.FK_ID_HORA\r\n" + 
 				"	INNER JOIN txestado_progcurso AS ep ON ep.ID_ESTADO_PROGCURSO = pgc.FK_ID_ESTADO_PROGCURSO\r\n" + 
 				"WHERE aul.FK_ID_SEDE = " + idSede + " AND pdc.FK_ID_PERIODO = " + idPeriodo
-				+ " ORDER BY  cur.ID_CURSO, doc.COD_DOCENTE_CI";
+				+ " ORDER BY doc.COD_DOCENTE_CI, id.NOM_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<ProgCursoDTO> progs = row.mapRowProgCurso(rows);
