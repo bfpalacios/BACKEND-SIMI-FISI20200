@@ -178,7 +178,8 @@ public class CursoRepositoryImpl implements CursoRepository {
 			"			INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA \r\n" +
 			"			LEFT JOIN tpprog_doc_curso AS pdc ON pdc.FK_ID_CURSO = cur.ID_CURSO \r\n" +
 			"			LEFT JOIN tpprog_curso AS pgc ON pgc.FK_ID_PROG_DOC_CUR = pdc.ID_PROG_DOC_CUR \r\n" +
-		"WHERE pdc.FK_ID_PERIODO = " + idPeriodo ;
+		"WHERE pdc.FK_ID_PERIODO = " + idPeriodo
+		+ " ORDER BY id.ID_IDIOMA, ni.ID_NIVEL, cur.CICLO";
 		 
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<CursoDTO> cursos = row.mapRowCurso(rows);

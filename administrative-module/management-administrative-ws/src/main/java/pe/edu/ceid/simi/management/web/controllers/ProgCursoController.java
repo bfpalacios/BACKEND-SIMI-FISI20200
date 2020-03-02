@@ -30,7 +30,7 @@ public class ProgCursoController {
 		return this.service.getProgCursos();
 	}
 
-	@GetMapping(path = {"/listProgCursosByDocenteCurso/{idCurso}/{idPeriodo}"})
+	@GetMapping(path = {"/listProgCursosByCursoPeriodo/{idCurso}/{idPeriodo}"})
 	public List<ProgCursoDTO> getProgCursosByCursoPeriodo(@PathVariable int idCurso, @PathVariable int idPeriodo) {
 		return this.service.getProgCursosByCursoPeriodo(idCurso, idPeriodo);
 	}
@@ -53,7 +53,7 @@ public class ProgCursoController {
 	
 	@PutMapping(path = {"/actualizarProgCurso/{id}"})
 	public String actualizarProgCurso(@RequestBody ProgCurso progCurso, @PathVariable int id) {
-		progCurso.setIdProgDocCur(id);
+		progCurso.setIdProgCurso(id);
 		return this.service.editProgCurso(progCurso, id);
 	}
 

@@ -10,6 +10,7 @@ import javax.swing.tree.TreePath;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.management.domain.progdoccurso.model.ProgDocCursoDTO;
+import pe.edu.ceid.simi.management.infraestructure.Tratamiento;
 
 @Component
 public class ProgDocCursoRowMapper implements RowMapper {
@@ -24,11 +25,11 @@ public class ProgDocCursoRowMapper implements RowMapper {
 		List<ProgDocCursoDTO> progs = new ArrayList<ProgDocCursoDTO>();
 		for(Map<String, Object> row: rows) {
 			int idProgDocCur = Integer.parseInt(row.get("ID_PROG_DOC_CUR").toString());
-			String idDocente = row.get("FK_ID_DOCENTE").toString();
-			String nombre =row.get("NOMBRE").toString();
-			String apellidoPat =row.get("APELLIDO_PAT").toString();
-			String apellidoMat =row.get("APELLIDO_MAT").toString();
-			String email =row.get("EMAIL").toString();
+			String idDocente = Tratamiento.tratarString("FK_ID_DOCENTE", row);
+			String nombre = Tratamiento.tratarString("NOMBRE", row);
+			String apellidoPat = Tratamiento.tratarString("APELLIDO_PAT", row);
+			String apellidoMat = Tratamiento.tratarString("APELLIDO_MAT", row);
+			String email = Tratamiento.tratarString("EMAIL", row);
 			int idCurso = Integer.parseInt(row.get("FK_ID_CURSO").toString());
 			String nomIdioma = row.get("NOM_IDIOMA").toString();
 			String nomNivel =row.get("NOM_NIVEL").toString();
