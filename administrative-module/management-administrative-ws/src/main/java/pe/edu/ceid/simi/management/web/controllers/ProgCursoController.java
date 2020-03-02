@@ -53,7 +53,7 @@ public class ProgCursoController {
 	
 	@PutMapping(path = {"/actualizarProgCurso/{id}"})
 	public String actualizarProgCurso(@RequestBody ProgCurso progCurso, @PathVariable int id) {
-		progCurso.setIdProgDocCur(id);
+		progCurso.setIdProgCurso(id);
 		return this.service.editProgCurso(progCurso, id);
 	}
 
