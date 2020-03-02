@@ -230,7 +230,7 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 	}
 
 	@Override
-	public boolean docenteOcupadoByDocenteHorarioPeriodo(int idProgDoc, int idHorario, int idPeriodo) {
+	public String docenteOcupadoByDocenteHorarioPeriodo(int idProgDoc, int idHorario, int idPeriodo) {
 		String query = "SELECT *\r\n" + 
 				"FROM tpprog_curso AS pgc\r\n" + 
 				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pgc.FK_ID_PROG_DOC_CUR\r\n" + 
@@ -242,10 +242,10 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		
 		if (rows.isEmpty()) {
-			return false;
+			return "Listo";
 		}
 		
-		return true;
+		return "El docente ya tiene asignado un curso en ese horario.";
 	}
 
 }

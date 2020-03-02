@@ -73,7 +73,7 @@ public class ProgCursoController {
 	}
 
 	@GetMapping(path= {"/docenteOcupado/{idProgDocente}/{idHorario}/{idPeriodo}"})
-	public boolean docenteOcupadoByDocenteHorarioPeriodo(@PathVariable int idProgDocente,
+	public String docenteOcupadoByDocenteHorarioPeriodo(@PathVariable int idProgDocente,
 			@PathVariable int idHorario, @PathVariable int idPeriodo) {
 		return this.service.docenteOcupadoByDocenteHorarioPeriodo(idProgDocente, idHorario, idPeriodo);
 	}
