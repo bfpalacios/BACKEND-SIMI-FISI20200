@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.operative.domain.authentication.model.Authentication;
@@ -23,8 +22,6 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 	@Autowired
 	private AuthenticationRowMapper row;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public Authentication findUserByEmail(String email) {
@@ -44,16 +41,14 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 		if (auth != null) {
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT ID_USUARIO, FK_ID_ROL, EMAIL, PASSWORD FROM TMUSUARIO ");
-			sql.append("WHERE EMAIL = ? AND ID_USUARIO = ? ");
+			sql.append("WHERE EMAIL = ? AND ID_USUARIO = ? AND PASSWORD = md5(?) ");
 			List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql.toString(),
-					new Object[] { email, auth.getId() });
+					new Object[] { email, auth.getId(), password });
 			Authentication authentication = rows.isEmpty() ? null : row.mapRowAuthentication(rows.get(0));
 			if (authentication != null) {
-				if (email.equalsIgnoreCase(authentication.getEmail())
-						&& this.passwordMatch(password, authentication.getPassword())) {
 					authentication.setPassword(password);
 					return authentication;
-				}
+			
 			}
 		}
 		return null;
@@ -70,9 +65,6 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 		return null;
 	}
 
-	public boolean passwordMatch(String password, String passwordHash) {
-		return this.passwordEncoder.matches(password, passwordHash);
-	}
 
 	@Override
 	public User signUpWithEmailAndPassword(User user) {
@@ -93,7 +85,7 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
         params.put("phone", " - ");
         params.put("fechaNac", "2020-02-02");
         params.put("email", user.getEmail());
-        params.put("passwd", this.passwordEncoder.encode(user.getPassword()));
+        params.put("passwd", user.getPassword());
         params.put("estado", "1");
         params.put("idTipoEstudiante", "1");
 		
