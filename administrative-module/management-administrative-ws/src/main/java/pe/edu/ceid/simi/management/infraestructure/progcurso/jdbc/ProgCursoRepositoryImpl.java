@@ -274,6 +274,35 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 	}
 
 	@Override
+	public Integer getIdProgCursoByCursoHorarioSedePeriodo(int idCurso, int idHorario, int idSede, int idPeriodo) {
+		String query = "SELECT ID_PROGCURSO FROM tpprog_curso AS pc\r\n" + 
+				"	INNER JOIN tpprog_doc_curso AS pdc ON pdc.ID_PROG_DOC_CUR = pc.FK_ID_PROG_DOC_CUR\r\n" + 
+				"		INNER JOIN tmdocente AS doc ON doc.COD_DOCENTE_CI = pdc.FK_ID_DOCENTE\r\n" + 
+				"			INNER JOIN tmusuario AS us ON us.ID_USUARIO = doc.FK_ID_USUARIO\r\n" + 
+				"				INNER JOIN tmpersona AS pe ON pe.ID_PERSONA = us.FK_ID_PERSONA\r\n" + 
+				"		INNER JOIN tmcurso AS cur ON cur.ID_CURSO = pdc.FK_ID_CURSO\r\n" + 
+				"			INNER JOIN txnivel AS ni ON ni.ID_NIVEL = cur.FK_ID_NIVEL\r\n" + 
+				"			INNER JOIN tmidioma AS id ON id.ID_IDIOMA = cur.FK_ID_IDIOMA\r\n" + 
+				"		INNER JOIN tmperiodo_academico AS pa ON pa.ID_PERIODO = pdc.FK_ID_PERIODO\r\n" + 
+				"	LEFT JOIN tmaula AS au ON au.ID_AULA = pc.FK_ID_AULA\r\n" + 
+				"		LEFT JOIN tmsede AS se ON se.ID_SEDE = au.FK_ID_SEDE\r\n" + 
+				"	INNER JOIN tmhorario_grupo_horario AS hgh ON hgh.ID_HORARIO_GRUPOHORARIO = pc.FK_ID_HORARIO_GRUPOHORARIO\r\n" + 
+				"		INNER JOIN tmgrupo_horario AS gh ON gh.ID_GRUPOHORARIO = hgh.FK_ID_GRUPOHORARIO\r\n" + 
+				"		INNER JOIN txhoras_clase AS dc ON dc.ID_HORA = hgh.FK_ID_HORA\r\n" + 
+				"	INNER JOIN txestado_progcurso AS ep ON ep.ID_ESTADO_PROGCURSO = pc.FK_ID_ESTADO_PROGCURSO\r\n" + 
+				"    WHERE cur.ID_CURSO = " + idCurso + " AND  hgh.ID_HORARIO_GRUPOHORARIO = " + idHorario + " AND\r\n" + 
+				"		se.ID_SEDE = " + idSede + " AND pa.ID_PERIODO = " + idPeriodo;
+		
+		Map<String, Object> row = this.jdbcTemplate.queryForList(query).get(0);
+		
+		if (row.isEmpty()) {
+			return null;
+		} else {
+			return Integer.parseInt(row.get("ID_PROGCURSO").toString());
+		}
+	}
+
+	@Override
 	public String docenteOcupadoByDocenteHorarioPeriodo(int idProgDoc, int idHorario, int idPeriodo) {
 		String query = "SELECT *\r\n" + 
 				"FROM tpprog_curso AS pgc\r\n" + 
