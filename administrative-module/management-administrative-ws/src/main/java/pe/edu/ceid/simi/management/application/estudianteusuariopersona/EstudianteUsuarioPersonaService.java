@@ -13,4 +13,5 @@ public interface EstudianteUsuarioPersonaService {
 	List<EstudianteUsuarioPersona> getEstudiantesByCursoPeriodo(int idCurso, int idPeriodo);
 	String deleteEstudianteUsuarioPersona(String codEstudiante);
 	EstudianteUsuarioPersona getEstudianteUsuarioPersonaById(String codEstudiante);
+	String validarPasswdEstudiante(String codEstudiante, String passwd);
 }

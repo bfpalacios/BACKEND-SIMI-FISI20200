@@ -65,5 +65,10 @@ public class EstudianteUsuarioPersonaController {
 	public EstudianteUsuarioPersona obtenerEstudianteUsuarioPersona(@PathVariable String id) {
 		return this.service.getEstudianteUsuarioPersonaById(id);
 	}
+
+	@GetMapping(path = {"/validarPasswdEstudiante/{codEstudiante}/{passwd}"})
+	public String validarPasswdEstudiante(@PathVariable String codEstudiante, @PathVariable String passwd) {
+		return this.service.validarPasswdEstudiante(codEstudiante, passwd);
+	}
 	
 }

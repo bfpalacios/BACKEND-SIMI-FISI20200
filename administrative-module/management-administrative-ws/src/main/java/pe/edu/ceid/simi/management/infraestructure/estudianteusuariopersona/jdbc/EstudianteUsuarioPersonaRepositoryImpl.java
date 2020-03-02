@@ -182,4 +182,19 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 		return estUsuPer;
 	}
 
+	@Override
+	public String validarPasswdEstudiante(String codEstudiante, String passwd) {
+		String query ="SELECT (usu.PASSWORD = md5('" + passwd + "')) AS IGUALES FROM tmusuario AS usu\r\n" + 
+				"INNER JOIN tmestudiante AS est ON est.FK_ID_USUARIO = usu.ID_USUARIO\r\n" + 
+				"WHERE est.COD_ESTUDIANTE_CI = '" + codEstudiante + "'";
+		
+		Map<String, Object> row = this.jdbcTemplate.queryForList(query).get(0);
+	
+		if (Integer.parseInt(row.get("IGUALES").toString()) == 1) {
+			return "Contraseña correcta.";
+		}
+	
+		return "Contraseña incorrecta.";
+	}
+
 }
