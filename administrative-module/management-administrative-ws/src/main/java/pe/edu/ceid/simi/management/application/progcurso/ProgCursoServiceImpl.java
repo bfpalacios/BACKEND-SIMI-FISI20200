@@ -69,4 +69,10 @@ public class ProgCursoServiceImpl implements ProgCursoService {
 		return this.repository.getProgCursosBySedePeriodo(idSede, idPeriodo);
 	}
 
+	@Override
+	public String docenteOcupadoByDocenteHorarioPeriodo(int idProgDoc, int idHorario, int idPeriodo) {
+		// TODO Auto-generated method stub
+		return this.repository.docenteOcupadoByDocenteHorarioPeriodo(idProgDoc, idHorario, idPeriodo);
+	}
+
 }

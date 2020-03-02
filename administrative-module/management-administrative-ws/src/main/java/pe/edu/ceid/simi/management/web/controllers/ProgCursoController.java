@@ -66,10 +66,16 @@ public class ProgCursoController {
 	public String crearProgCurso(@RequestBody ProgCurso progCurso) {
 		return this.service.crearProgCurso(progCurso);
 	}
-	
+
 	@GetMapping(path= {"/obtenerProgCursoById/{id}"})
 	public ProgCursoDTO obtenerProgCursoById(@PathVariable int id) {
 		return this.service.getProgCursoById(id);
+	}
+
+	@GetMapping(path= {"/docenteOcupado/{idProgDocente}/{idHorario}/{idPeriodo}"})
+	public String docenteOcupadoByDocenteHorarioPeriodo(@PathVariable int idProgDocente,
+			@PathVariable int idHorario, @PathVariable int idPeriodo) {
+		return this.service.docenteOcupadoByDocenteHorarioPeriodo(idProgDocente, idHorario, idPeriodo);
 	}
 	
 }
