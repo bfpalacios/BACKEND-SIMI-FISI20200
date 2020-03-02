@@ -37,6 +37,12 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 			
 			return "false";
 		} catch (DuplicateKeyException ex) {
+			System.out.println(ex.getMessage());
+			if (ex.getMessage().contains("DOC_HGH_UNIQUE")) {
+				return "El docente ya tiene asignado un curso en ese horario";
+			} else if (ex.getMessage().contains("UNICO_UNIQUE")) {
+				return "No es posible ingresar registros duplicados.";
+			}
 			return "No es posible ingresar registros duplicados.";
 		}
 	}
