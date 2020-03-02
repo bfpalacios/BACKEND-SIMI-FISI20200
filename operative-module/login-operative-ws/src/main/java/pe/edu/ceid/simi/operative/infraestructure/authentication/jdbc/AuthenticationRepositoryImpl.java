@@ -1,14 +1,17 @@
 package pe.edu.ceid.simi.operative.infraestructure.authentication.jdbc;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.operative.domain.authentication.model.Authentication;
+import pe.edu.ceid.simi.operative.domain.authentication.model.User;
 import pe.edu.ceid.simi.operative.domain.authentication.repository.AuthenticationRepository;
 
 @Component
@@ -25,7 +28,6 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
 	@Override
 	public Authentication findUserByEmail(String email) {
-		System.out.println("findUserByEmail");
 		StringBuilder sql = new StringBuilder("SELECT ID_USUARIO, EMAIL FROM TMUSUARIO ")
 				.append("WHERE EMAIL = ? ");
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql.toString(), new Object[] { email });
@@ -70,6 +72,33 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
 	public boolean passwordMatch(String password, String passwordHash) {
 		return this.passwordEncoder.matches(password, passwordHash);
+	}
+
+	@Override
+	public User signUpWithEmailAndPassword(User user) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_EST_USU_PER_INSERT");
+		Map<String, Object> params = new HashMap<String, Object>();
+        params.put("nombre", user.getNames());
+        params.put("apellidoPat", user.getLastNameP());
+        params.put("apellidoMat", user.getLastNameM());
+        params.put("dni", user.getDocNumber());
+        params.put("genero", "1");
+        params.put("edad", "22");
+        params.put("university", " - ");
+        params.put("lugarNacDist", " - ");
+        params.put("lugarNacProv", " - ");
+        params.put("lugarNacDep", " - ");
+        params.put("nacionalidad", " - ");
+        params.put("address", " - ");
+        params.put("phone", " - ");
+        params.put("fechaNac", "2020-02-02");
+        params.put("email", user.getEmail());
+        params.put("passwd", this.passwordEncoder.encode(user.getPassword()));
+        params.put("estado", "1");
+        params.put("idTipoEstudiante", "1");
+		
+		Map<String, Object> result = jdbcCall.execute(params);
+		return null;
 	}
 
 }
