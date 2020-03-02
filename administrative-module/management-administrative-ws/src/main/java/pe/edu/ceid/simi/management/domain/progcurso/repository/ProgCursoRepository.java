@@ -8,7 +8,7 @@ import pe.edu.ceid.simi.management.domain.progcurso.model.ProgCursoDTO;
 public interface ProgCursoRepository {
 	String crearProgCurso(ProgCurso progCurso);
 	String editProgCurso(ProgCurso progCurso, int id);
-	boolean deleteProgCurso(int id);
+	String deleteProgCurso(int id);
 	List<ProgCursoDTO> getProgCursos();
 	List<ProgCursoDTO> getProgCursosByCursoPeriodo(int idCurso, int idPeriodo);
 	List<ProgCursoDTO> getProgCursosByCursoHorarioPeriodo(int idCurso, int idHorario, int idPeriodo);

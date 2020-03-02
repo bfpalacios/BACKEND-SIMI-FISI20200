@@ -28,7 +28,7 @@ public class ProgCursoServiceImpl implements ProgCursoService {
 	}
 
 	@Override
-	public boolean deleteProgCurso(int id) {
+	public String deleteProgCurso(int id) {
 		// TODO Auto-generated method stub
 		return this.repository.deleteProgCurso(id);
 	}
