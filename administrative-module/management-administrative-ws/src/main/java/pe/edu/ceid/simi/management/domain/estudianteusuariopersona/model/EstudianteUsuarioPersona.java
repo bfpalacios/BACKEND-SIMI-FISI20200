@@ -11,17 +11,20 @@ public class EstudianteUsuarioPersona {
 	private String dni;
 	private int genero;
 	private int edad;
-	private Date fechaAltaP;
-	private Date fechaModP;
-	private String university;
+		
 	private String fechaNacimiento; 
 	private String lugarNacDist;
 	private String lugarNacProv;
 	private String lugarNacDep;
+	
 	private String nacionalidad;
 	private String address;
 	private String phone;
-
+	
+	private Date fechaAltaP;
+	private Date fechaModP;
+	
+	private String university;
 	private int idUsuario;
 	private String email;
 	private String contrasenia;
@@ -33,11 +36,13 @@ public class EstudianteUsuarioPersona {
 	private Date fechaModU;
 	private int idUsuarioMod;
 	
+	
+	
 	private String codEstudiante;
 	private int idTipoEstudiante;
-
+	private String nomTipoEstudiante;
+	
 	public EstudianteUsuarioPersona() {}
-
 	public EstudianteUsuarioPersona(int idPersona, String nombre, String apellidoPat, String apellidoMat, String dni,
 			int genero, int edad, Date fechaAltaP, Date fechaModP, String university, String fechaNacimiento,
 			String lugarNacDist, String lugarNacProv, String lugarNacDep, String nacionalidad, String address,
@@ -74,6 +79,54 @@ public class EstudianteUsuarioPersona {
 		this.idUsuarioMod = idUsuarioMod;
 		this.codEstudiante = codEstudiante;
 		this.idTipoEstudiante = idTipoEstudiante;
+	}
+	
+	public EstudianteUsuarioPersona(int idPersona, String nombre, String apellidoPat, String apellidoMat, String dni,
+			int genero, int edad, Date fechaAltaP, Date fechaModP, String university, String fechaNacimiento,
+			String lugarNacDist, String lugarNacProv, String lugarNacDep, String nacionalidad, String address,
+			String phone, int idUsuario, String email, String contrasenia, int idRol, String nomRol, int estado,
+			Date fechaAltaU, Date fechaBajaU, Date fechaModU, int idUsuarioMod, String codEstudiante,
+			int idTipoEstudiante, String nomTipoEstudiante) {
+		super();
+		this.idPersona = idPersona;
+		this.nombre = nombre;
+		this.apellidoPat = apellidoPat;
+		this.apellidoMat = apellidoMat;
+		this.dni = dni;
+		this.genero = genero;
+		this.edad = edad;
+		this.fechaAltaP = fechaAltaP;
+		this.fechaModP = fechaModP;
+		this.university = university;
+		this.fechaNacimiento = fechaNacimiento;
+		this.lugarNacDist = lugarNacDist;
+		this.lugarNacProv = lugarNacProv;
+		this.lugarNacDep = lugarNacDep;
+		this.nacionalidad = nacionalidad;
+		this.address = address;
+		this.phone = phone;
+		this.idUsuario = idUsuario;
+		this.email = email;
+		this.contrasenia = contrasenia;
+		this.idRol = idRol;
+		this.nomRol = nomRol;
+		this.estado = estado;
+		this.fechaAltaU = fechaAltaU;
+		this.fechaBajaU = fechaBajaU;
+		this.fechaModU = fechaModU;
+		this.idUsuarioMod = idUsuarioMod;
+		this.codEstudiante = codEstudiante;
+		this.idTipoEstudiante = idTipoEstudiante;
+		this.nomTipoEstudiante = nomTipoEstudiante;
+	}
+
+	
+	public String getNomTipoEstudiante() {
+		return nomTipoEstudiante;
+	}
+
+	public void setNomTipoEstudiante(String nomTipoEstudiante) {
+		this.nomTipoEstudiante = nomTipoEstudiante;
 	}
 
 	public int getIdPersona() {

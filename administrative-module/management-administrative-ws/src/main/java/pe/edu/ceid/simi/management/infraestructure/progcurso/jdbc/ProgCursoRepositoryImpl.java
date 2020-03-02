@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
 import pe.edu.ceid.simi.management.domain.progcurso.model.ProgCurso;
 import pe.edu.ceid.simi.management.domain.progcurso.model.ProgCursoDTO;
 import pe.edu.ceid.simi.management.domain.progcurso.repository.ProgCursoRepository;
+import pe.edu.ceid.simi.management.infraestructure.progdoccurso.jdbc.ProgDocCursoRepositoryImpl;
 
 @Component
 public class ProgCursoRepositoryImpl implements ProgCursoRepository {
-
+	ProgDocCursoRepositoryImpl  progDocenteri ; 
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -49,7 +51,12 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 
 	@Override
 	public String editProgCurso(ProgCurso progCurso, int id) {
-		try {
+		int idPeriodo = progDocenteri.getProgDocCursoById (progCurso.getIdProgDocCur()).getIdPeriodo();
+				
+    String docenteOcupado = docenteOcupadoByDocenteHorarioPeriodo(progCurso.getIdProgDocCur(), progCurso.getIdHorarioGrupoHorario(), 
+				idPeriodo) ;
+    if(docenteOcupado =="1"){
+    	try {
 			String query = "UPDATE tpprog_curso SET FK_ID_PROG_DOC_CUR = ?, FK_ID_AULA = ? , FK_ID_HORARIO_GRUPOHORARIO = ?,"
 					+ " FK_ID_ESTADO_PROGCURSO = ? WHERE ID_PROGCURSO = " + id;
 			int update = this.jdbcTemplate.update(query, progCurso.getIdProgDocCur(),
@@ -63,6 +70,12 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 		} catch (DuplicateKeyException ex) {
 			return "Los datos actualizados se repiten en otro registro.";
 		}
+    }
+    else { // (docenteOcupado =="0")
+    	return "El docente ya tiene asignado un curso en ese horario.";
+    }
+		
+    
 	}
 
 	@Override
@@ -248,10 +261,11 @@ public class ProgCursoRepositoryImpl implements ProgCursoRepository {
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		
 		if (rows.isEmpty()) {
-			return "Listo";
+			return "1";
+//			return "Listo";
 		}
-		
-		return "El docente ya tiene asignado un curso en ese horario.";
+//		return "El docente ya tiene asignado un curso en ese horario.";
+        return "0";
 	}
 
 }

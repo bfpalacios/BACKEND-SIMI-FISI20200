@@ -34,7 +34,7 @@ public class EstudianteUsuarioPersonaServiceImpl implements EstudianteUsuarioPer
 	}
 
 	@Override
-	public boolean deleteEstudianteUsuarioPersona(String codEstudiante) {
+	public String deleteEstudianteUsuarioPersona(String codEstudiante) {
 		// TODO Auto-generated method stub
 		return this.repository.deleteEstudianteUsuarioPersona(codEstudiante);
 	}
