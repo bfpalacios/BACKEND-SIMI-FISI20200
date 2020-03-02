@@ -128,7 +128,6 @@ public class DocenteUsuarioPersonaRepositoryImpl implements DocenteUsuarioPerson
 			return "false";
 			
 		} catch (Exception e) {
-			e.printStackTrace();
 			System.out.print(e);
 			return "No se puede eliminar al docente "+ docente.getNombre() +" "+ docente.getApellidoPat()+" "+ docente.getApellidoMat()
 			+" porque tiene asignado carga académica" ;

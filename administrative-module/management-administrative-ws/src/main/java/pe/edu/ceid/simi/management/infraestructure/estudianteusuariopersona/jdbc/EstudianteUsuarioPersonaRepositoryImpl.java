@@ -129,22 +129,21 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 	@Override
 	public String deleteEstudianteUsuarioPersona(String cosEstudiante) {
 	EstudianteUsuarioPersona docente = getEstudianteUsuarioPersonaById(cosEstudiante);
-	try {
-		String query = "{CALL SP_EST_USU_PER_DELETE(?)}";
-		int success = this.jdbcTemplate.update(query, cosEstudiante);
-		
-		if (success >= 0) {
-			return "true";
+		try {
+			String query = "{CALL SP_EST_USU_PER_DELETE(?)}";
+			int success = this.jdbcTemplate.update(query, cosEstudiante);
+			
+			if (success >= 0) {
+				return "true";
+			}
+			
+			return "false";
+			
+		} catch (Exception e) {
+			System.out.print(e);
+			return "No se puede eliminar al estudiante "+ docente.getNombre() +" "+ docente.getApellidoPat()+" "+ docente.getApellidoMat()
+			+" porque tiene asignado carga académica" ;
 		}
-		
-		return "false";
-		
-	} catch (Exception e) {
-		e.printStackTrace();
-		System.out.print(e);
-		return "No se puede eliminar al estudiante "+ docente.getNombre() +" "+ docente.getApellidoPat()+" "+ docente.getApellidoMat()
-		+" porque tiene asignado carga académica" ;
-	}
 	
 	}
 
