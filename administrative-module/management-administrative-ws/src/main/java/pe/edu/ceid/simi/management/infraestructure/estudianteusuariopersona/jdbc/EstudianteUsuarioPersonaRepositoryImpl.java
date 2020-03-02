@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
 import pe.edu.ceid.simi.management.domain.estudianteusuariopersona.model.EstudianteUsuarioPersona;
 import pe.edu.ceid.simi.management.domain.estudianteusuariopersona.repository.EstudianteUsuarioPersonaRepository;
 
@@ -88,8 +87,10 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 				"INNER JOIN tmusuario AS us ON us.ID_USUARIO = es.FK_ID_USUARIO " + 
 				"INNER JOIN tmpersona AS pe ON pe.ID_PERSONA = us.FK_ID_PERSONA " + 
 				"INNER JOIN tmrol AS ro ON ro.ID_ROL = us.FK_ID_ROL";
+//				+"INNER JOIN tmtipo_estudiante AS te ON te.ID_TIPO_ESTUDIANTE = es.FK_ID_TIPO_ESTUDIANTE";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<EstudianteUsuarioPersona> estUsuPer = row.mapRowEstudianteUsuarioPersona(rows);
+		
 		return estUsuPer;
 	}
 
@@ -126,13 +127,25 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 	}
 
 	@Override
-	public boolean deleteEstudianteUsuarioPersona(String cosEstudiante) {
+	public String deleteEstudianteUsuarioPersona(String cosEstudiante) {
+	EstudianteUsuarioPersona docente = getEstudianteUsuarioPersonaById(cosEstudiante);
+	try {
 		String query = "{CALL SP_EST_USU_PER_DELETE(?)}";
 		int success = this.jdbcTemplate.update(query, cosEstudiante);
+		
 		if (success >= 0) {
-			return true;
+			return "true";
 		}
-		return false;
+		
+		return "false";
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		System.out.print(e);
+		return "No se puede eliminar al estudiante "+ docente.getNombre() +" "+ docente.getApellidoPat()+" "+ docente.getApellidoMat()
+		+" porque tiene asignado carga académica" ;
+	}
+	
 	}
 
 	@Override
