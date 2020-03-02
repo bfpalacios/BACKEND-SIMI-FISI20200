@@ -35,7 +35,7 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping(path = {"/signUpWithEmailAndPassword"})
-	public User signUpWithEmailAndPassword(@RequestBody User user) {
+	public boolean signUpWithEmailAndPassword(@RequestBody User user) {
 		return this.service.signUpWithEmailAndPassword(user);
 	}
 	

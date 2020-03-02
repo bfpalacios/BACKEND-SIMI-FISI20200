@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import pe.edu.ceid.simi.operative.domain.authentication.model.Authentication;
@@ -23,8 +22,6 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 	@Autowired
 	private AuthenticationRowMapper row;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public Authentication findUserByEmail(String email) {
@@ -44,16 +41,14 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 		if (auth != null) {
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT ID_USUARIO, FK_ID_ROL, EMAIL, PASSWORD FROM TMUSUARIO ");
-			sql.append("WHERE EMAIL = ? AND ID_USUARIO = ? ");
+			sql.append("WHERE EMAIL = ? AND ID_USUARIO = ? AND PASSWORD = md5(?) ");
 			List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql.toString(),
-					new Object[] { email, auth.getId() });
+					new Object[] { email, auth.getId(), password });
 			Authentication authentication = rows.isEmpty() ? null : row.mapRowAuthentication(rows.get(0));
 			if (authentication != null) {
-				if (email.equalsIgnoreCase(authentication.getEmail())
-						&& this.passwordMatch(password, authentication.getPassword())) {
 					authentication.setPassword(password);
 					return authentication;
-				}
+			
 			}
 		}
 		return null;
@@ -70,35 +65,35 @@ public class AuthenticationRepositoryImpl implements AuthenticationRepository {
 		return null;
 	}
 
-	public boolean passwordMatch(String password, String passwordHash) {
-		return this.passwordEncoder.matches(password, passwordHash);
-	}
 
 	@Override
-	public User signUpWithEmailAndPassword(User user) {
+	public boolean signUpWithEmailAndPassword(User user) {
 		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("SP_EST_USU_PER_INSERT");
 		Map<String, Object> params = new HashMap<String, Object>();
         params.put("nombre", user.getNames());
         params.put("apellidoPat", user.getLastNameP());
         params.put("apellidoMat", user.getLastNameM());
         params.put("dni", user.getDocNumber());
-        params.put("genero", "1");
-        params.put("edad", "22");
-        params.put("university", " - ");
-        params.put("lugarNacDist", " - ");
-        params.put("lugarNacProv", " - ");
-        params.put("lugarNacDep", " - ");
-        params.put("nacionalidad", " - ");
-        params.put("address", " - ");
-        params.put("phone", " - ");
-        params.put("fechaNac", "2020-02-02");
+        params.put("genero", user.getGenero());
+        params.put("edad", "20");
+        params.put("university", user.getUniversity());
+        params.put("lugarNacDist", user.getLugarNacDist());
+        params.put("lugarNacProv", user.getLugarNacProv());
+        params.put("lugarNacDep", user.getLugarNacDep());
+        params.put("nacionalidad", user.getNacionalidad());
+        params.put("address", user.getAddress());
+        params.put("phone", user.getPhone());
+        params.put("fechaNac", user.getBirthday());
         params.put("email", user.getEmail());
-        params.put("passwd", this.passwordEncoder.encode(user.getPassword()));
+        params.put("passwd", user.getPassword());
         params.put("estado", "1");
         params.put("idTipoEstudiante", "1");
 		
 		Map<String, Object> result = jdbcCall.execute(params);
-		return null;
+		if (result.size() > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }
