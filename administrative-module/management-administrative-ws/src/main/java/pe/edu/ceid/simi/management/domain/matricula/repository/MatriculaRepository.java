@@ -10,5 +10,6 @@ public interface MatriculaRepository {
 	Matricula editMatricula(Matricula matricula, int id);
 	boolean deleteMatricula(int id);
 	List<MatriculaDTO> getMatriculas();
+	List<MatriculaDTO> getMatriculasBySedePeriodo(int idSede, int idPeriodo);
 	MatriculaDTO getMatriculaById(int id);
 }

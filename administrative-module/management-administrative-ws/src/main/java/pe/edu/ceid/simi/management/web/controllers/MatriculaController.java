@@ -50,5 +50,10 @@ public class MatriculaController {
 	public MatriculaDTO obtenerMatriculaById(@PathVariable int id) {
 		return this.service.getMatriculaById(id);
 	}
+
+	@GetMapping(path = {"/listMatriculasBySedePeriodo/{idSede}/{idPeriodo}"})
+	public List<MatriculaDTO> getMatriculasBySedePeriodo(@PathVariable int idSede, @PathVariable int idPeriodo) {
+		return this.service.getMatriculasBySedePeriodo(idSede, idPeriodo);
+	}
 	
 }
