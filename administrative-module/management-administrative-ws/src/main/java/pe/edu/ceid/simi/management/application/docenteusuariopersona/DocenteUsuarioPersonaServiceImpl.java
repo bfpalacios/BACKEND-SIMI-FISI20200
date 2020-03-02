@@ -50,4 +50,10 @@ public class DocenteUsuarioPersonaServiceImpl implements DocenteUsuarioPersonaSe
 		return this.repository.getDocentesByCursoPeriodo(idCurso, idPeriodo);
 	}
 
+	@Override
+	public String validarPasswdDocente(String codDocente, String passwd) {
+		// TODO Auto-generated method stub
+		return this.repository.validarPasswdDocente(codDocente, passwd);
+	}
+
 }

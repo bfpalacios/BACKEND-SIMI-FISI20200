@@ -63,7 +63,8 @@ public class HorarioRepositoryImpl implements HorarioRepository {
 		String query = "SELECT *\r\n" + 
 				"FROM tmhorario_grupo_horario AS hgh\r\n" + 
 				"	INNER JOIN tmgrupo_horario AS gho ON gho.ID_GRUPOHORARIO = hgh.FK_ID_GRUPOHORARIO\r\n" + 
-				"    INNER JOIN txhoras_clase AS hcl ON hcl.ID_HORA = hgh.FK_ID_HORA";
+				"    INNER JOIN txhoras_clase AS hcl ON hcl.ID_HORA = hgh.FK_ID_HORA "
+				+ " ORDER BY gho.NOM_GRUPOHORARIO";
 		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
 		List<HorarioDTO> horarios = row.mapRowHorario(rows);
 		return horarios;

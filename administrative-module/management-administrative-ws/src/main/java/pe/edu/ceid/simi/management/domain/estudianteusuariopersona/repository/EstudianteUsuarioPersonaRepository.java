@@ -11,6 +11,8 @@ public interface EstudianteUsuarioPersonaRepository {
 	List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonaMatriculadosByProgCurso(int idProgCurso);
 	List<EstudianteUsuarioPersona> getEstudianteUsuarioPersonaByTipoEstudiante(int idTipoEstudiante);
 	List<EstudianteUsuarioPersona> getEstudiantesByCursoPeriodo(int idCurso, int idPeriodo);
+//	List<EstudianteUsuarioPersona> getEstudiantesMatriculadosByProgCurso(int idProgCurso);
 	String deleteEstudianteUsuarioPersona(String codEstudiante);
 	EstudianteUsuarioPersona getEstudianteUsuarioPersonaById(String codEstudiante);
+	String validarPasswdEstudiante(String codEstudiante, String passwd);
 }

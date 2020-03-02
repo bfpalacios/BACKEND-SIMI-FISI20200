@@ -182,4 +182,34 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 		return estUsuPer;
 	}
 
+//	@Override
+//	public List<EstudianteUsuarioPersona> getEstudiantesMatriculadosByProgCurso(int idProgCurso) {
+//		String query = "SELECT *\r\n" + 
+//				"FROM tpmatricula AS mat\r\n" + 
+//				"	INNER JOIN tmestudiante AS est ON est.COD_ESTUDIANTE_CI = mat.FK_COD_ESTUDIANTE_CI\r\n" + 
+//				"		INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = est.FK_ID_USUARIO\r\n" + 
+//				"			INNER JOIN tmpersona AS per ON per.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+//				"	INNER JOIN tpprog_curso AS pgc ON pgc.ID_PROGCURSO = mat.FK_ID_PROGCURSO\r\n" + 
+//				"WHERE pgc.ID_PROGCURSO = " + idProgCurso;
+//		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+//		List<EstudianteUsuarioPersona> estUsuPer = row.mapRowEstudianteUsuarioPersona(rows);
+//		
+//		return estUsuPer;
+//	}
+
+	@Override
+	public String validarPasswdEstudiante(String codEstudiante, String passwd) {
+		String query ="SELECT (usu.PASSWORD = md5('" + passwd + "')) AS IGUALES FROM tmusuario AS usu\r\n" + 
+				"INNER JOIN tmestudiante AS est ON est.FK_ID_USUARIO = usu.ID_USUARIO\r\n" + 
+				"WHERE est.COD_ESTUDIANTE_CI = '" + codEstudiante + "'";
+		
+		Map<String, Object> row = this.jdbcTemplate.queryForList(query).get(0);
+	
+		if (Integer.parseInt(row.get("IGUALES").toString()) == 1) {
+			return "Contraseña correcta.";
+		}
+	
+		return "Contraseña incorrecta.";
+	}
+
 }

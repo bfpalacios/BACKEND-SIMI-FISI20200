@@ -44,6 +44,11 @@ public class EstudianteUsuarioPersonaController {
 			@PathVariable int idPeriodo) {
 		return this.service.getEstudiantesByCursoPeriodo(idCurso, idPeriodo);
 	}
+
+//	@GetMapping(path = {"/listEstudiantesMatriculadosByProgCurso/{idProgCurso}"})
+//	public List<EstudianteUsuarioPersona> getEstudiantesMatriculadosByProgCurso(@PathVariable int idProgCurso) {
+//		return this.service.getEstudiantesMatriculadosByProgCurso(idProgCurso);
+//	}
 	
 	@PutMapping(path = {"/actualizarEstudianteUsuarioPersona/{id}"})
 	public String actualizarEstudianteUsuarioPersonaById(@RequestBody EstudianteUsuarioPersona estUsuPer,
@@ -64,6 +69,11 @@ public class EstudianteUsuarioPersonaController {
 	@GetMapping(path= {"/obtenerEstudianteUsuarioPersonaById/{id}"})
 	public EstudianteUsuarioPersona obtenerEstudianteUsuarioPersona(@PathVariable String id) {
 		return this.service.getEstudianteUsuarioPersonaById(id);
+	}
+
+	@GetMapping(path = {"/validarPasswdEstudiante/{codEstudiante}/{passwd}"})
+	public String validarPasswdEstudiante(@PathVariable String codEstudiante, @PathVariable String passwd) {
+		return this.service.validarPasswdEstudiante(codEstudiante, passwd);
 	}
 	
 }
