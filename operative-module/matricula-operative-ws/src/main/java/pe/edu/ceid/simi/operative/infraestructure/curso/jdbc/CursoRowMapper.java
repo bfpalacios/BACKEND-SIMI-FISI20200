@@ -25,7 +25,7 @@ public class CursoRowMapper implements RowMapper{
 		int idCurso = Integer.parseInt(row.get("ID_CURSO").toString());
 		int ciclo = Integer.parseInt(row.get("CICLO").toString());
 
-		CursoDTO i = new CursoDTO(idCurso, ciclo);
+		CursoDTO i = new CursoDTO(idCurso, ciclo, "", "");
 		return i;
 	}
 
