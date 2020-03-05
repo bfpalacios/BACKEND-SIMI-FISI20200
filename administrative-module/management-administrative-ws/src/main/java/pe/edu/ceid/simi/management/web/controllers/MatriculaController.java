@@ -51,9 +51,20 @@ public class MatriculaController {
 		return this.service.getMatriculaById(id);
 	}
 
+	@GetMapping(path = {"/listMatriculasByPeriodo/{idPeriodo}"})
+	public List<MatriculaDTO> getMatriculasByPeriodo(@PathVariable int idPeriodo) {
+		return this.service.getMatriculasByPeriodo(idPeriodo);
+	}
+
 	@GetMapping(path = {"/listMatriculasBySedePeriodo/{idSede}/{idPeriodo}"})
 	public List<MatriculaDTO> getMatriculasBySedePeriodo(@PathVariable int idSede, @PathVariable int idPeriodo) {
 		return this.service.getMatriculasBySedePeriodo(idSede, idPeriodo);
+	}
+
+	@GetMapping(path = {"/listMatriculasBySedePeriodoIdioma/{idSede}/{idPeriodo}/{idIdioma}"})
+	public List<MatriculaDTO> getMatriculasBySedePeriodoIdioma(@PathVariable int idSede,
+			@PathVariable int idPeriodo, @PathVariable int idIdioma) {
+		return this.service.getMatriculasBySedePeriodoIdioma(idSede, idPeriodo, idIdioma);
 	}
 	
 }
