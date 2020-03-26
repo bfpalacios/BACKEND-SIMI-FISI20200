@@ -45,6 +45,11 @@ public class EstudianteUsuarioPersonaController {
 		return this.service.getEstudiantesByCursoPeriodo(idCurso, idPeriodo);
 	}
 
+	@GetMapping(path = {"/listEstudiantesByCodigo/{codEstudiante}"})
+	public List<EstudianteUsuarioPersona> getEstudiantesByCodigo(@PathVariable String codEstudiante) {
+		return this.service.getEstudiantesByCodigo(codEstudiante);
+	}
+
 //	@GetMapping(path = {"/listEstudiantesMatriculadosByProgCurso/{idProgCurso}"})
 //	public List<EstudianteUsuarioPersona> getEstudiantesMatriculadosByProgCurso(@PathVariable int idProgCurso) {
 //		return this.service.getEstudiantesMatriculadosByProgCurso(idProgCurso);

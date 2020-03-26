@@ -51,4 +51,16 @@ public class MatriculaServiceImpl implements MatriculaService {
 		return this.repository.getMatriculasBySedePeriodo(idSede, idPeriodo);
 	}
 
+	@Override
+	public List<MatriculaDTO> getMatriculasByPeriodo(int idPeriodo) {
+		// TODO Auto-generated method stub
+		return this.repository.getMatriculasByPeriodo(idPeriodo);
+	}
+
+	@Override
+	public List<MatriculaDTO> getMatriculasBySedePeriodoIdioma(int idSede, int idPeriodo, int idIdioma) {
+		// TODO Auto-generated method stub
+		return this.repository.getMatriculasBySedePeriodoIdioma(idSede, idPeriodo, idIdioma);
+	}
+
 }

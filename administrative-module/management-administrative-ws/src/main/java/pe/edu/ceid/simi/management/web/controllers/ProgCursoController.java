@@ -57,6 +57,11 @@ public class ProgCursoController {
 		return this.service.getProgCursosBySedePeriodoIdioma(idSede, idPeriodo, idIdioma);
 	}
 
+	@GetMapping(path = {"/listProgCursosByIdioma/{idIdioma}"})
+	public List<ProgCursoDTO> getProgCursosByIdioma(@PathVariable int idIdioma) {
+		return this.service.getProgCursosByIdioma(idIdioma);
+	}
+
 	@GetMapping(path = {"/obtenerIdProgCursoByCursoHorarioSedePeriodo/{idCurso}/{idHorario}/{idSede}/{idPeriodo}"})
 	public Integer getIdProgCursoByCursoHorarioSedePeriodo(@PathVariable int idCurso, @PathVariable int idHorario,
 			@PathVariable int idSede, @PathVariable int idPeriodo) {

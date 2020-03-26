@@ -182,6 +182,19 @@ public class EstudianteUsuarioPersonaRepositoryImpl implements EstudianteUsuario
 		return estUsuPer;
 	}
 
+	@Override
+	public List<EstudianteUsuarioPersona> getEstudiantesByCodigo(String codEstudiante) {
+		String query = "SELECT * FROM tmestudiante AS est\r\n" + 
+				"	INNER JOIN tmusuario AS usu ON usu.ID_USUARIO = est.FK_ID_USUARIO\r\n" + 
+				"		INNER JOIN tmpersona AS pe ON pe.ID_PERSONA = usu.FK_ID_PERSONA\r\n" + 
+				"		INNER JOIN tmrol AS rol ON rol.ID_ROL = usu.FK_ID_ROL\r\n" +
+				"WHERE est.COD_ESTUDIANTE_CI = '" + codEstudiante + "'";
+		List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(query);
+		List<EstudianteUsuarioPersona> estUsuPer = row.mapRowEstudianteUsuarioPersona(rows);
+		
+		return estUsuPer;
+	}
+
 //	@Override
 //	public List<EstudianteUsuarioPersona> getEstudiantesMatriculadosByProgCurso(int idProgCurso) {
 //		String query = "SELECT *\r\n" + 
